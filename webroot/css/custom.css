@@ -1,0 +1,36 @@
+body {
+	background-image: url('http://www.animacomic.es/wp-content/uploads/2013/06/fondorojo33.jpg');
+	background-repeat: repeat;
+	background-position: top left;
+	background-attachment: scroll;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 300;
+    letter-spacing: 1px;
+    line-height: 1.62em;
+}
+
+h1 {
+	color: #333333;
+	font-size: 1.5em;
+}
+
+#container {
+	margin: auto;
+	max-width: 1140px;
+	background-color: #f8f8f8;
+}
+#header {
+	text-align: center;
+	background: #111111;
+	padding: 0px;
+}
+#content {
+	margin: 10px 20px 40px 20px;
+}
+
+#nav p {
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
