@@ -46,7 +46,6 @@ class ObjetosController extends AppController {
 			}
 		}
 		else {
-			$this->Objeto->Ubicacion->recursive = 0;
 			$this->set('ubicaciones', $this->Objeto->Ubicacion->find('list'));
 		}
     }
@@ -74,7 +73,6 @@ class ObjetosController extends AppController {
 			throw new NotFoundException(__('Objeto desconocido'));
 		}
 
-		$this->Objeto->Ubicacion->recursive = 0;
 		$this->set('ubicaciones', $this->Objeto->Ubicacion->find('list'));
 		if ($this->request->is(array('post', 'put'))) {
 			$this->Objeto->id = $id;
