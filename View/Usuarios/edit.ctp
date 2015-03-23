@@ -14,4 +14,20 @@
     </fieldset>
     
 <?php echo $this->Form->end(); ?>
+
 </div>
+
+<?php
+echo $this->Html->script('jquery');
+echo $this->Html->scriptBlock('
+	$("#UsuarioRol").change(function() {
+		if ($("#UsuarioRol").val() == \'managerzona\') {
+			$("#UsuarioZonas").removeAttr(\'disabled\');
+		}
+		else {
+			$("#UsuarioZonas").prop(\'disabled\', true);
+		}
+	});
+	$("#UsuarioRol").trigger(\'change\');
+');
+?>
