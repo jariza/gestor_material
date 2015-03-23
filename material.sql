@@ -78,12 +78,16 @@ CREATE TABLE `objetos` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `descripcion` varchar(100) COLLATE utf8_spanish_ci NOT NULL,
   `ubicacion_id` int(11) NOT NULL,
-  `tipoobjeto_id` int(11) NOT NULL,
+  `fungible` tinyint(1) NOT NULL,
+  `cantidad` int(11) NOT NULL,
+  `fechaentrega` datetime NOT NULL,
+  `comentariosentrega` text COLLATE utf8_spanish_ci NOT NULL,
   `comentarios` text COLLATE utf8_spanish_ci NOT NULL,
   `created` datetime NOT NULL,
   `modified` datetime NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `descripcion` (`descripcion`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -92,7 +96,7 @@ CREATE TABLE `objetos` (
 
 LOCK TABLES `objetos` WRITE;
 /*!40000 ALTER TABLE `objetos` DISABLE KEYS */;
-INSERT INTO `objetos` VALUES (1,'Primer objeto',2,2,'Está en 2 y es equipamiento.','2015-03-19 00:45:51','2015-03-19 00:47:42');
+INSERT INTO `objetos` VALUES (1,'Primer objeto',2,2,0,'0000-00-00 00:00:00','','Está en 2 y es equipamiento.','2015-03-19 00:45:51','2015-03-23 00:01:01'),(2,'Objeto en ubicación 1, no fungible',1,0,1,'2015-03-23 00:01:00','','','2015-03-23 00:01:21','2015-03-23 00:02:09'),(3,'sec2',1,0,1,'0000-00-00 00:00:00','','','2015-03-23 00:03:39','2015-03-23 00:03:39'),(4,'sec3',-1,0,1,'2015-03-23 00:04:00','','','2015-03-23 00:04:09','2015-03-23 00:04:09'),(5,'sec4',-1,0,1,'2015-03-23 00:10:00','lo mismo llega, lo mismo no y vete a saber donde','','2015-03-23 00:11:04','2015-03-23 01:07:55'),(6,'sec6',1,1,1,'0000-00-00 00:00:00','','','2015-03-23 00:28:28','2015-03-23 00:46:02'),(7,'sec7',-1,0,1,'2015-03-23 00:28:00','','','2015-03-23 00:28:35','2015-03-23 00:28:35'),(8,'sec9',1,0,1,'0000-00-00 00:00:00','','','2015-03-23 00:30:42','2015-03-23 00:45:52'),(9,'sec10',1,0,1,'0000-00-00 00:00:00','','','2015-03-23 00:30:52','2015-03-23 00:55:33');
 /*!40000 ALTER TABLE `objetos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -140,7 +144,7 @@ CREATE TABLE `usuarios` (
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -149,7 +153,7 @@ CREATE TABLE `usuarios` (
 
 LOCK TABLES `usuarios` WRITE;
 /*!40000 ALTER TABLE `usuarios` DISABLE KEYS */;
-INSERT INTO `usuarios` VALUES (1,'Usuario','admin','admin','','6fb913c8c31f6db76281163a5a0de50e9d8ed128','pepe@jariza.net','2015-03-18 23:48:46','2015-03-18 23:54:11'),(2,'stage1','stage1','managerzona','','ec9c306ef3cfd6d94c6730ba6891cbdac935d184','stage1@jariza.net','2015-03-22 00:50:03','2015-03-22 00:50:12'),(3,'stage2','stage2','managerzona','1','fc0f0110bab743a784903446b4ca14f85019f466','stage2@jariza.net','2015-03-22 01:29:43','2015-03-22 02:00:07');
+INSERT INTO `usuarios` VALUES (1,'Usuario','admin','admin','','6fb913c8c31f6db76281163a5a0de50e9d8ed128','pepe@jariza.net','2015-03-18 23:48:46','2015-03-22 23:05:44'),(2,'stage1','stage1','managerzona','3','ec9c306ef3cfd6d94c6730ba6891cbdac935d184','stage1@jariza.net','2015-03-22 00:50:03','2015-03-22 23:07:17'),(3,'stage2','stage2','admin','','fc0f0110bab743a784903446b4ca14f85019f466','stage2@jariza.net','2015-03-22 01:29:43','2015-03-22 23:06:06'),(4,'otromanager','otromanager','managerzona','1,3','ec9c306ef3cfd6d94c6730ba6891cbdac935d184','otromanager@jariza.net','2015-03-22 23:07:45','2015-03-22 23:07:45');
 /*!40000 ALTER TABLE `usuarios` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -186,4 +190,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-03-22  2:09:27
+-- Dump completed on 2015-03-23  1:09:43

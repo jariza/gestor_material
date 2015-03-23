@@ -13,6 +13,3 @@ Configure::write('datosevento', array(
 	//'imagenpie' => '', //Imagen del pie
 	'customcss' => '', //CSS propios
 ));
-
-//Tipos de objeto
-Configure::write('tiposobjeto', array(0 => 'Fungible', 1 => 'Impresión', 2 => 'Equpamiento', 3 => 'Material', 4 => 'Herramientas'));

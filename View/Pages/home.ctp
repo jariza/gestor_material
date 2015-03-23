@@ -23,7 +23,7 @@ if (strcmp($rol, 'admin') == 0) {
 }
 if (in_array($rol, array('admin', 'produccion'))) {
 	echo "\t<li>".$this->Html->link('Gestión de ubicaciones', array('controller' => 'Ubicaciones'))."</li>\n";
-	echo "\t<li>".$this->Html->link('Gestión de objetos', array('controller' => 'Objetos'))."</li>\n";
+	echo "\t<li>".$this->Html->link('Gestión de inventario', array('controller' => 'Objetos'))."</li>\n";
 	echo "\t<li>".$this->Html->link('Gestión de zonas', array('controller' => 'Zonas'))."</li>\n";
 }
 ?>
