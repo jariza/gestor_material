@@ -29,7 +29,13 @@
 		else {
 			$txtentrega = $v['Objeto']['fechaentrega'];
 		}
-		echo "<td>{$v['Objeto']['descripcion']}</td><td>{$v['Ubicacion']['nombre']}</td><td>$txtfungible</td><td>{$v['Objeto']['cantidad']}</td><td>$txtentrega</td></tr>\n";
+		if ($v['Objeto']['fechadevolucion'] == '9999-12-31 23:59:59') {
+			$txtprestamo = '';
+		}
+		else {
+			$txtprestamo = '¡Préstamo! ';
+		}
+		echo "<td>$txtprestamo{$v['Objeto']['descripcion']}</td><td>{$v['Ubicacion']['nombre']}</td><td>$txtfungible</td><td>{$v['Objeto']['cantidad']}</td><td>$txtentrega</td></tr>\n";
 	}
 ?>
 </table>

@@ -28,7 +28,7 @@ CREATE TABLE `login_fallidos` (
   `IP` varchar(15) COLLATE utf8_spanish_ci NOT NULL,
   `username` varchar(50) COLLATE utf8_spanish_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -37,7 +37,7 @@ CREATE TABLE `login_fallidos` (
 
 LOCK TABLES `login_fallidos` WRITE;
 /*!40000 ALTER TABLE `login_fallidos` DISABLE KEYS */;
-INSERT INTO `login_fallidos` VALUES (1,'2015-03-20 23:10:06','127.0.0.1','root');
+INSERT INTO `login_fallidos` VALUES (1,'2015-03-20 23:10:06','127.0.0.1','root'),(2,'2015-03-23 20:51:27','127.0.0.1','root'),(3,'2015-03-23 20:51:30','127.0.0.1','root');
 /*!40000 ALTER TABLE `login_fallidos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -56,6 +56,8 @@ CREATE TABLE `objetos` (
   `cantidad` int(11) NOT NULL,
   `fechaentrega` datetime NOT NULL,
   `comentariosentrega` text COLLATE utf8_spanish_ci NOT NULL,
+  `fechadevolucion` datetime NOT NULL,
+  `comentariosdevolucion` text COLLATE utf8_spanish_ci NOT NULL,
   `comentarios` text COLLATE utf8_spanish_ci NOT NULL,
   `created` datetime NOT NULL,
   `modified` datetime NOT NULL,
@@ -70,7 +72,7 @@ CREATE TABLE `objetos` (
 
 LOCK TABLES `objetos` WRITE;
 /*!40000 ALTER TABLE `objetos` DISABLE KEYS */;
-INSERT INTO `objetos` VALUES (1,'Primer objeto',2,2,0,'0000-00-00 00:00:00','','Está en 2 y es equipamiento.','2015-03-19 00:45:51','2015-03-23 00:01:01'),(2,'Objeto en ubicación 1, no fungible',1,0,1,'2015-03-23 00:01:00','','','2015-03-23 00:01:21','2015-03-23 00:02:09'),(3,'sec2',1,0,1,'0000-00-00 00:00:00','','','2015-03-23 00:03:39','2015-03-23 00:03:39'),(4,'sec3',-1,0,1,'2015-03-23 00:04:00','','','2015-03-23 00:04:09','2015-03-23 00:04:09'),(5,'sec4',-1,0,1,'2015-03-23 00:10:00','lo mismo llega, lo mismo no y vete a saber donde','','2015-03-23 00:11:04','2015-03-23 01:07:55'),(6,'sec6',1,1,1,'0000-00-00 00:00:00','','','2015-03-23 00:28:28','2015-03-23 00:46:02'),(7,'sec7',-1,0,1,'2015-03-23 00:28:00','','','2015-03-23 00:28:35','2015-03-23 00:28:35'),(8,'sec9',1,0,1,'0000-00-00 00:00:00','','','2015-03-23 00:30:42','2015-03-23 00:45:52'),(9,'sec10',1,0,1,'0000-00-00 00:00:00','','','2015-03-23 00:30:52','2015-03-23 00:55:33');
+INSERT INTO `objetos` VALUES (1,'Primer objeto',1,1,10,'0000-00-00 00:00:00','','9999-12-31 23:59:59','','Está en 2 y es equipamiento.','2015-03-19 00:45:51','2015-03-23 22:07:08'),(2,'Objeto en ubicación 1, no fungible',1,0,1,'0000-00-00 00:00:00','','2015-04-23 22:25:00','Es de huelva','','2015-03-23 00:01:21','2015-03-23 22:25:40'),(3,'sec2',1,0,1,'0000-00-00 00:00:00','','9999-12-31 23:59:59','','','2015-03-23 00:03:39','2015-03-23 22:24:00'),(4,'sec3',-1,0,1,'2015-03-23 00:04:00','','9999-12-31 23:59:59','','','2015-03-23 00:04:09','2015-03-23 22:24:03'),(5,'sec4',-1,0,1,'2015-03-23 00:10:00','lo mismo llega, lo mismo no y vete a saber donde','9999-12-31 23:59:59','','','2015-03-23 00:11:04','2015-03-23 22:25:15'),(6,'sec6',1,1,1,'0000-00-00 00:00:00','','9999-12-31 23:59:59','','','2015-03-23 00:28:28','2015-03-23 22:25:19'),(7,'sec7',-1,0,1,'2015-03-23 00:28:00','','9999-12-31 23:59:59','','','2015-03-23 00:28:35','2015-03-23 22:25:22'),(8,'sec9',1,0,1,'0000-00-00 00:00:00','','9999-12-31 23:59:59','','','2015-03-23 00:30:42','2015-03-23 22:25:25'),(9,'sec10',1,0,1,'0000-00-00 00:00:00','','9999-12-31 23:59:59','','','2015-03-23 00:30:52','2015-03-23 22:25:28');
 /*!40000 ALTER TABLE `objetos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -164,4 +166,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-03-23  1:12:35
+-- Dump completed on 2015-03-23 22:26:59

@@ -17,6 +17,11 @@
 		echo "\t\t<li>Fecha de entrega: $fechaentrega</li>\n";
 		echo "\t\t<li>Comentarios sobre la entrega: {$objeto['Objeto']['comentariosentrega']}</li>\n";
 	}
+	$fechadevolucion = $objeto['Objeto']['fechadevolucion'];
+	if ($fechadevolucion != '9999-12-31 23:59:59') {
+		echo "\t\t<li>Fecha de devolución: $fechadevolucion</li>\n";
+		echo "\t\t<li>Comentarios sobre la devolución: {$objeto['Objeto']['comentariosdevolucion']}</li>\n";
+	}
 	echo "\t\t<li>Comentarios: {$objeto['Objeto']['comentarios']}</li>\n";
 	echo "\t\t<li>Creado: {$objeto['Objeto']['created']}</li>\n";
 	echo "\t\t<li>Modificado: {$objeto['Objeto']['modified']}</li>\n";

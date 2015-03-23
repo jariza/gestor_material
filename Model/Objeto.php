@@ -19,6 +19,12 @@ class Objeto extends AppModel {
 	public function beforeValidate($options = array()) {
 		if (isset($this->data[$this->alias]['ubicacion_id']) && ($this->data[$this->alias]['ubicacion_id'] != -1)) {
 			$this->data[$this->alias]['fechaentrega'] = '0000-00-00 00:00:00';
+			$this->data[$this->alias]['comentariosentrega'] = '';
+		}
+		if (!isset($this->data[$this->alias]['prestamo']) || ($this->data[$this->alias]['prestamo'] != 1)) {
+			
+			$this->data[$this->alias]['fechadevolucion'] = '9999-12-31 23:59:59';
+			$this->data[$this->alias]['comentariosdevolucion'] = '';
 		}
 		return true;
 	}

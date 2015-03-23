@@ -3,7 +3,7 @@ class ObjetosController extends AppController {
     public $helpers = array('Html', 'Form', 'Paginator');
 
 	public $paginate = array(
-		'fields' => array('Objeto.id', 'Objeto.descripcion', 'Ubicacion.nombre', 'Objeto.fungible', 'Objeto.cantidad', 'Objeto.fechaentrega')
+		'fields' => array('Objeto.id', 'Objeto.descripcion', 'Ubicacion.nombre', 'Objeto.fungible', 'Objeto.cantidad', 'Objeto.fechaentrega', 'Objeto.fechadevolucion')
 		);
 
 	public function beforeFilter() {
@@ -86,6 +86,16 @@ class ObjetosController extends AppController {
 		}
 
 		if (!$this->request->data) {
+			if ($objeto['Objeto']['fechaentrega'] == '0000-00-00 00:00:00') {
+				$objeto['Objeto']['fechaentrega'] = date('Y-m-d H:i:s'); //El campo fecha no determina nada en la vista, ajusto para comudidad del usuario
+			}
+			if ($objeto['Objeto']['fechadevolucion'] == '9999-12-31 23:59:59') {
+				$this->set('prestamo', false);
+				$objeto['Objeto']['fechadevolucion'] = date('Y-m-d H:i:s'); //El campo fecha no determina nada en la vista, ajusto para comudidad del usuario
+			}
+			else {
+				$this->set('prestamo', true);
+			}
 			$this->request->data = $objeto;
 		}
 	}
