@@ -16,6 +16,11 @@ class ZonasController extends AppController {
 		return false;
 	}
 
+	public function beforeFilter() {
+		parent::beforeFilter();
+		$this->Security->validatePost = false;
+	}
+
     public function index() {
 		$this->Zona->recursive = -1;
         $this->set('zonas', $this->paginate());
@@ -28,7 +33,7 @@ class ZonasController extends AppController {
     public function nueva() {
 		if ($this->request->is('post')) {
 			$this->Zona->create();
-			if ($this->Zona->save($this->request->data)) {
+			if ($this->Zona->saveAssociated($this->request->data)) {
                 $this->Session->setFlash('Zona añadida.');
                 return $this->redirect(array('action' => 'index'));
 			}
@@ -63,7 +68,7 @@ class ZonasController extends AppController {
 
 		if ($this->request->is(array('post', 'put'))) {
 			$this->Zona->id = $id;
-			if ($this->Zona->save($this->request->data)) {
+			if ($this->Zona->saveAssociated($this->request->data)) {
 				$this->Session->setFlash(__('Zona actualizada correctamente.'));
 				return $this->redirect(array('action' => 'index'));
 			}
