@@ -24,7 +24,7 @@ class Actividad extends AppModel {
 	
 	public function beforeSave($options = array()) {
 		if (isset($this->data[$this->alias]['enlaceweb'])) {
-			if (strncmp('http://', $this->data[$this->alias]['enlaceweb'], 7) != 0) {
+			if (($this->data[$this->alias]['enlaceweb'] != '') && (strncmp('http://', $this->data[$this->alias]['enlaceweb'], 7) != 0)) {
 				$this->data[$this->alias]['enlaceweb'] = 'http://'.$this->data[$this->alias]['enlaceweb'];
 			}
 		}

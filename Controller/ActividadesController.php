@@ -37,7 +37,20 @@ class ActividadesController extends AppController {
 			}				
 		}
     }
-    
+
+	public function view($id = null) {
+		if (!$id) {
+			throw new NotFoundException(__('Actividad desconocida'));
+		}
+
+		$actividad = $this->Actividad->findById($id);
+		if (!$actividad) {
+			throw new NotFoundException(__('Actividad desconocida'));
+		}
+
+		$this->set('actividad', $actividad);
+	}
+
 	public function edit($id = null) {
 		if (!$id) {
 			throw new NotFoundException(__('Actividad desconocida'));

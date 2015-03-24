@@ -1,9 +1,10 @@
 <h1>Detalle de objeto</h1>
 <?php
-	echo "<p>\n\t<ul>\n";
+	$objeto['Objeto'] = array_map('htmlspecialchars', $objeto['Objeto']);
+	echo "\t<ul>\n";
 	echo "\t\t<li>Id: {$objeto['Objeto']['id']}</li>\n";
 	echo "\t\t<li>Descripción: {$objeto['Objeto']['descripcion']}</li>\n";
-	echo "\t\t<li>Ubicación: {$objeto['Ubicacion']['nombre']}</li>\n";
+	echo "\t\t<li>Ubicación: ".htmlspecialchars($objeto['Ubicacion']['nombre'])."</li>\n";
 	echo "\t\t<li>Fungible: ";
 	if ($objeto['Objeto']['fungible']) {
 		echo "si</li>\n";
@@ -25,6 +26,6 @@
 	echo "\t\t<li>Comentarios: {$objeto['Objeto']['comentarios']}</li>\n";
 	echo "\t\t<li>Creado: {$objeto['Objeto']['created']}</li>\n";
 	echo "\t\t<li>Modificado: {$objeto['Objeto']['modified']}</li>\n";
-	echo "\t</ul>\n</p>\n";
+	echo "\t</ul>\n";
 	echo "<p>".$this->Html->link('Volver al listado de objetos', array('action' => 'index'))."</p>";
 ?>

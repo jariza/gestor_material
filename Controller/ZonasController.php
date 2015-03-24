@@ -17,6 +17,7 @@ class ZonasController extends AppController {
 	}
 
     public function index() {
+		$this->Zona->recursive = -1;
         $this->set('zonas', $this->paginate());
     }
     
@@ -36,7 +37,20 @@ class ZonasController extends AppController {
 			}				
 		}
     }
-    
+
+	public function view($id = null) {
+		if (!$id) {
+			throw new NotFoundException(__('Zona desconocida'));
+		}
+
+		$zona = $this->Zona->findById($id);
+		if (!$zona) {
+			throw new NotFoundException(__('Zona desconocida'));
+		}
+
+		$this->set('zona', $zona);
+	}
+
 	public function edit($id = null) {
 		if (!$id) {
 			throw new NotFoundException(__('Zona desconocida'));

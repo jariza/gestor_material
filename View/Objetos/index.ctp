@@ -19,6 +19,7 @@
 	</tr>
 <?php
 	foreach ($objetos as $v) {
+		$v['Objeto'] = array_map('htmlspecialchars', $v['Objeto']);
 		echo '<tr><td>'.$this->Html->link($v['Objeto']['id'], array('action' => 'view', $v['Objeto']['id']));
 		echo " (".$this->Html->link('E', array('action' => 'edit', $v['Objeto']['id']), array('title' => 'Editar'));
 		echo "/".$this->Form->postLink('X', array('action' => 'delete', $v['Objeto']['id']), array('confirm' => "¿Seguro que deseas eliminar el objeto {$v['Objeto']['descripcion']}?")).")</td>";		
@@ -35,7 +36,7 @@
 		else {
 			$txtprestamo = '¡Préstamo! ';
 		}
-		echo "<td>$txtprestamo{$v['Objeto']['descripcion']}</td><td>{$v['Ubicacion']['nombre']}</td><td>$txtfungible</td><td>{$v['Objeto']['cantidad']}</td><td>$txtentrega</td></tr>\n";
+		echo "<td>$txtprestamo{$v['Objeto']['descripcion']}</td><td>".htmlspecialchars($v['Ubicacion']['nombre'])."</td><td>$txtfungible</td><td>{$v['Objeto']['cantidad']}</td><td>$txtentrega</td></tr>\n";
 	}
 ?>
 </table>

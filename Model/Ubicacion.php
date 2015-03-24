@@ -9,7 +9,7 @@ class Ubicacion extends AppModel {
             'message' => 'No se indicó el nombre.'
         )
 	);
-	
+
 	public function afterFind($results, $primary = false) {
 		foreach ($results as $k => $v) {
 			if (is_null($v['Ubicacion']['nombre'])) {
