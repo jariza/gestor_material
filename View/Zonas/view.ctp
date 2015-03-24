@@ -9,5 +9,12 @@
 	echo "<p>Descripción técnica:</p>\n";
 	echo "<pre>{$zona['Zona']['desctecnica']}</pre>\n";
 	echo "\t</ul>\n";
+	echo "\t<p>Necesidades de la zona</p>\n\t<table>";
+	echo "\t<tr><th>Id</th><th>Descripción</th><th>Cantidad</th><th>Objeto asignado</th></tr>\n";
+	foreach ($zona['Necesidadzona'] as $v) {
+		$v = array_map('htmlspecialchars', $v);
+		echo "\t\t<tr><td>{$v['id']}</td><td>{$v['descripcion']}</td><td>{$v['cantidad']}</td><td>{$v['objeto_id']}</td></tr>\n";
+	}
+	echo "\t</table>\n";
 	echo "<p>".$this->Html->link('Volver al listado de zonas', array('action' => 'index'))."</p>";
 ?>

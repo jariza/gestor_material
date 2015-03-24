@@ -1,6 +1,6 @@
 <?php
 class Zona extends AppModel {
-	//public $hasMany = 'Actividad';
+	public $hasMany = array('Necesidadzona' => array('dependent' => true));
 	public $displayField = 'nombre';
 
     public $validate = array(
