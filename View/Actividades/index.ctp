@@ -13,7 +13,8 @@
 	</tr>
 <?php
 	foreach ($actividades as $v) {
-		echo "<tr><td>{$v['Actividad']['id']}";
+		$v['Actividad'] = array_map('htmlspecialchars', $v['Actividad']);
+		echo '<tr><td>'.$this->Html->link($v['Actividad']['id'], array('action' => 'view', $v['Actividad']['id']));
 		echo " (".$this->Html->link('E', array('action' => 'edit', $v['Actividad']['id']), array('title' => 'Editar'));
 		echo "/".$this->Form->postLink('X', array('action' => 'delete', $v['Actividad']['id']), array('confirm' => "¿Seguro que deseas eliminar la actividad {$v['Actividad']['nombre']}?")).")</td>";
 		if ($v['Actividad']['enlaceweb'] != '') {

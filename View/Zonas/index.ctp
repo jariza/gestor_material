@@ -11,7 +11,8 @@
 	</tr>
 <?php
 	foreach ($zonas as $v) {
-		echo "<tr><td>{$v['Zona']['id']}";
+		$v['Zona'] = array_map('htmlspecialchars', $v['Zona']);
+		echo '<tr><td>'.$this->Html->link($v['Zona']['id'], array('action' => 'view', $v['Zona']['id']));
 		echo " (".$this->Html->link('E', array('action' => 'edit', $v['Zona']['id']), array('title' => 'Editar'));
 		echo "/".$this->Form->postLink('X', array('action' => 'delete', $v['Zona']['id']), array('confirm' => "¿Seguro que deseas eliminar la zona {$v['Zona']['nombre']}?")).")</td>";		
 		echo "<td>{$v['Zona']['nombre']}</td></tr>\n";

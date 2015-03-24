@@ -56,7 +56,6 @@ class UsuariosController extends AppController {
 	}
 
     public function index() {
-        $this->Usuario->recursive = 0;
 		$mzona = $this->loadModel('Zona');
 		$this->set('zonas', $this->Zona->find('list'));
         $this->set('usuarios', $this->paginate());

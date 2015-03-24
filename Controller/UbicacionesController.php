@@ -17,6 +17,7 @@ class UbicacionesController extends AppController {
 	}
 
     public function index() {
+		$this->Ubicacion->recursive = -1;
         $this->set('ubicaciones', $this->paginate());
     }
     
