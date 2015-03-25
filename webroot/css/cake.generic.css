@@ -812,3 +812,23 @@ form.buscar input#ObjetoQ {
 	width: auto;
 	clear: none;
 }
+
+/** Autocomplete **/
+#url-rewriting-warning {
+	display:none;
+}
+
+ul.ui-autocomplete {
+	list-style:none;
+	color: black;
+	background: lightgray;
+}
+
+li.ui-menu-item {
+	padding: 3px;
+	margin: 0px;
+}
+
+li.ui-menu-item:hover {
+	background: gray;
+}

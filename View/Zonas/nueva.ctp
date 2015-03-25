@@ -11,10 +11,10 @@ echo $this->Form->input('desctecnica', array('label' => 'Descripción técnica')
 <tr><th></th><th>Descripción</th><th>Cantidad</th><th>Objeto asignado</th></tr>
 <?php
 echo "<tr id=\"necesidad0\">\n";
-	echo '<td>'.$this->Form->button('&nbsp;-&nbsp;',array('type'=>'button','title'=>'Eliminar la necesidad'))."</td>\n";
+	echo '<td>'.$this->Form->button('&nbsp;-&nbsp;',array('type'=>'button','title'=>'Eliminar la necesidad', 'onclick' => 'removeNecesidadzona(0)'))."</td>\n";
 	echo '<td>'.$this->Form->input("Necesidadzona.0.descripcion",array('label'=>'','type'=>'text'))."</td>\n";
 	echo '<td>'.$this->Form->input("Necesidadzona.0.cantidad",array('label'=>'','type'=>'text'))."</td>\n";
-	echo '<td>'.$this->Form->input("Necesidadzona.0.objeto_id",array('label'=>'','type'=>'hidden', 'readonly'=>'readonly')).$this->Form->input("Necesidadzona.0.objeto_nombre",array('label'=>'','type'=>'text'))."</td>\n";
+	echo '<td>'.$this->Form->input("Necesidadzona.0.objeto_id",array('label'=>'','type'=>'text', 'readonly'=>'readonly')).$this->Form->input("Necesidadzona.0.objeto_nombre",array('label'=>'','type'=>'text'))."</td>\n";
 echo "</tr>\n";
 ?>
 <tr id="trAdd">
@@ -38,14 +38,23 @@ echo $this->Form->end();
 	
 	function addNecesidadzona() {
 		lastRow++;
-		$("#tablanecesidades tr#necesidad0").clone().attr('id','Necesidadzona'+lastRow).removeAttr('style').insertBefore("#tablanecesidades tr#trAdd");
-		$("#Necesidadzona"+lastRow+" button").attr('onclick','removeNecesidadzona('+lastRow+')');
-		$("#Necesidadzona"+lastRow+" input:first").attr('name','data[Necesidadzona]['+lastRow+'][descripcion]').attr('id','Necesidadzona'+lastRow+'Descripcion').val('');
-		$("#Necesidadzona"+lastRow+" input:eq(1)").attr('name','data[Necesidadzona]['+lastRow+'][cantidad]').attr('id','Necesidadzona'+lastRow+'Cantidad').val('');
-		$("#Necesidadzona"+lastRow+" input:eq(2)").attr('name','data[Necesidadzona]['+lastRow+'][objeto_id]').attr('id','Necesidadzona'+lastRow+'Objeto_id').val('');
-		$("#Necesidadzona"+lastRow+" input:eq(3)").attr('name','data[Necesidadzona]['+lastRow+'][objeto_nombre]').attr('id','Necesidadzona'+lastRow+'Objeto_nombre').val('');
+		$("#tablanecesidades tr#necesidad0").clone().attr('id','necesidad'+lastRow).removeAttr('style').insertBefore("#tablanecesidades tr#trAdd");
+		$("#necesidad"+lastRow+" button").removeAttr('onclick').attr('onclick','removeNecesidadzona('+lastRow+')');
+		$("#necesidad"+lastRow+" input:first").attr('name','data[Necesidadzona]['+lastRow+'][descripcion]').attr('id','Necesidadzona'+lastRow+'Descripcion').val('');
+		$("#necesidad"+lastRow+" input:eq(1)").attr('name','data[Necesidadzona]['+lastRow+'][cantidad]').attr('id','Necesidadzona'+lastRow+'Cantidad').val('');
+		$("#necesidad"+lastRow+" input:eq(2)").attr('name','data[Necesidadzona]['+lastRow+'][objeto_id]').attr('id','Necesidadzona'+lastRow+'Objeto_id').val('');
+		$("#necesidad"+lastRow+" input:eq(3)").attr('name','data[Necesidadzona]['+lastRow+'][objeto_nombre]').attr('id','Necesidadzona'+lastRow+'Objeto_nombre').val('');
+		$('#Necesidadzona'+lastRow+'Descripcion').autocomplete({
+			source:"<?php echo Router::url('/', true); ?>necesidadzona/findnecesidades",
+			open: function() {$('.ui-menu').width('30em')}
+		});
 	}
 	function removeNecesidadzona(x) {
-		$("#item"+x).remove();
+		$("#necesidad"+x).remove();
 	}
+
+	$('#Necesidadzona0Descripcion').autocomplete({
+		source:"<?php echo Router::url('/', true); ?>necesidadzona/findnecesidades",
+		open: function() {$('.ui-menu').width('30em')}
+	});
 </script>
