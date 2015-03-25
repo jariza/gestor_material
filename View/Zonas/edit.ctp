@@ -50,10 +50,10 @@ else {
 echo $this->Form->input('id', array('type' => 'hidden'));
 echo $this->Form->submit('Guardar zona', array('after' => $this->Html->link('Cancelar', array('action' => 'index'), array('class' => 'btncancelar'))));
 echo $this->Form->end();
-?>
 
-<?php echo $this->Html->script(array('jquery'));?>
-<?php echo $this->Html->script(array('jquery-ui-autocomplete/jquery-ui'));?>
+echo $this->Html->script(array('jquery'));
+echo $this->Html->script(array('jquery-ui-autocomplete/jquery-ui'));
+?>
 
 <script type='text/javascript'>
 	var lastRow=<?php echo $lng-1; ?>;
@@ -68,7 +68,7 @@ echo $this->Form->end();
 		$("#necesidad"+lastRow+" input:eq(3)").attr('name','data[Necesidadzona]['+lastRow+'][id]').attr('id','Necesidadzona'+lastRow+'Id').val('');
 		$("#necesidad"+lastRow+" input:eq(4)").attr('name','data[Necesidadzona]['+lastRow+'][objeto_nombre]').attr('id','Necesidadzona'+lastRow+'Objeto_nombre').val('');
 		$('#Necesidadzona'+lastRow+'Descripcion').autocomplete({
-			source:"<?php echo Router::url('/', true); ?>necesidadzona/findnecesidades",
+			source:"<?php echo Router::url('/', true); ?>necesidadzonas/findnecesidades",
 			open: function() {$('.ui-menu').width('30em')}
 		});
 	}
@@ -80,7 +80,7 @@ echo $this->Form->end();
 if ($lng == 0) {$lng = 1;} //Fuerza insertar al menos una cuando no hay necesidades
 for ($i = 0; $i < $lng; $i++) {
 	echo "\$('#Necesidadzona{$i}Descripcion').autocomplete({\n";
-	echo "\tsource:\"".Router::url('/', true)."necesidadzona/findnecesidades\",\n";
+	echo "\tsource:\"".Router::url('/', true)."necesidadzona/sfindnecesidades\",\n";
 	echo "\topen: function() {\$('.ui-menu').width('30em')}\n";
 	echo "});\n";
 }

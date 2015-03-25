@@ -6,9 +6,9 @@
 	echo "\t\t<li>Nombre: {$zona['Zona']['nombre']}</li>\n";
 	echo "\t\t<li>Creada: {$zona['Zona']['created']}</li>\n";
 	echo "\t\t<li>Modificada: {$zona['Zona']['modified']}</li>\n";
+	echo "\t</ul>\n";
 	echo "<p>Descripción técnica:</p>\n";
 	echo "<pre>{$zona['Zona']['desctecnica']}</pre>\n";
-	echo "\t</ul>\n";
 	echo "\t<p>Necesidades de la zona</p>\n\t<table>";
 	echo "\t<tr><th>Id</th><th>Descripción</th><th>Cantidad</th><th>Objeto asignado</th></tr>\n";
 	foreach ($zona['Necesidadzona'] as $v) {

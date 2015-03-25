@@ -1,6 +1,7 @@
 <?php
 class Actividad extends AppModel {
 	public $belongsTo = 'Zona';
+	public $hasMany = array('Necesidadactividad' => array('dependent' => true));
 
     public $validate = array(
        'nombre' => array(

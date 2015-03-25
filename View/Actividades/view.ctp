@@ -22,5 +22,12 @@
 	echo "\t</ul>\n</p>\n";
 	echo "<p>Descripción técnica:";
 	echo "<pre>{$actividad['Actividad']['desctecnica']}</pre>\n";
+	echo "\t<p>Necesidades de la actividad</p>\n\t<table>";
+	echo "\t<tr><th>Id</th><th>Descripción</th><th>Cantidad</th><th>Objeto asignado</th></tr>\n";
+	foreach ($actividad['Necesidadactividad'] as $v) {
+		$v = array_map('htmlspecialchars', $v);
+		echo "\t\t<tr><td>{$v['id']}</td><td>{$v['descripcion']}</td><td>{$v['cantidad']}</td><td>{$v['objeto_id']}</td></tr>\n";
+	}
+	echo "\t</table>\n";
 	echo "<p>".$this->Html->link('Volver al listado de actividades', array('action' => 'index'))."</p>";
 ?>
