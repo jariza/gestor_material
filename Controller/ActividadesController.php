@@ -16,6 +16,11 @@ class ActividadesController extends AppController {
 		return false;
 	}
 
+	public function beforeFilter() {
+		parent::beforeFilter();
+		$this->Security->validatePost = false;
+	}
+
     public function index() {
         $this->set('actividades', $this->paginate());
     }
@@ -28,7 +33,7 @@ class ActividadesController extends AppController {
 		$this->set('zonas', $this->Actividad->Zona->find('list'));
 		if ($this->request->is('post')) {
 			$this->Actividad->create();
-			if ($this->Actividad->save($this->request->data)) {
+			if ($this->Actividad->saveAssociated($this->request->data)) {
                 $this->Session->setFlash('Actividad añadida.');
                 return $this->redirect(array('action' => 'index'));
 			}
@@ -64,7 +69,7 @@ class ActividadesController extends AppController {
 		$this->set('zonas', $this->Actividad->Zona->find('list'));
 		if ($this->request->is(array('post', 'put'))) {
 			$this->Actividad->id = $id;
-			if ($this->Actividad->save($this->request->data)) {
+			if ($this->Actividad->saveAssociated($this->request->data)) {
 				$this->Session->setFlash(__('Actividad actualizada correctamente.'));
 				return $this->redirect(array('action' => 'index'));
 			}

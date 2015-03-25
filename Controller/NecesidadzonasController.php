@@ -1,5 +1,5 @@
 <?php
-class NecesidadzonaController extends AppController {
+class NecesidadzonasController extends AppController {
     public $helpers = array('Html', 'Form');
 
 	public function findnecesidades() {
@@ -23,7 +23,7 @@ class NecesidadzonaController extends AppController {
 		}
 
 		if ($this->Necesidadzona->delete($id)) {
-			$this->Session->setFlash(__('Necesidadzona %s eliminado.', $id));
+			$this->Session->setFlash(__('Necesidadzona %s eliminada.', $id));
 			return $this->redirect(array('controller' => 'zonas', 'action' => 'index'));
 		}
 	}
