@@ -17,4 +17,11 @@ echo "<p style=\"display: inline-block; width: 18%; text-align: right\">".$this-
 	}
 ?>
 </table>
-<p><?php echo $this->Paginator->numbers(); ?></p>
+<p>
+<?php
+echo $this->Paginator->counter('Página {:page} de {:pages}').'<br />';
+echo $this->Paginator->first('<<Primera', array('after' => ' ... '));
+echo $this->Paginator->numbers();
+echo $this->Paginator->last('Última>>', array('before' => ' ... '));
+?>
+</p>
