@@ -2,10 +2,6 @@
 class ObjetosController extends AppController {
     public $helpers = array('Html', 'Form', 'Paginator');
 
-	public $paginate = array(
-		'fields' => array('Objeto.id', 'Objeto.descripcion', 'Ubicacion.nombre', 'Objeto.fungible', 'Objeto.cantidad', 'Objeto.fechaentrega', 'Objeto.fechadevolucion')
-		);
-
 	public function beforeFilter() {
 		parent::beforeFilter();
 		$this->Security->unlockFields = array('ObjetoFechaentregaDay', 'ObjetoFechaentregaMonth', 'ObjetoFechaentregaYear', 'ObjetoFechaentregaHour', 'ObjetoFechaentregaMin', 'ObjetoComentariosentrega'); //El componente Security no se lleva bien con los cambios dinámicos de Forms
@@ -23,11 +19,15 @@ class ObjetosController extends AppController {
 
     public function index() {
 		$q = $this->request->data('Objeto.q');
-		$opc = array();
+		$conds = array();
 		if (($q !== NULL) && ($q != '')) {
-			$opc = array('Objeto.descripcion LIKE' => '%'.str_replace(' ', '%', $q).'%');
+			$conds = array('Objeto.descripcion LIKE' => '%'.str_replace(' ', '%', $q).'%');
 		}
-        $this->set('objetos', $this->paginate('Objeto', $opc));
+		$this->paginate = array(
+			'conditions' => $conds,
+			'fields' => array('Objeto.id', 'Objeto.descripcion', 'Ubicacion.nombre', 'Objeto.fungible', 'Objeto.cantidad', 'Objeto.fechaentrega', 'Objeto.fechadevolucion'),
+		);
+		$this->set('objetos', $this->paginate('Objeto'));
     }
 
 	public function ayuda() {
@@ -61,6 +61,51 @@ class ObjetosController extends AppController {
 		}
 
 		$this->set('objeto', $objeto);
+	}
+
+	public function agendarecepcion() {
+		$opc = array();
+		$this->set('imprimir', false);
+		if ($this->request->query('imprimir') == 1) {
+			$this->layout = 'print';
+			$opc = array('limit' => $this->Objeto->find('count'));
+			$this->set('imprimir', true);
+		}
+		$this->paginate = array_merge($opc, array(
+			'conditions' => array('Objeto.ubicacion_id' => -1),
+			'fields' => array('Objeto.descripcion', 'Objeto.cantidad', 'Objeto.fechaentrega', 'Objeto.comentariosentrega'),
+		));
+		$this->set('objetos', $this->paginate('Objeto'));
+	}
+
+	public function agendadevolucion() {
+		$opc = array();
+		$this->set('imprimir', false);
+		if ($this->request->query('imprimir') == 1) {
+			$this->layout = 'print';
+			$opc = array('limit' => $this->Objeto->find('count'));
+			$this->set('imprimir', true);
+		}
+		$this->paginate = array_merge($opc, array(
+			'conditions' => array('Objeto.fechadevolucion !=' => '9999-12-31 23:59:59'),
+			'fields' => array('Objeto.descripcion', 'Objeto.cantidad', 'Objeto.fechadevolucion', 'Objeto.comentariosdevolucion'),
+		));
+		$this->set('objetos', $this->paginate('Objeto'));
+	}
+	
+	public function agendaprestamo() {
+		$opc = array();
+		$this->set('imprimir', false);
+		if ($this->request->query('imprimir') == 1) {
+			$this->layout = 'print';
+			$opc = array('limit' => $this->Objeto->find('count'));
+			$this->set('imprimir', true);
+		}
+		$this->paginate = array_merge($opc, array(
+			'conditions' => array('Objeto.ubicacion_id' => -1, 'Objeto.fechadevolucion !=' => '9999-12-31 23:59:59'),
+			'fields' => array('Objeto.descripcion', 'Objeto.cantidad', 'Objeto.fechaentrega', 'Objeto.fechadevolucion', 'Objeto.comentariosentrega', 'Objeto.comentariosdevolucion'),
+		));
+		$this->set('objetos', $this->paginate('Objeto'));
 	}
 
 	public function edit($id = null) {

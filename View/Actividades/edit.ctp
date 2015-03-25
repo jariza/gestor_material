@@ -84,7 +84,7 @@ echo $this->Html->script(array('jquery-ui-autocomplete/jquery-ui'));
 if ($lng == 0) {$lng = 1;} //Fuerza insertar al menos una cuando no hay necesidades
 for ($i = 0; $i < $lng; $i++) {
 	echo "\$('#Necesidadactividad{$i}Descripcion').autocomplete({\n";
-	echo "\tsource:\"".Router::url('/', true)."necesidadactividad/findnecesidades\",\n";
+	echo "\tsource:\"".Router::url('/', true)."necesidadactividades/findnecesidades\",\n";
 	echo "\topen: function() {\$('.ui-menu').width('30em')}\n";
 	echo "});\n";
 }

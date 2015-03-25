@@ -24,6 +24,11 @@ if (strcmp($rol, 'admin') == 0) {
 if (in_array($rol, array('admin', 'produccion'))) {
 	echo "\t<li>".$this->Html->link('Gestión de ubicaciones', array('controller' => 'Ubicaciones'))."</li>\n";
 	echo "\t<li>".$this->Html->link('Gestión de inventario', array('controller' => 'Objetos'))."</li>\n";
+	echo "\t<ul>\n";
+	echo "\t\t<li>".$this->Html->link('Agenda de recepción', array('controller' => 'Objetos', 'action' => 'agendarecepcion'))."</li>\n";
+	echo "\t\t<li>".$this->Html->link('Agenda de devolución', array('controller' => 'Objetos', 'action' => 'agendadevolucion'))."</li>\n";
+	echo "\t\t<li>".$this->Html->link('Agenda de préstamos', array('controller' => 'Objetos', 'action' => 'agendaprestamo'))."</li>\n";
+	echo "\t</ul>\n";
 	echo "\t<li>".$this->Html->link('Gestión de zonas', array('controller' => 'Zonas'))."</li>\n";
 	echo "\t<li>".$this->Html->link('Gestión de actividades', array('controller' => 'Actividades'))."</li>\n";
 }
