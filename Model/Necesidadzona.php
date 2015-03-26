@@ -1,7 +1,6 @@
 <?php
 class Necesidadzona extends AppModel {
-	public $belongsTo = 'Zona';
-	public $hasOne = 'Objeto';
+	public $belongsTo = 'Objeto';
 	
     public $validate = array(
         'descripcion' => array(

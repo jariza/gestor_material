@@ -44,12 +44,21 @@ echo $this->Html->script(array('jquery-ui-autocomplete/jquery-ui'));
 		$("#tablanecesidades tr#necesidad0").clone().attr('id','necesidad'+lastRow).removeAttr('style').insertBefore("#tablanecesidades tr#trAdd");
 		$("#necesidad"+lastRow+" button").removeAttr('onclick').attr('onclick','removeNecesidadactividad('+lastRow+')');
 		$("#necesidad"+lastRow+" input:first").attr('name','data[Necesidadactividad]['+lastRow+'][descripcion]').attr('id','Necesidadactividad'+lastRow+'Descripcion').val('');
+		$("#necesidad"+lastRow+" label:first").attr('for','Necesidadactividad'+lastRow+'Descripcion');
 		$("#necesidad"+lastRow+" input:eq(1)").attr('name','data[Necesidadactividad]['+lastRow+'][cantidad]').attr('id','Necesidadactividad'+lastRow+'Cantidad').val('');
-		$("#necesidad"+lastRow+" input:eq(2)").attr('name','data[Necesidadactividad]['+lastRow+'][objeto_id]').attr('id','Necesidadactividad'+lastRow+'Objeto_id').val('');
-		$("#necesidad"+lastRow+" input:eq(3)").attr('name','data[Necesidadactividad]['+lastRow+'][objeto_nombre]').attr('id','Necesidadactividad'+lastRow+'Objeto_nombre').val('');
+		$("#necesidad"+lastRow+" label:eq(1)").attr('for','Necesidadactividad'+lastRow+'Cantidad');
+		$("#necesidad"+lastRow+" input:eq(2)").attr('name','data[Necesidadactividad]['+lastRow+'][objeto_id]').attr('id','Necesidadactividad'+lastRow+'ObjetoId').val('');
+		$("#necesidad"+lastRow+" label:eq(2)").attr('for','Necesidadactividad'+lastRow+'ObjetoId');
+		$("#necesidad"+lastRow+" input:eq(3)").attr('name','data[Necesidadactividad]['+lastRow+'][objeto_nombre]').attr('id','Necesidadactividad'+lastRow+'ObjetoNombre').val('');
+		$("#necesidad"+lastRow+" label:eq(3)").attr('for','Necesidadactividad'+lastRow+'ObjetoNombre');
 		$('#Necesidadactividad'+lastRow+'Descripcion').autocomplete({
 			source:"<?php echo Router::url('/', true); ?>necesidadactividad/findnecesidades",
 			open: function() {$('.ui-menu').width('30em')}
+		});
+		$('#Necesidadactividad'+lastRow+'ObjetoNombre').autocomplete({
+			source:"<?php echo Router::url('/', true); ?>objetos/findobjeto",
+			open: function() {$('.ui-menu').width('30em')},
+			select: function(event, ui) {$('#'+event.target.id.replace('Nombre', 'Id')).val(ui.item.id); console.log(event.target.id);}
 		});
 	}
 	function removeNecesidadactividad(x) {
@@ -59,5 +68,10 @@ echo $this->Html->script(array('jquery-ui-autocomplete/jquery-ui'));
 	$('#Necesidadactividad0Descripcion').autocomplete({
 		source:"<?php echo Router::url('/', true); ?>necesidadactividades/findnecesidades",
 		open: function() {$('.ui-menu').width('30em')}
+	});
+	$('#Necesidadactividad0ObjetoNombre').autocomplete({
+		source:"<?php echo Router::url('/', true); ?>objetos/findobjeto",
+		open: function() {$('.ui-menu').width('30em')},
+		select: function(event, ui) {$('#'+event.target.id.replace('Nombre', 'Id')).val(ui.item.id); console.log(event.target.id);}
 	});
 </script>

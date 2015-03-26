@@ -17,6 +17,21 @@ class ObjetosController extends AppController {
 		return false;
 	}
 
+	public function findobjeto() {
+		$this->autoLayout = false;
+		$this->autoRender = false;
+		$this->Objeto->recursive = -1;
+		$results = $this->Objeto->find('all', array('fields' => array('id', 'descripcion'), 'conditions' => array('descripcion LIKE ' => '%'.$this->request->query('term').'%'), 'order' => array('descripcion')));
+		$response = array();
+		$i = 0;
+		foreach($results as $result){
+			$response[$i]['value'] = $result['Objeto']['descripcion'];
+			$response[$i]['id'] = $result['Objeto']['id'];
+			$i++;
+		}
+		echo json_encode($response);
+	}
+
     public function index() {
 		$q = $this->request->data('Objeto.q');
 		$conds = array();
