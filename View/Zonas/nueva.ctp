@@ -40,12 +40,21 @@ echo $this->Html->script(array('jquery-ui-autocomplete/jquery-ui'));
 		$("#tablanecesidades tr#necesidad0").clone().attr('id','necesidad'+lastRow).removeAttr('style').insertBefore("#tablanecesidades tr#trAdd");
 		$("#necesidad"+lastRow+" button").removeAttr('onclick').attr('onclick','removeNecesidadzona('+lastRow+')');
 		$("#necesidad"+lastRow+" input:first").attr('name','data[Necesidadzona]['+lastRow+'][descripcion]').attr('id','Necesidadzona'+lastRow+'Descripcion').val('');
+		$("#necesidad"+lastRow+" label:first").attr('for','Necesidadzona'+lastRow+'Descripcion');
 		$("#necesidad"+lastRow+" input:eq(1)").attr('name','data[Necesidadzona]['+lastRow+'][cantidad]').attr('id','Necesidadzona'+lastRow+'Cantidad').val('');
-		$("#necesidad"+lastRow+" input:eq(2)").attr('name','data[Necesidadzona]['+lastRow+'][objeto_id]').attr('id','Necesidadzona'+lastRow+'Objeto_id').val('');
-		$("#necesidad"+lastRow+" input:eq(3)").attr('name','data[Necesidadzona]['+lastRow+'][objeto_nombre]').attr('id','Necesidadzona'+lastRow+'Objeto_nombre').val('');
+		$("#necesidad"+lastRow+" label:eq(1)").attr('for','Necesidadzona'+lastRow+'Cantidad');
+		$("#necesidad"+lastRow+" input:eq(2)").attr('name','data[Necesidadzona]['+lastRow+'][objeto_id]').attr('id','Necesidadzona'+lastRow+'ObjetoId').val('');
+		$("#necesidad"+lastRow+" label:eq(2)").attr('for','Necesidadzona'+lastRow+'ObjetoId');
+		$("#necesidad"+lastRow+" input:eq(3)").attr('name','data[Necesidadzona]['+lastRow+'][objeto_nombre]').attr('id','Necesidadzona'+lastRow+'ObjetoNombre').val('');
+		$("#necesidad"+lastRow+" label:eq(3)").attr('for','Necesidadzona'+lastRow+'ObjetoNombre');
 		$('#Necesidadzona'+lastRow+'Descripcion').autocomplete({
 			source:"<?php echo Router::url('/', true); ?>necesidadzonas/findnecesidades",
 			open: function() {$('.ui-menu').width('30em')}
+		});
+		$('#Necesidadzona'+lastRow+'ObjetoNombre').autocomplete({
+			source:"<?php echo Router::url('/', true); ?>objetos/findobjeto",
+			open: function() {$('.ui-menu').width('30em')},
+			select: function(event, ui) {$('#'+event.target.id.replace('Nombre', 'Id')).val(ui.item.id); console.log(event.target.id);}
 		});
 	}
 	function removeNecesidadzona(x) {
@@ -55,5 +64,10 @@ echo $this->Html->script(array('jquery-ui-autocomplete/jquery-ui'));
 	$('#Necesidadzona0Descripcion').autocomplete({
 		source:"<?php echo Router::url('/', true); ?>necesidadzonas/findnecesidades",
 		open: function() {$('.ui-menu').width('30em')}
+	});
+	$('#Necesidadzona0ObjetoNombre').autocomplete({
+		source:"<?php echo Router::url('/', true); ?>objetos/findobjeto",
+		open: function() {$('.ui-menu').width('30em')},
+		select: function(event, ui) {$('#'+event.target.id.replace('Nombre', 'Id')).val(ui.item.id); console.log(event.target.id);}
 	});
 </script>

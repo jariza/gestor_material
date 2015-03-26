@@ -1,7 +1,6 @@
 <?php
 class Necesidadactividad extends AppModel {
-	public $belongsTo = 'Actividad';
-	public $hasOne = 'Objeto';
+	public $belongsTo = 'Objeto';
 	
     public $validate = array(
         'descripcion' => array(

@@ -34,3 +34,9 @@ if (in_array($rol, array('admin', 'produccion'))) {
 }
 ?>
 </ul>
+<p>TODO</p>
+<ul>
+	<li>Sacar horario por objeto</li>
+	<li>Sacar horario por zona</li>
+	<li>Sacar horario total</li>
+</ul>

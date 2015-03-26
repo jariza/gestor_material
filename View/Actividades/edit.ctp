@@ -27,10 +27,10 @@ else {
 	foreach ($this->request['data']['Necesidadactividad'] as $k => $v) {
 		echo "<tr id=\"necesidad$k\">\n";
 		echo '<td>'.$this->Html->Link('[X]', array('controller' => 'necesidadactividades', 'action' => 'delete', $v['id']), array('confirm' => "¿Seguro que deseas eliminar esta necesidad?\n¡LAS MODIFICACIONES NO GUARDADAS SE PERDERÁN!"))."</td>\n";
-		echo '<td>'.$this->Form->input("Necesidadactividad.$k.descripcion",array('label'=> false, 'type'=>'text', 'div' => false))."</td>\n";
+		echo '<td>'.$this->Form->input("Necesidadactividad.$k.descripcion",array('label'=> '', 'type'=>'text', 'div' => false))."</td>\n";
 		echo '<td>'.$this->Form->input("Necesidadactividad.$k.cantidad",array('label'=> '', 'type'=>'text', 'div' => false))."</td>\n";
 		echo '<td>'.$this->Form->input("Necesidadactividad.$k.objeto_id",array('label'=>'','type'=>'text', 'readonly'=>'readonly'));
-		echo $this->Form->input("Necesidadactividad.$k.id", array('type' => 'text'));
+		echo $this->Form->input("Necesidadactividad.$k.id", array('label' => false, 'type' => 'hidden'));
 		if (is_null($v['objeto_id'])) {
 			$txtobjeto = '';
 		}
@@ -60,20 +60,30 @@ echo $this->Html->script(array('jquery-ui-autocomplete/jquery-ui'));
 ?>
 
 <script type='text/javascript'>
-	var lastRow=<?php echo $lng-1; ?>;
+	var lastRow=<?php if ($lng == 0) {echo 0;} else {echo $lng-1;} ?>;
 	
 	function addNecesidadactividad() {
 		lastRow++;
 		$("#tablanecesidades tr#necesidad0").clone().attr('id','necesidad'+lastRow).removeAttr('style').insertBefore("#tablanecesidades tr#trAdd");
 		$("#necesidad"+lastRow+" td:first").empty().append('<?php echo $this->Form->button('&nbsp;-&nbsp;',array('type'=>'button','title'=>'Eliminar la necesidad', 'onclick' => 'removeNecesidadactividad(\'+lastRow+\')')); ?>');
 		$("#necesidad"+lastRow+" input:first").attr('name','data[Necesidadactividad]['+lastRow+'][descripcion]').attr('id','Necesidadactividad'+lastRow+'Descripcion').val('');
+		$("#necesidad"+lastRow+" label:first").attr('for','Necesidadactividad'+lastRow+'Descripcion');
 		$("#necesidad"+lastRow+" input:eq(1)").attr('name','data[Necesidadactividad]['+lastRow+'][cantidad]').attr('id','Necesidadactividad'+lastRow+'Cantidad').val('');
-		$("#necesidad"+lastRow+" input:eq(2)").attr('name','data[Necesidadactividad]['+lastRow+'][objeto_id]').attr('id','Necesidadactividad'+lastRow+'Objeto_id').val('');
+		$("#necesidad"+lastRow+" label:eq(1)").attr('for','Necesidadactividad'+lastRow+'Cantidad');
+		$("#necesidad"+lastRow+" input:eq(2)").attr('name','data[Necesidadactividad]['+lastRow+'][objeto_id]').attr('id','Necesidadactividad'+lastRow+'ObjetoId').val('');
+		$("#necesidad"+lastRow+" label:eq(2)").attr('for','Necesidadactividad'+lastRow+'ObjetoId');
 		$("#necesidad"+lastRow+" input:eq(3)").attr('name','data[Necesidadactividad]['+lastRow+'][id]').attr('id','Necesidadactividad'+lastRow+'Id').val('');
-		$("#necesidad"+lastRow+" input:eq(4)").attr('name','data[Necesidadactividad]['+lastRow+'][objeto_nombre]').attr('id','Necesidadactividad'+lastRow+'Objeto_nombre').val('');
+		$("#necesidad"+lastRow+" label:eq(3)").attr('for','Necesidadactividad'+lastRow+'Id');
+		$("#necesidad"+lastRow+" input:eq(4)").attr('name','data[Necesidadactividad]['+lastRow+'][objeto_nombre]').attr('id','Necesidadactividad'+lastRow+'ObjetoNombre').val('');
+		$("#necesidad"+lastRow+" label:eq(4)").attr('for','Necesidadactividad'+lastRow+'ObjetoNombre');
 		$('#Necesidadactividad'+lastRow+'Descripcion').autocomplete({
 			source:"<?php echo Router::url('/', true); ?>necesidadactividades/findnecesidades",
 			open: function() {$('.ui-menu').width('30em')}
+		});
+		$('#Necesidadactividad'+lastRow+'ObjetoNombre').autocomplete({
+			source:"<?php echo Router::url('/', true); ?>objetos/findobjeto",
+			open: function() {$('.ui-menu').width('30em')},
+			select: function(event, ui) {$('#'+event.target.id.replace('Nombre', 'Id')).val(ui.item.id); console.log(event.target.id);}
 		});
 	}
 	function removeNecesidadactividad(x) {
@@ -86,6 +96,11 @@ for ($i = 0; $i < $lng; $i++) {
 	echo "\$('#Necesidadactividad{$i}Descripcion').autocomplete({\n";
 	echo "\tsource:\"".Router::url('/', true)."necesidadactividades/findnecesidades\",\n";
 	echo "\topen: function() {\$('.ui-menu').width('30em')}\n";
+	echo "});\n";
+	echo "\$('#Necesidadactividad{$i}ObjetoNombre').autocomplete({\n";
+	echo "\tsource:\"".Router::url('/', true)."objetos/findobjeto\",\n";
+	echo "\topen: function() {\$('.ui-menu').width('30em')},\n";
+	echo "\tselect: function(event, ui) {\$('#'+event.target.id.replace('Nombre', 'Id')).val(ui.item.id); console.log(event.target.id);}\n";
 	echo "});\n";
 }
 ?>

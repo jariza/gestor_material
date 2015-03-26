@@ -33,7 +33,7 @@ CREATE TABLE `actividades` (
   `created` datetime NOT NULL,
   `modified` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -42,7 +42,7 @@ CREATE TABLE `actividades` (
 
 LOCK TABLES `actividades` WRITE;
 /*!40000 ALTER TABLE `actividades` DISABLE KEYS */;
-INSERT INTO `actividades` VALUES (1,'asd',1,'2015-03-23 22:48:00','2015-03-23 22:48:00','http://www.uma.es','asdasd\r\nasdasd\r\nasdasd','0000-00-00 00:00:00','2015-03-24 20:49:53'),(2,'Actividad 2, de zona id3',3,'2015-03-23 23:16:00','2015-03-24 23:32:00','http://www.animacomic.es','','0000-00-00 00:00:00','0000-00-00 00:00:00'),(3,'2334234<b>NNNN</b>',1,'2015-03-24 20:50:00','2015-03-24 20:50:00','','234234234234\r\n234242\r\n42423423\r\n4234234234<<<>>>>><b>HOOOLAAA</b>','2015-03-24 20:50:18','2015-03-24 20:50:50'),(6,'Actividad con requisitos',1,'2015-03-25 20:23:00','2015-03-25 20:23:00','','','2015-03-25 20:24:16','2015-03-25 20:30:15');
+INSERT INTO `actividades` VALUES (1,'asd',1,'2015-03-23 22:48:00','2015-03-23 22:48:00','http://www.uma.es','asdasd\r\nasdasd\r\nasdasd','0000-00-00 00:00:00','2015-03-24 20:49:53'),(2,'Actividad 2, de zona id3',3,'2015-03-23 23:16:00','2015-03-24 23:32:00','http://www.animacomic.es','','0000-00-00 00:00:00','0000-00-00 00:00:00'),(3,'2334234<b>NNNN</b>',1,'2015-03-24 20:50:00','2015-03-24 20:50:00','','234234234234\r\n234242\r\n42423423\r\n4234234234<<<>>>>><b>HOOOLAAA</b>','2015-03-24 20:50:18','2015-03-24 20:50:50'),(6,'Actividad con requisitos',1,'2015-03-25 20:23:00','2015-03-25 20:23:00','','','2015-03-25 20:24:16','2015-03-25 20:30:15'),(7,'Actividad con objetos',1,'2015-03-26 01:54:00','2015-03-26 01:54:00','','','2015-03-26 01:54:41','2015-03-26 01:59:20');
 /*!40000 ALTER TABLE `actividades` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -97,7 +97,7 @@ CREATE TABLE `necesidadactividades` (
 
 LOCK TABLES `necesidadactividades` WRITE;
 /*!40000 ALTER TABLE `necesidadactividades` DISABLE KEYS */;
-INSERT INTO `necesidadactividades` VALUES (1,'req1',1,6,NULL,'2015-03-25 20:24:16','2015-03-25 20:30:15'),(4,'req5',5,6,NULL,'2015-03-25 20:29:20','2015-03-25 20:30:15');
+INSERT INTO `necesidadactividades` VALUES (1,'req1',1,6,NULL,'2015-03-25 20:24:16','2015-03-25 20:30:15'),(4,'req5',5,6,NULL,'2015-03-25 20:29:20','2015-03-25 20:30:15'),(5,'a1',1,7,2,'2015-03-26 01:54:41','2015-03-26 01:59:20'),(6,'s3',3,7,8,'2015-03-26 01:54:41','2015-03-26 01:59:20');
 /*!40000 ALTER TABLE `necesidadactividades` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -117,7 +117,7 @@ CREATE TABLE `necesidadzonas` (
   `created` datetime NOT NULL,
   `modified` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -126,7 +126,7 @@ CREATE TABLE `necesidadzonas` (
 
 LOCK TABLES `necesidadzonas` WRITE;
 /*!40000 ALTER TABLE `necesidadzonas` DISABLE KEYS */;
-INSERT INTO `necesidadzonas` VALUES (1,'otra cosa',1,9,NULL,'2015-03-24 22:49:51','2015-03-24 22:49:51'),(2,'asdasd',1,10,NULL,'2015-03-24 22:50:57','2015-03-24 22:50:57'),(3,'asdasd',0,11,NULL,'2015-03-24 22:52:12','2015-03-24 22:52:12'),(4,'123123',1,12,NULL,'2015-03-24 22:52:43','2015-03-24 23:15:14'),(8,'CUARTA',23,12,NULL,'2015-03-24 23:15:14','2015-03-24 23:15:14'),(9,'nec1',1,16,NULL,'2015-03-25 20:17:23','2015-03-25 20:17:43'),(11,'nec4',1,16,NULL,'2015-03-25 20:17:43','2015-03-25 20:17:43');
+INSERT INTO `necesidadzonas` VALUES (1,'otra cosa',1,9,NULL,'2015-03-24 22:49:51','2015-03-24 22:49:51'),(2,'asdasd',1,10,NULL,'2015-03-24 22:50:57','2015-03-24 22:50:57'),(3,'asdasd',0,11,NULL,'2015-03-24 22:52:12','2015-03-24 22:52:12'),(4,'123123',1,12,NULL,'2015-03-24 22:52:43','2015-03-24 23:15:14'),(8,'CUARTA',23,12,NULL,'2015-03-24 23:15:14','2015-03-24 23:15:14'),(9,'nec1',1,16,NULL,'2015-03-25 20:17:23','2015-03-25 20:17:43'),(11,'nec4',1,16,NULL,'2015-03-25 20:17:43','2015-03-25 20:17:43'),(12,'necesisdad 1',1,1,2,'2015-03-26 01:17:50','2015-03-26 01:49:19'),(13,'cosa 1',1,22,2,'2015-03-26 01:26:51','2015-03-26 01:26:51'),(14,'cosa 1',1,23,2,'2015-03-26 01:31:56','2015-03-26 01:31:56'),(15,'cosa 2',2,23,9,'2015-03-26 01:31:56','2015-03-26 01:31:56'),(16,'necesisdad 1',2,1,3,'2015-03-26 01:49:19','2015-03-26 01:49:19');
 /*!40000 ALTER TABLE `necesidadzonas` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -236,7 +236,7 @@ CREATE TABLE `zonas` (
   `created` datetime NOT NULL,
   `modified` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -245,7 +245,7 @@ CREATE TABLE `zonas` (
 
 LOCK TABLES `zonas` WRITE;
 /*!40000 ALTER TABLE `zonas` DISABLE KEYS */;
-INSERT INTO `zonas` VALUES (1,'Zona 1','','0000-00-00 00:00:00','2015-03-25 03:39:53'),(3,'Otra zona','','0000-00-00 00:00:00','0000-00-00 00:00:00'),(4,'<b>asdasd<b/>','qwqeqwe\r\nqweqeqwe\r\nqweqeqweq\r\neqweqewqwe','2015-03-24 20:52:13','2015-03-24 21:27:03'),(5,'Zona nueva','','2015-03-24 22:47:01','2015-03-24 22:47:01'),(6,'Zona repetible','','2015-03-24 22:48:32','2015-03-24 22:48:32'),(7,'Zona repetible','','2015-03-24 22:49:21','2015-03-24 22:49:21'),(9,'Zona repetible','','2015-03-24 22:49:51','2015-03-24 22:49:51'),(10,'La del fallo','','2015-03-24 22:50:57','2015-03-24 22:50:57'),(11,'La del fallo 2','','2015-03-24 22:52:12','2015-03-24 22:52:12'),(12,'La del fallo 3','','2015-03-24 22:52:43','2015-03-24 23:15:14'),(15,'Vacía','','2015-03-25 03:37:07','2015-03-25 03:37:07'),(16,'Otra más','','2015-03-25 20:17:23','2015-03-25 20:17:43'),(17,'Relleno 1','','2015-03-25 21:47:07','2015-03-25 21:47:07'),(18,'Relleno 2','','2015-03-25 21:47:16','2015-03-25 21:47:16'),(19,'Relleno 3','','2015-03-25 21:47:23','2015-03-25 21:47:23'),(20,'Relleno 4','','2015-03-25 21:47:33','2015-03-25 21:47:33'),(21,'Relleno 5','','2015-03-25 21:47:43','2015-03-25 21:47:43');
+INSERT INTO `zonas` VALUES (1,'Zona 1','','0000-00-00 00:00:00','2015-03-26 01:49:19'),(3,'Otra zona','','0000-00-00 00:00:00','0000-00-00 00:00:00'),(4,'<b>asdasd<b/>','qwqeqwe\r\nqweqeqwe\r\nqweqeqweq\r\neqweqewqwe','2015-03-24 20:52:13','2015-03-24 21:27:03'),(5,'Zona nueva','','2015-03-24 22:47:01','2015-03-24 22:47:01'),(6,'Zona repetible','','2015-03-24 22:48:32','2015-03-24 22:48:32'),(7,'Zona repetible','','2015-03-24 22:49:21','2015-03-24 22:49:21'),(9,'Zona repetible','','2015-03-24 22:49:51','2015-03-24 22:49:51'),(10,'La del fallo','','2015-03-24 22:50:57','2015-03-24 22:50:57'),(11,'La del fallo 2','','2015-03-24 22:52:12','2015-03-24 22:52:12'),(12,'La del fallo 3','','2015-03-24 22:52:43','2015-03-24 23:15:14'),(15,'Vacía','','2015-03-25 03:37:07','2015-03-25 03:37:07'),(16,'Otra más','','2015-03-25 20:17:23','2015-03-25 20:17:43'),(17,'Relleno 1','','2015-03-25 21:47:07','2015-03-25 21:47:07'),(18,'Relleno 2','','2015-03-25 21:47:16','2015-03-25 21:47:16'),(19,'Relleno 3','','2015-03-25 21:47:23','2015-03-25 21:47:23'),(20,'Relleno 4','','2015-03-25 21:47:33','2015-03-25 21:47:33'),(21,'Relleno 5','','2015-03-25 21:47:43','2015-03-25 21:47:43'),(22,'Nuevo objeto','','2015-03-26 01:26:51','2015-03-26 01:26:51'),(23,'Con objeto','','2015-03-26 01:31:56','2015-03-26 01:31:56');
 /*!40000 ALTER TABLE `zonas` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -258,4 +258,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-03-25 23:33:47
+-- Dump completed on 2015-03-26  2:25:27

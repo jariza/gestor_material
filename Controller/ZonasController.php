@@ -48,6 +48,7 @@ class ZonasController extends AppController {
 			throw new NotFoundException(__('Zona desconocida'));
 		}
 
+		$this->Zona->recursive = 2;
 		$zona = $this->Zona->findById($id);
 		if (!$zona) {
 			throw new NotFoundException(__('Zona desconocida'));
@@ -61,6 +62,7 @@ class ZonasController extends AppController {
 			throw new NotFoundException(__('Zona desconocida'));
 		}
 
+		$this->Zona->recursive = 2;
 		$zona = $this->Zona->findById($id);
 		if (!$zona) {
 			throw new NotFoundException(__('Zona desconocida'));
