@@ -23,13 +23,21 @@
 		else {
 			$txtenlaceweb = '';
 		}
-		$tini = strtotime($v['Actividad']['inicio']);
-		$tfin = strtotime($v['Actividad']['fin']);
-		if (date('Y-m-d', $tini) == date('Y-m-d', $tfin)) { //Están en el mismo día
-			$txthorario = date('D, j/M/Y, \d\e G:i:s \a ', $tini).date('G:i:s', $tfin);
+		if (count($v['Horario']) == 0) {
+			$txthorario = 'No definido';
+		}
+		elseif (count($v['Horario']) == 1) {
+			$tini = strtotime($v['Horario'][0]['inicio']);
+			$tfin = strtotime($v['Horario'][0]['fin']);
+			if (date('Y-m-d', $tini) == date('Y-m-d', $tfin)) { //Están en el mismo día
+				$txthorario = date('D, j/M/Y, \d\e G:i:s \a ', $tini).date('G:i:s', $tfin);
+			}
+			else {
+				$txthorario = date('\D\e\l D j/M/Y \a \l\a\s  G:i:s \a\l ', $tini).date('D j/M/Y \a \l\a\s  G:i:s', $tfin);
+			}
 		}
 		else {
-			$txthorario = date('\D\e\l D j/M/Y \a \l\a\s  G:i:s \a\l ', $tini).date('D j/M/Y \a \l\a\s  G:i:s', $tfin);
+			$txthorario = 'Múltiples';
 		}
 		echo "<td>{$v['Actividad']['nombre']}$txtenlaceweb</td><td>{$v['Zona']['nombre']}</td><td>$txthorario</td></tr>\n";
 	}

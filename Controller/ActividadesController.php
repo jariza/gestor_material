@@ -3,7 +3,7 @@ class ActividadesController extends AppController {
     public $helpers = array('Html', 'Form', 'Paginator');
 
 	public $paginate = array(
-		'fields' => array('Actividad.id', 'Actividad.nombre', 'Zona.nombre', 'Actividad.inicio', 'Actividad.fin', 'Actividad.enlaceweb')
+		'fields' => array('Actividad.id', 'Actividad.nombre', 'Zona.nombre', 'Actividad.enlaceweb')
 		);
 
 	public function isAuthorized($usuario) {
