@@ -26,14 +26,12 @@ CREATE TABLE `actividades` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nombre` varchar(200) COLLATE utf8_spanish_ci NOT NULL,
   `zona_id` int(11) NOT NULL,
-  `inicio` datetime NOT NULL,
-  `fin` datetime NOT NULL,
   `enlaceweb` varchar(200) COLLATE utf8_spanish_ci NOT NULL,
   `desctecnica` text COLLATE utf8_spanish_ci NOT NULL,
   `created` datetime NOT NULL,
   `modified` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -42,8 +40,36 @@ CREATE TABLE `actividades` (
 
 LOCK TABLES `actividades` WRITE;
 /*!40000 ALTER TABLE `actividades` DISABLE KEYS */;
-INSERT INTO `actividades` VALUES (1,'asd',1,'2015-03-23 22:48:00','2015-03-23 22:48:00','http://www.uma.es','asdasd\r\nasdasd\r\nasdasd','0000-00-00 00:00:00','2015-03-24 20:49:53'),(2,'Actividad 2, de zona id3',3,'2015-03-23 23:16:00','2015-03-24 23:32:00','http://www.animacomic.es','','0000-00-00 00:00:00','0000-00-00 00:00:00'),(3,'2334234<b>NNNN</b>',1,'2015-03-24 20:50:00','2015-03-24 20:50:00','','234234234234\r\n234242\r\n42423423\r\n4234234234<<<>>>>><b>HOOOLAAA</b>','2015-03-24 20:50:18','2015-03-24 20:50:50'),(6,'Actividad con requisitos',1,'2015-03-25 20:23:00','2015-03-25 20:23:00','','','2015-03-25 20:24:16','2015-03-25 20:30:15'),(7,'Actividad con objetos',1,'2015-03-26 01:54:00','2015-03-26 01:54:00','','','2015-03-26 01:54:41','2015-03-26 01:59:20');
+INSERT INTO `actividades` VALUES (1,'asd',1,'http://www.uma.es','asdasd\r\nasdasd\r\nasdasd','0000-00-00 00:00:00','2015-03-26 21:20:55'),(2,'Actividad 2, de zona id3',3,'http://www.animacomic.es','','0000-00-00 00:00:00','2015-03-26 21:25:18'),(3,'2334234<b>NNNN</b>',1,'','234234234234\r\n234242\r\n42423423\r\n4234234234<<<>>>>><b>HOOOLAAA</b>','2015-03-24 20:50:18','2015-03-26 21:33:32'),(6,'Actividad con requisitos',1,'','','2015-03-25 20:24:16','2015-03-25 20:30:15'),(7,'Actividad con objetos',1,'','','2015-03-26 01:54:41','2015-03-26 01:59:20'),(8,'Horas',1,'','','2015-03-26 20:38:11','2015-03-26 21:02:43'),(9,'Horas2',1,'','','2015-03-26 20:49:01','2015-03-26 20:49:01'),(10,'Horas3',1,'','','2015-03-26 20:51:26','2015-03-26 20:51:26'),(11,'Horas4',1,'','','2015-03-26 20:53:09','2015-03-26 20:57:36');
 /*!40000 ALTER TABLE `actividades` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `horarios`
+--
+
+DROP TABLE IF EXISTS `horarios`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `horarios` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `actividad_id` int(11) NOT NULL,
+  `inicio` datetime NOT NULL,
+  `fin` datetime NOT NULL,
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `horarios`
+--
+
+LOCK TABLES `horarios` WRITE;
+/*!40000 ALTER TABLE `horarios` DISABLE KEYS */;
+INSERT INTO `horarios` VALUES (1,8,'2015-03-10 20:37:00','2015-03-10 20:37:00','2015-03-26 20:38:11','2015-03-26 20:38:11'),(2,9,'2015-03-26 20:48:00','2015-03-26 20:48:00','2015-03-26 20:49:01','2015-03-26 20:49:01'),(3,10,'2015-03-26 20:51:00','2015-03-26 20:51:00','2015-03-26 20:51:26','2015-03-26 20:51:26'),(4,11,'2015-03-26 20:53:00','2015-03-26 20:53:00','2015-03-26 20:53:09','2015-03-26 20:53:09'),(5,11,'2015-03-26 20:53:00','2015-03-26 20:53:00','2015-03-26 20:53:09','2015-03-26 20:53:09'),(6,11,'2015-03-26 20:57:00','2015-03-26 20:57:00','2015-03-26 20:57:36','2015-03-26 20:57:36'),(7,11,'2015-03-26 20:57:00','2015-03-26 20:57:00','2015-03-26 20:57:36','2015-03-26 20:57:36'),(8,8,'2015-03-26 21:02:00','2015-03-26 21:02:00','2015-03-26 21:02:43','2015-03-26 21:02:43'),(9,1,'2015-03-26 21:07:00','2015-03-26 21:07:00','2015-03-26 21:07:33','2015-03-26 21:07:33'),(10,1,'2015-03-26 21:07:00','2015-03-26 21:07:00','2015-03-26 21:07:39','2015-03-26 21:07:39'),(11,1,'2015-03-26 21:07:00','2015-03-26 21:07:00','2015-03-26 21:20:55','2015-03-26 21:20:55'),(12,2,'2015-03-26 21:24:00','2015-03-26 21:24:00','2015-03-26 21:24:49','2015-03-26 21:25:18'),(13,2,'2015-03-26 21:24:00','2015-03-26 21:24:00','2015-03-26 21:24:55','2015-03-26 21:25:18'),(14,2,'2015-03-26 21:24:00','2015-03-26 21:24:00','2015-03-26 21:25:04','2015-03-26 21:25:18'),(19,3,'2015-03-26 21:31:00','2015-03-26 21:31:00','2015-03-26 21:33:04','2015-03-26 21:33:32'),(21,3,'2015-06-26 21:31:00','2015-03-26 21:31:00','2015-03-26 21:33:32','2015-03-26 21:33:32');
+/*!40000 ALTER TABLE `horarios` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -88,7 +114,7 @@ CREATE TABLE `necesidadactividades` (
   `created` datetime NOT NULL,
   `modified` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -97,7 +123,7 @@ CREATE TABLE `necesidadactividades` (
 
 LOCK TABLES `necesidadactividades` WRITE;
 /*!40000 ALTER TABLE `necesidadactividades` DISABLE KEYS */;
-INSERT INTO `necesidadactividades` VALUES (1,'req1',1,6,NULL,'2015-03-25 20:24:16','2015-03-25 20:30:15'),(4,'req5',5,6,NULL,'2015-03-25 20:29:20','2015-03-25 20:30:15'),(5,'a1',1,7,2,'2015-03-26 01:54:41','2015-03-26 01:59:20'),(6,'s3',3,7,8,'2015-03-26 01:54:41','2015-03-26 01:59:20');
+INSERT INTO `necesidadactividades` VALUES (1,'req1',1,6,NULL,'2015-03-25 20:24:16','2015-03-25 20:30:15'),(4,'req5',5,6,NULL,'2015-03-25 20:29:20','2015-03-25 20:30:15'),(5,'a1',1,7,2,'2015-03-26 01:54:41','2015-03-26 01:59:20'),(6,'s3',3,7,8,'2015-03-26 01:54:41','2015-03-26 01:59:20'),(7,'',0,11,NULL,'2015-03-26 20:57:36','2015-03-26 20:57:36'),(8,'',0,11,NULL,'2015-03-26 20:57:36','2015-03-26 20:57:36'),(9,'',0,8,NULL,'2015-03-26 21:02:43','2015-03-26 21:02:43'),(10,'',0,1,NULL,'2015-03-26 21:20:55','2015-03-26 21:20:55'),(11,'',0,1,NULL,'2015-03-26 21:20:55','2015-03-26 21:20:55'),(12,'asd',1,3,2,'2015-03-26 21:31:31','2015-03-26 21:33:32');
 /*!40000 ALTER TABLE `necesidadactividades` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -258,4 +284,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-03-26  2:25:27
+-- Dump completed on 2015-03-26 21:36:43

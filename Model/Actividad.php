@@ -1,21 +1,13 @@
 <?php
 class Actividad extends AppModel {
 	public $belongsTo = 'Zona';
-	public $hasMany = array('Necesidadactividad' => array('dependent' => true));
+	public $hasMany = array('Necesidadactividad' => array('dependent' => true), 'Horario' => array('dependent' => true));
 
     public $validate = array(
        'nombre' => array(
             'rule' => 'notEmpty',
             'message' => 'No se indicó el nombre.'
         ),
-        'inicio' => array(
-			'rule' => 'datetime',
-			'message' => 'Fecha de inicio incorrecta'
-		),
-		'fin' => array(
-			'rule' => 'datetime',
-			'message' => 'Fecha de finalización incorrecta'
-		),
 		'enlaceweb' => array(
 			'rule' => 'url',
 			'allowEmpty' => true,
