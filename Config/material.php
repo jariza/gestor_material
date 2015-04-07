@@ -12,4 +12,12 @@ Configure::write('datosevento', array(
 	'imagencabecera' => 'http://www.animacomic.es/wp-content/uploads/2015/01/cabecera_general.jpg', //Imagen de la cabecera
 	//'imagenpie' => '', //Imagen del pie
 	'customcss' => '', //CSS propios
+	'horario' => array(
+		'2015-07-04' => array('inicio' => '10:00', 'fin' => '21:00'),
+		'2015-07-05' => array('inicio' => '10:00', 'fin' => '20:00')
+	),
 ));
+
+//Calendario externo, Google Calendar
+Configure::write('GC_email', '202257522507-2mtj9199hf166gti7fan30qmqaee600j@developer.gserviceaccount.com');
+Configure::write('GC_keyfile', 'Config/e66899cd68b6.p12'); //Relativo al directorio app

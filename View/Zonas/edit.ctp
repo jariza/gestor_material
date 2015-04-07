@@ -5,6 +5,12 @@ $lng = count($this->request['data']['Necesidadzona']);
 
 echo $this->Form->create('Zona');
 echo $this->Form->input('nombre');
+if (count($calendarios) == 0) {
+	echo $this->Form->input('calendarioext', array('type' => 'hidden', 'value' => '0'));
+}
+else {
+	echo $this->Form->input('calendarioext', array('label' => 'Calendario externo con el que sincronizar', 'options' => $calendarios));
+}
 echo $this->Form->input('desctecnica', array('label' => 'Descripción técnica'));
 ?>
 <h2>Necesidades</h2>

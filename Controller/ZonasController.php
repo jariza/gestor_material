@@ -41,6 +41,10 @@ class ZonasController extends AppController {
 				$this->Session->setFlash(__('No se pudo crear la zona, por favor, revisa el formulario.'));
 			}				
 		}
+		else {
+			$mcalendario = $this->loadModel('Calendarioexterno');
+			$this->set('calendarios', $this->Calendarioexterno->listacalendarios());
+		}
     }
 
 	public function view($id = null) {
@@ -75,6 +79,10 @@ class ZonasController extends AppController {
 				return $this->redirect(array('action' => 'index'));
 			}
 			$this->Session->setFlash(__('No se pudo actualizar la zona.'));
+		}
+		else {
+			$mcalendario = $this->loadModel('Calendarioexterno');
+			$this->set('calendarios', $this->Calendarioexterno->listacalendarios());
 		}
 
 		if (!$this->request->data) {

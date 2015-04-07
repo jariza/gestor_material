@@ -14,28 +14,40 @@ echo $this->Form->input('desctecnica', array('label' => 'Descripción técnica')
 <table id="tablahorarios">
 <tr><th></th><th>Inicio</th><th>Fin</th></tr>
 <?php
-if ($lnghorarios == 0) {
-	echo "<tr id=\"horario0\">\n";
-	echo "\t<td>".$this->Form->button('&nbsp;-&nbsp;',array('type'=>'button','title'=>'Eliminar la horario', 'onclick' => 'removeHorario(0)'))."</td>\n";
-	echo "\t<td>".$this->Form->input('Horario.0.inicio', array('div' => false, 'label' => false, 'dateFormat' => 'DMY', 'timeFormat' => 24, 'empty' => false))."</td>\n";
-	echo "\t<td>".$this->Form->input('Horario.0.fin', array('div' => false, 'label' => false, 'dateFormat' => 'DMY', 'timeFormat' => 24, 'empty' => false))."</td>\n</tr>\n";
-}
-else {
-	foreach ($this->request['data']['Horario'] as $k => $v) {
-		echo "<tr id=\"horario$k\">\n";
-		echo '<td>'.$this->Html->Link('[X]', array('controller' => 'horarios', 'action' => 'delete', $v['id']), array('confirm' => "¿Seguro que deseas eliminar esta horario?\n¡LAS MODIFICACIONES NO GUARDADAS SE PERDERÁN!"))."</td>\n";
-		echo "\t<td>".$this->Form->input("Horario.$k.inicio", array('div' => false, 'label' => false, 'dateFormat' => 'DMY', 'timeFormat' => 24))."</td>\n";
-		echo "\t<td>".$this->Form->input("Horario.$k.fin", array('div' => false, 'label' => false, 'dateFormat' => 'DMY', 'timeFormat' => 24)).$this->Form->input("Horario.$k.id", array('label' => false, 'type' => 'hidden'))."</td>\n";
-		echo "</tr>\n";
+	if ($this->request['data']['Zona']['calendarioext'] == '0') {
+		if ($lnghorarios == 0) {
+			echo "<tr id=\"horario0\">\n";
+			echo "\t<td>".$this->Form->button('&nbsp;-&nbsp;',array('type'=>'button','title'=>'Eliminar la horario', 'onclick' => 'removeHorario(0)'))."</td>\n";
+			echo "\t<td>".$this->Form->input('Horario.0.inicio', array('div' => false, 'label' => false, 'dateFormat' => 'DMY', 'timeFormat' => 24, 'empty' => false))."</td>\n";
+			echo "\t<td>".$this->Form->input('Horario.0.fin', array('div' => false, 'label' => false, 'dateFormat' => 'DMY', 'timeFormat' => 24, 'empty' => false))."</td>\n</tr>\n";
+		}
+		else {
+			foreach ($this->request['data']['Horario'] as $k => $v) {
+				echo "<tr id=\"horario$k\">\n";
+				echo '<td>'.$this->Html->Link('[X]', array('controller' => 'horarios', 'action' => 'delete', $v['id']), array('confirm' => "¿Seguro que deseas eliminar esta horario?\n¡LAS MODIFICACIONES NO GUARDADAS SE PERDERÁN!"))."</td>\n";
+				echo "\t<td>".$this->Form->input("Horario.$k.inicio", array('div' => false, 'label' => false, 'dateFormat' => 'DMY', 'timeFormat' => 24))."</td>\n";
+				echo "\t<td>".$this->Form->input("Horario.$k.fin", array('div' => false, 'label' => false, 'dateFormat' => 'DMY', 'timeFormat' => 24)).$this->Form->input("Horario.$k.id", array('label' => false, 'type' => 'hidden'))."</td>\n";
+				echo "</tr>\n";
+			}
+		}
+		?>
+		<tr id="trAdd">
+			<td><?php echo $this->Form->button('+',array('type'=>'button','title'=>'Añadir un ítem','onclick'=>'addHorario()')); ?></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+<?php
 	}
-}
+	else {
+		if ($this->request['data']['Zona']['sync_calext'] == '0000-00-00 00:00:00') {
+			echo "\t<tr><td colspan=\"3\">Pendiente de sincronización con calendario externo.</td>\n";
+		}
+		else {
+			echo "\t<tr><td colspan=\"3\">Pendiente de hacer XD</td>\n";
+		}
+	}
 ?>
-<tr id="trAdd">
-	<td><?php echo $this->Form->button('+',array('type'=>'button','title'=>'Añadir un ítem','onclick'=>'addHorario()')); ?></td>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 </table>
 
 <h2>Necesidades</h2>
@@ -89,7 +101,7 @@ echo $this->Html->script(array('jquery-ui-autocomplete/jquery-ui'));
 <script type='text/javascript'>
 	var lastNecesidad=<?php if ($lngnec == 0) {echo 0;} else {echo $lngnec-1;} ?>;
 	var lastHorario=<?php if ($lnghorarios == 0) {echo 0;} else {echo $lnghorarios-1;} ?>;
-	
+
 	function addNecesidadactividad() {
 		lastNecesidad++;
 		$("#tablanecesidades tr#necesidad0").clone().attr('id','necesidad'+lastNecesidad).removeAttr('style').insertBefore("#tablanecesidades tr#trAdd");
@@ -117,7 +129,7 @@ echo $this->Html->script(array('jquery-ui-autocomplete/jquery-ui'));
 	function removeNecesidadactividad(x) {
 		$("#necesidad"+x).remove();
 	}
-	
+
 	function addHorario() {
 		lastHorario++;
 		$("#tablahorarios tr#horario0").clone().attr('id','horario'+lastHorario).removeAttr('style').insertBefore("#tablahorarios tr#trAdd");
