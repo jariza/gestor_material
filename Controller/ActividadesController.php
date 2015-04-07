@@ -48,7 +48,6 @@ class ActividadesController extends AppController {
 			throw new NotFoundException(__('Actividad desconocida'));
 		}
 
-		$this->Actividad->recursive = 2;
 		$actividad = $this->Actividad->findById($id);
 		if (!$actividad) {
 			throw new NotFoundException(__('Actividad desconocida'));

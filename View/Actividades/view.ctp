@@ -21,6 +21,14 @@
 	echo "<p>Descripción técnica:";
 	echo "<pre>{$actividad['Actividad']['desctecnica']}</pre>\n";
 	echo "\t<h2>Horario</h2>\n\t<table>";
+	if ($actividad['Zona']['calendarioext'] != '0') {
+		if ($actividad['Zona']['sync_calext'] == '0000-00-00 00:00:00') {
+			echo "\t<p style=\"font-weight: bold\">Pendiente de sincronización con calendario externo.</p>\n";
+		}
+		else {
+			echo "\t<p>Última sincronización con calendario externo: {$actividad['Zona']['sync_calext']}</p>\n";
+		}
+	}
 	echo "\t<tr><th>Inicio</th><th>Fin</th></tr>\n";
 	foreach ($actividad['Horario'] as $v) {
 		echo "\t\t<tr><td>";
