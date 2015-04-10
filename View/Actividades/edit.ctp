@@ -44,7 +44,7 @@ echo $this->Form->input('desctecnica', array('label' => 'Descripción técnica')
 			echo "\t<tr><td colspan=\"3\">Pendiente de sincronización con calendario externo.</td>\n";
 		}
 		else {
-			echo "\t<tr><td colspan=\"3\">Pendiente de hacer XD</td>\n";
+			echo "\t<tr><td colspan=\"3\">Pendiente de hacer XD.</td>\n";
 		}
 	}
 ?>
@@ -163,4 +163,16 @@ for ($i = 0; $i < $lngnec; $i++) {
 	echo "});\n";
 }
 ?>
+
+	$('#ActividadZonaId').change(function() {
+		var conhorario = [<?php echo '"'.implode('", "', $horariozonas).'"'; ?>];
+		if ($.inArray($('#ActividadZonaId').val(), conhorario) != -1) {
+			if (confirm("Has cambiado a una zona vinculada a un calendario externo, se eliminarán los horarios que hayas introducido, ¿estás seguro?")) {
+				for (i = 0; i <= lastHorario; i++) {
+					removeHorario(i);
+				}
+			}
+		}
+	});
+
 </script>

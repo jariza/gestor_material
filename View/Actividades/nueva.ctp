@@ -9,7 +9,7 @@ echo $this->Form->input('fin', array('dateFormat' => 'DMY', 'timeFormat' => 24))
 echo $this->Form->input('enlaceweb', array('label' => 'Enlace a web de '.Configure::read('datosevento.nombre')));
 echo $this->Form->input('desctecnica', array('label' => 'Descripción técnica'));
 ?>
-<h2>Horario</h2>
+<h2 id="cabecerahorario">Horario</h2>
 <table id="tablahorarios">
 <tr><th></th><th>Inicio</th><th>Fin</th></tr>
 <?php
@@ -50,6 +50,7 @@ echo $this->Form->end();
 	
 echo $this->Html->script(array('jquery'));
 echo $this->Html->script(array('jquery-ui-autocomplete/jquery-ui'));
+
 ?>
 
 <script type='text/javascript'>
@@ -110,4 +111,17 @@ echo $this->Html->script(array('jquery-ui-autocomplete/jquery-ui'));
 		open: function() {$('.ui-menu').width('30em')},
 		select: function(event, ui) {$('#'+event.target.id.replace('Nombre', 'Id')).val(ui.item.id); console.log(event.target.id);}
 	});
+	
+	$('#ActividadZonaId').change(function() {
+		var conhorario = [<?php echo '"'.implode('", "', $horariozonas).'"'; ?>];
+		if ($.inArray($('#ActividadZonaId').val(), conhorario) != -1) {
+			$('#tablahorarios').show();
+			$('#cabecerahorario').show();
+		}
+		else {
+			$('#tablahorarios').hide();
+			$('#cabecerahorario').hide();
+		}
+	});
+	$('#ActividadZonaId').change();
 </script>

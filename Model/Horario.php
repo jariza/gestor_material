@@ -10,9 +10,4 @@ class Horario extends AppModel {
 			'message' => 'Fecha de finalización incorrecta'
 		)
     );
-    
-	public function beforeSave($options = array()) {
-		/*debug($this->data[$this->alias]);
-		die();*/
-	}
 }

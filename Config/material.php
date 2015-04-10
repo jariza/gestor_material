@@ -20,4 +20,4 @@ Configure::write('datosevento', array(
 
 //Calendario externo, Google Calendar
 Configure::write('GC_email', '202257522507-2mtj9199hf166gti7fan30qmqaee600j@developer.gserviceaccount.com');
-Configure::write('GC_keyfile', 'Config/e66899cd68b6.p12'); //Relativo al directorio app
+Configure::write('GC_keyfile', 'Config/63df53c241f9.p12'); //Relativo al directorio app
