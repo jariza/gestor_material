@@ -16,6 +16,11 @@ class Actividad extends AppModel {
 	);
 	
 	public function beforeSave($options = array()) {
+		$zona = $this->Zona->findById($this->data[$this->alias]['zona_id'], 'Zona.calendarioext');
+		if ($zona['Zona']['calendarioext'] != '0') {
+			//Si se usa calendario externo, eliminar los horarios guardados
+			$this->Horario->deleteAll(array('actividad_id' => $this->data[$this->alias]['id']));
+		}
 		if (isset($this->data[$this->alias]['enlaceweb'])) {
 			if (($this->data[$this->alias]['enlaceweb'] != '') && (strncmp('http://', $this->data[$this->alias]['enlaceweb'], 7) != 0)) {
 				$this->data[$this->alias]['enlaceweb'] = 'http://'.$this->data[$this->alias]['enlaceweb'];

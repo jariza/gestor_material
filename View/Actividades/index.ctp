@@ -39,7 +39,7 @@
 		else {
 			$txthorario = 'Múltiples';
 		}
-		echo "<td>{$v['Actividad']['nombre']}$txtenlaceweb</td><td>{$v['Zona']['nombre']}</td><td>$txthorario</td></tr>\n";
+		echo "<td>{$v['Actividad']['nombre']}$txtenlaceweb</td><td>".htmlspecialchars($v['Zona']['nombre'])."</td><td>$txthorario</td></tr>\n";
 	}
 ?>
 </table>

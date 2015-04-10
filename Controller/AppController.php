@@ -59,7 +59,7 @@ class AppController extends Controller {
     );
 
     public function beforeFilter() {
-		//$this->Security->blackHoleCallback = 'blackhole';
+		$this->Security->blackHoleCallback = 'blackhole';
 		$this->Auth->authenticate = array(
 			'Form' => array(
 				'userModel' => 'Usuario'

@@ -31,6 +31,7 @@ class ActividadesController extends AppController {
     
     public function nueva() {
 		$this->set('zonas', $this->Actividad->Zona->find('list'));
+		$this->set('horariozonas', $this->Actividad->Zona->find('list', array('fields' => 'id', 'conditions' => array('calendarioext NOT' => '0'))));
 		if ($this->request->is('post')) {
 			$this->Actividad->create();
 			if ($this->Actividad->saveAssociated($this->request->data)) {
@@ -68,6 +69,7 @@ class ActividadesController extends AppController {
 		}
 
 		$this->set('zonas', $this->Actividad->Zona->find('list'));
+		$this->set('horariozonas', $this->Actividad->Zona->find('list', array('fields' => 'id', 'conditions' => array('calendarioext NOT' => '0'))));
 		if ($this->request->is(array('post', 'put'))) {
 			$this->Actividad->id = $id;
 			if ($this->Actividad->saveAssociated($this->request->data)) {
