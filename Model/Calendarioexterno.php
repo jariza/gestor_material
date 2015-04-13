@@ -48,32 +48,30 @@ class Calendarioexterno extends AppModel {
 			//Inicio
 			if (!is_null($event->getStart()->getDate())) {
 				//Día completo
-				$fechainicio = date('Y-m-d', strtotime($event->getStart()->getDate()));
-				if (array_key_exists($fechainicio, $horarioevento)) {
-					$horainicio = $horarioevento[$fechainicio]['inicio'];
+				if (array_key_exists($event->getStart()->getDate(), $horarioevento)) {
+					$horainicio = $horarioevento[$event->getStart()->getDate()]['inicio'];
 				}
 				else {
 					$horainicio = '00:00';
 				}
-				$salida[$event->getId()]['inicio'] = $fechainicio.'T'.$horainicio.':00'.$timezone;
+				$salida[$event->getId()]['inicio'] = $event->getStart()->getDate().' '.$horainicio.':00';
 			}
 			else {
-				$salida[$event->getId()]['inicio'] = $event->getStart()->getDateTime();
+				$salida[$event->getId()]['inicio'] = date('Y-m-d H:i:s', strtotime($event->getStart()->getDateTime()));
 			}
 			//Final
 			if (!is_null($event->getEnd()->getDate())) {
 				//Día completo
-				$fechafin = date('Y-m-d', strtotime($event->getEnd()->getDate()));
-				if (array_key_exists($fechafin, $horarioevento)) {
-					$horafin = $horarioevento[$fechafin]['fin'];
+				if (array_key_exists($event->getEnd()->getDate(), $horarioevento)) {
+					$horafin = $horarioevento[$event->getEnd()->getDate()]['fin'];
 				}
 				else {
 					$horafin = '00:00';
 				}
-				$salida[$event->getId()]['fin'] = $fechafin.'T'.$horafin.':00'.$timezone;
+				$salida[$event->getId()]['fin'] = $event->getEnd()->getDate().' '.$horafin.':00';
 			}
 			else {
-				$salida[$event->getId()]['fin'] = $event->getEnd()->getDateTime();
+				$salida[$event->getId()]['fin'] = date('Y-m-d H:i:s', strtotime($event->getEnd()->getDateTime()));
 			}
 		}
 		return $salida;
