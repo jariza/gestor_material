@@ -3,7 +3,7 @@ class ZonasController extends AppController {
     public $helpers = array('Html', 'Form', 'Paginator');
 
 	public $paginate = array(
-		'fields' => array('Zona.id', 'Zona.nombre')
+		'fields' => array('Zona.id', 'Zona.nombre', 'Zona.calendarioext')
 		);
 
 	public function isAuthorized($usuario) {
@@ -25,11 +25,11 @@ class ZonasController extends AppController {
 		$this->Zona->recursive = -1;
         $this->set('zonas', $this->paginate());
     }
-    
+
 	public function ayuda() {
 		//Nada que hacer, sólo muestra la ayuda
 	}
-    
+
     public function nueva() {
 		if ($this->request->is('post')) {
 			$this->Zona->create();
@@ -39,7 +39,7 @@ class ZonasController extends AppController {
 			}
 			else {
 				$this->Session->setFlash(__('No se pudo crear la zona, por favor, revisa el formulario.'));
-			}				
+			}
 		}
 		else {
 			$mcalendario = $this->loadModel('Calendarioexterno');
@@ -78,7 +78,7 @@ class ZonasController extends AppController {
 				$this->Session->setFlash(__('Zona actualizada correctamente.'));
 				return $this->redirect(array('action' => 'index'));
 			}
-			$this->Session->setFlash(__('No se pudo actualizar la zona.'));
+			$this->Session->setFlash('No se pudo actualizar la zona.');
 		}
 		else {
 			$mcalendario = $this->loadModel('Calendarioexterno');
@@ -89,7 +89,146 @@ class ZonasController extends AppController {
 			$this->request->data = $zona;
 		}
 	}
-	
+
+	public function synccalendario($id = null) {
+		if (!$id) {
+			throw new NotFoundException('Zona desconocida');
+		}
+
+		$zona = $this->Zona->findById($id);
+		if (!$zona) {
+			throw new NotFoundException('Zona desconocida');
+		}
+
+		if (count($zona['Actividad']) == 0) {
+			$this->Session->setFlash('La zona no tiene actividades.');
+			return $this->redirect(array('action' => 'index'));
+		}
+		elseif ($zona['Zona']['calendarioext'] == '0') {
+			$this->Session->setFlash('La zona no tiene calendario externo.');
+			return $this->redirect(array('action' => 'index'));
+		}
+		else {
+			$mcalendarioext = $this->loadModel('Calendarioexterno');
+			$evcalext = $this->Calendarioexterno->listaeventos($zona['Zona']['calendarioext']);
+			//Agrupo por nombre de actividad
+			$eventosext = array();
+			foreach ($evcalext as $v) {
+				$eventosext[$v['nombre']][] = array(
+					'inicio' => $v['inicio'],
+					'fin' => $v['fin']
+				);
+			}
+			$mhorario = $this->loadModel('Horario');
+			//Limpiar
+			$borrar = array();
+			foreach ($zona['Actividad'] as $k => $v) {$borrar[] = $v['id'];}
+			$this->Horario->deleteAll(array('actividad_id' => $borrar));
+			//Guardar
+			foreach ($zona['Actividad'] as $k => $v) {
+				if (array_key_exists($v['nombre'], $eventosext)) {
+					//Insertar el horario
+					foreach ($eventosext[$v['nombre']] as $v2) {
+						$this->Horario->save(array(
+							'actividad_id' => $v['id'],
+							'inicio' => $v2['inicio'],
+							'fin' => $v2['fin']
+						));
+					}
+					unset($eventosext[$v['nombre']]);
+					unset($zona['Actividad'][$k]);
+				}
+			}
+			$this->Zona->save(array(
+				'id' => $zona['Zona']['id'],
+				'sync_calext' => DboSource::expression('NOW()')
+			));
+			$this->set('faltanext', $zona['Actividad']); //Actividades que no están en el calendario externo
+			$this->set('faltanlocal', $eventosext); //Actividades que están en el calendario externo pero no en local
+			$this->set('zona', $zona);
+		}
+	}
+
+	public function synctodocalendario() {
+		$zonas = $this->Zona->find('all', array('conditions' => array('calendarioext !=' => '0')));
+		$mcalendarioext = $this->loadModel('Calendarioexterno');
+		$mhorario = $this->loadModel('Horario');
+
+		//Backup de tabla de horario
+		$tablabu = 'horario_'.time();
+		$this->Zona->query("CREATE TABLE $tablabu LIKE horarios");
+		$this->Zona->query("INSERT $tablabu SELECT * FROM horarios");
+		
+		$idactividades = array();
+		foreach ($zonas as $v) {
+			foreach ($v['Actividad'] as $v2) {
+				$idactividades[] = $v2['id'];
+			}
+		}
+		$horarioslocales = $this->Horario->find('all', array('conditions' => array('NOT' => array('actividad_id' => $idactividades))));
+		foreach ($horarioslocales as $k => $v) {unset($horarioslocales[$k]['Horario']['id']);} //Para poder reconstruir la tabla sin índices duplicados
+
+		$this->Horario->query("TRUNCATE TABLE horarios");
+
+		$errores = array(); //Los índices son los id de zona, los valores, string con mensajes de error
+		$faltanext = array(); //Los índices son los id de zona, los valores, arrays con las actividades que no están en el calendario externo
+		$faltanlocal = array(); //Los índices son los id de zona, los valores, arrays con las actividades que están en el calendario externo pero no en local
+		$datoszonas = array(); //El índice es son los id de zona, los valores, arrays con el nombre y la fecha de última sincronización
+		foreach ($zonas as $zona) {
+			//Inizialización
+			$errores[$zona['Zona']['id']] = '';
+			$datoszonas[$zona['Zona']['id']] = array('nombre' => $zona['Zona']['nombre'], 'ultimasync' => $zona['Zona']['sync_calext']);
+
+			if (count($zona['Actividad']) == 0) {
+				$errores[$zona['Zona']['id']] = 'La zona no tiene actividades.';
+			}			
+			elseif (($zona['Zona']['calendarioext'] == '0') || ($zona['Zona']['calendarioext'] == '')) {
+				$errores[$zona['Zona']['id']] = 'La zona no tiene calendario externo.';
+			}
+			else {
+				$evcalext = $this->Calendarioexterno->listaeventos($zona['Zona']['calendarioext']);
+				//Agrupo por nombre de actividad
+				$eventosext = array();
+				foreach ($evcalext as $v) {
+					$eventosext[$v['nombre']][] = array(
+						'inicio' => $v['inicio'],
+						'fin' => $v['fin']
+					);
+				}
+				//Guardar
+				foreach ($zona['Actividad'] as $k => $v) {
+					if (array_key_exists($v['nombre'], $eventosext)) {
+						//Insertar el horario
+						$bloquehorarios = array();
+						foreach ($eventosext[$v['nombre']] as $v2) {
+							$bloquehorarios[]['Horario'] = array(
+								'actividad_id' => $v['id'],
+								'inicio' => $v2['inicio'],
+								'fin' => $v2['fin']
+							);
+						}
+						$this->Horario->saveMany($bloquehorarios);
+						unset($eventosext[$v['nombre']]);
+						unset($zona['Actividad'][$k]);
+					}
+				}
+				$faltanext[$zona['Zona']['id']] = $zona['Actividad'];
+				$faltanlocal[$zona['Zona']['id']] = $eventosext;
+				$this->Zona->id = $zona['Zona']['id'];
+				$this->Zona->saveField('sync_calext', ConnectionManager::getDataSource('default')->expression('NOW()'));
+			}
+		}
+		
+		$this->Horario->saveMany($horarioslocales);
+		
+		$this->Zona->query("DROP TABLE $tablabu");
+		
+		$this->set('errores', $errores);
+		$this->set('faltanext', $faltanext);
+		$this->set('faltanlocal', $faltanlocal);
+		$this->set('datoszonas', $datoszonas);
+	}
+
 	public function delete($id) {
 		if ($this->request->is('get')) {
 			throw new MethodNotAllowedException();

@@ -11,6 +11,19 @@ echo $this->Form->input('desctecnica', array('label' => 'Descripción técnica')
 ?>
 <h2>Horario</h2>
 <table id="tablahorarios">
+<?php
+	if ($this->request['data']['Zona']['calendarioext'] == '0') {
+		echo "\t<caption>No usa calendario externo.</caption>\n";
+	}
+	else {
+		if ($this->request['data']['Zona']['sync_calext'] == '0000-00-00 00:00:00') {
+			echo "\t<caption>Pendiente de sincronización con calendario externo.</caption>\n";
+		}
+		else {
+			echo "\t<caption>Última sincronización con calendario externo: ".date('D, j/M/Y G:i:s', strtotime($this->request['data']['Zona']['sync_calext']))."</caption>\n";
+		}
+	}
+?>
 <tr><th></th><th>Sesión</th><th>Inicio</th><th>Fin</th></tr>
 <?php
 	if ($this->request['data']['Zona']['calendarioext'] == '0') {
@@ -42,11 +55,14 @@ echo $this->Form->input('desctecnica', array('label' => 'Descripción técnica')
 <?php
 	}
 	else {
-		if ($this->request['data']['Zona']['sync_calext'] == '0000-00-00 00:00:00') {
-			echo "\t<tr><td colspan=\"3\">Pendiente de sincronización con calendario externo.</td>\n";
-		}
-		else {
-			echo "\t<tr><td colspan=\"3\">Pendiente de hacer XD.</td>\n";
+		$sesion = 1;
+		foreach ($this->request['data']['Horario'] as $v) {
+			echo "\t\t<tr><td></td><td>$sesion</td><td>";
+			echo date('D, j/M/Y G:i:s', strtotime($v['inicio']));
+			echo "</td><td>";
+			echo date('D, j/M/Y G:i:s', strtotime($v['fin']));
+			echo "</td></tr>\n";
+			$sesion++;
 		}
 	}
 ?>
