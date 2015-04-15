@@ -1,7 +1,7 @@
 <?php
 echo "<h1>Nueva actividad</h1>\n";
 
-echo $this->Form->create('Actividad');
+echo $this->Form->create('Actividad', array('onsubmit' => 'numSesion()'));
 echo $this->Form->input('nombre');
 echo $this->Form->input('zona_id');
 echo $this->Form->input('enlaceweb', array('label' => 'Enlace a web de '.Configure::read('datosevento.nombre')));
@@ -9,17 +9,18 @@ echo $this->Form->input('desctecnica', array('label' => 'Descripción técnica')
 ?>
 <h2 id="cabecerahorario">Horario</h2>
 <table id="tablahorarios">
-<tr><th></th><th>Inicio</th><th>Fin</th></tr>
+<tr><th></th><th>Sesión</th><th>Inicio</th><th>Fin</th></tr>
 <?php
 echo "<tr id=\"horario0\">\n";
 echo "\t<td>".$this->Form->button('&nbsp;-&nbsp;',array('type'=>'button','title'=>'Eliminar el horario', 'onclick' => 'removeHorario(0)'))."</td>\n";
+echo "\t<td>".$this->Form->input('Horario.0.sesion', array('type' => 'text', 'size' => 3, 'div' => false, 'label' => '', 'readonly'=>'readonly', 'class' => 'faketext'))."</td>\n";
 echo "\t<td>".$this->Form->input('Horario.0.inicio', array('div' => false, 'label' => false, 'dateFormat' => 'DMY', 'timeFormat' => 24))."</td>\n";
 echo "\t<td>".$this->Form->input('Horario.0.fin', array('div' => false, 'label' => false, 'dateFormat' => 'DMY', 'timeFormat' => 24))."</td>\n</tr>\n";
 ?>
 <tr id="trAdd">
 	<td><?php echo $this->Form->button('+',array('type'=>'button','title'=>'Añadir un ítem','onclick'=>'addHorario()')); ?></td>
 	<td></td>
-	<td></td>
+	<td><?php echo $this->Form->button('Asignar nº sesión',array('type'=>'button','title'=>'Asignar nº sesión','onclick'=>'numSesion()')); ?></td>
 	<td></td>
 </tr>
 </table>
@@ -88,6 +89,7 @@ echo $this->Html->script(array('jquery-ui-autocomplete/jquery-ui'));
 		lastHorario++;
 		$("#tablahorarios tr#horario0").clone().attr('id','horario'+lastHorario).removeAttr('style').insertBefore("#tablahorarios tr#trAdd");
 		$("#horario"+lastHorario+" button").removeAttr('onclick').attr('onclick','removeHorario('+lastHorario+')');
+		$("#horario"+lastHorario+" input:first").attr('name','data[Horario]['+lastHorario+'][sesion]').attr('id','Horario'+lastHorario+'Sesion');
 		$("#horario"+lastHorario+" select:first").attr('name','data[Horario]['+lastHorario+'][inicio][day]').attr('id','Horario'+lastHorario+'InicioDay');
 		$("#horario"+lastHorario+" select:eq(1)").attr('name','data[Horario]['+lastHorario+'][inicio][month]').attr('id','Horario'+lastHorario+'InicioMonth');
 		$("#horario"+lastHorario+" select:eq(2)").attr('name','data[Horario]['+lastHorario+'][inicio][year]').attr('id','Horario'+lastHorario+'InicioYear');
@@ -125,4 +127,21 @@ echo $this->Html->script(array('jquery-ui-autocomplete/jquery-ui'));
 		}
 	});
 	$('#ActividadZonaId').change();
+	
+	function numSesion() {
+		var horario = []; //El índice es el ide del elemento en form
+		var sesion = 1;
+		for (i = 0; i <= lastHorario; i++) {
+			datetime = $('#Horario'+i+'InicioYear').val() + $('#Horario'+i+'InicioMonth').val() + $('#Horario'+i+'InicioDay').val() + $('#Horario'+i+'InicioHour').val() + $('#Horario'+i+'InicioMin').val();
+			horario[i] = {id:i, hora:datetime}
+		}
+		horario.sort(function(a,b) {
+			console.log(a.hora)
+			return a.hora > b.hora ? 1 : a.hora < b.hora ? -1 : 0;
+		});
+		for (var v of horario) {
+			$('#Horario'+v.id+'Sesion').val(sesion);
+			sesion++;
+		}
+	}
 </script>

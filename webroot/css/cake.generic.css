@@ -813,6 +813,11 @@ form.buscar input#ObjetoQ {
 	clear: none;
 }
 
+input.faketext {
+	background: none;
+	border: none;
+}
+
 /** Autocomplete **/
 #url-rewriting-warning {
 	display:none;

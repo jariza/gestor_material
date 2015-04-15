@@ -30,14 +30,12 @@
 		}
 	}
 	echo "\t<table>\n\t<tr><th>Sesión</th><th>Inicio</th><th>Fin</th></tr>\n";
-	$sesion = 1;
 	foreach ($actividad['Horario'] as $v) {
-		echo "\t\t<tr><td>$sesion</td><td>";
+		echo "\t\t<tr><td>{$v['sesion']}</td><td>";
 		echo date('D, j/M/Y G:i:s', strtotime($v['inicio']));
 		echo "</td><td>";
 		echo date('D, j/M/Y G:i:s', strtotime($v['fin']));
 		echo "</td></tr>\n";
-		$sesion++;
 	}
 	echo "\t</table>\n";
 	echo "\t<h2>Necesidades de la actividad</h2>\n\t<table>";

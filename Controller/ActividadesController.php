@@ -6,6 +6,23 @@ class ActividadesController extends AppController {
 		'fields' => array('Actividad.id', 'Actividad.nombre', 'Zona.nombre', 'Actividad.enlaceweb')
 		);
 
+	private function testNumSesion($horario) {
+		$ok = true;
+		$horariocheck = array();
+		foreach ($horario as $v) {
+			$horariocheck[$v['sesion']] = strtotime("{$v['inicio']['year']}-{$v['inicio']['month']}-{$v['inicio']['day']} {$v['inicio']['hour']}:{$v['inicio']['min']}:00");
+		}
+		ksort($horariocheck);
+		reset($horariocheck);
+		$horaanterior = current($horariocheck);
+		while (($ok) && ($val = next($horariocheck))) {
+			$ok = $horaanterior < $val;
+			$horaanterior = $val;
+		}
+		
+		return $ok;
+	}
+
 	public function isAuthorized($usuario) {
 		if (isset($usuario['rol'])) {
 			if (in_array($usuario['rol'], array('admin', 'produccion'))) {
@@ -34,17 +51,22 @@ class ActividadesController extends AppController {
 		$this->set('horariozonas', $this->Actividad->Zona->find('list', array('fields' => 'id', 'conditions' => array('calendarioext NOT' => '0'))));
 		if ($this->request->is('post')) {
 			$this->Actividad->create();
-			$numsesiones = count($this->request->data['Horario']);
-			$this->Actividad->Necesidadactividad->validator()->add('sesion', 'required', array(
-				'rule' => array('range', -1, $numsesiones+1),
-				'message' => "Debe ser un número entre 0 y $numsesiones"
-			));
-			if ($this->Actividad->saveAssociated($this->request->data)) {
+			if (array_key_exists('Horario', $this->request->data)) { //Se comprueba sólo si se puede
+				$numsesiones = count($this->request->data['Horario']);
+				$this->Actividad->Necesidadactividad->validator()->add('sesion', 'required', array(
+					'rule' => array('range', -1, $numsesiones+1),
+					'message' => "Debe ser un número entre 0 y $numsesiones"
+				));
+			}
+			if (array_key_exists('Horario', $this->request->data) && !$this->testNumSesion($this->request->data['Horario'])) {
+				$this->Session->setFlash('Error en el orden de las sesiones, no se pudo crear la actividad.');
+			}
+			elseif ($this->Actividad->saveAssociated($this->request->data)) {
                 $this->Session->setFlash('Actividad añadida.');
                 return $this->redirect(array('action' => 'index'));
 			}
 			else {
-				$this->Session->setFlash(__('No se pudo crear la actividad, por favor, revisa el formulario.'));
+				$this->Session->setFlash('No se pudo crear la actividad, por favor, revisa el formulario.');
 			}				
 		}
     }
@@ -78,16 +100,23 @@ class ActividadesController extends AppController {
 		$this->set('horariozonas', $this->Actividad->Zona->find('list', array('fields' => 'id', 'conditions' => array('calendarioext NOT' => '0'))));
 		if ($this->request->is(array('post', 'put'))) {
 			$this->Actividad->id = $id;
-			$numsesiones = count($this->request->data['Horario']);
-			$this->Actividad->Necesidadactividad->validator()->add('sesion', 'required', array(
-				'rule' => array('range', -1, $numsesiones+1),
-				'message' => "Debe ser un número entre 0 y $numsesiones"
-			));
-			if ($this->Actividad->saveAssociated($this->request->data)) {
-				$this->Session->setFlash(__('Actividad actualizada correctamente.'));
+			if (array_key_exists('Horario', $this->request->data)) { //Se comprueba sólo si se puede
+				$numsesiones = count($this->request->data['Horario']);
+				$this->Actividad->Necesidadactividad->validator()->add('sesion', 'required', array(
+					'rule' => array('range', -1, $numsesiones+1),
+					'message' => "Debe ser un número entre 0 y $numsesiones"
+				));
+			}
+			if (array_key_exists('Horario', $this->request->data) && !$this->testNumSesion($this->request->data['Horario'])) {
+				$this->Session->setFlash('Error en el orden de las sesiones, no se pudo actualizar la actividad.');
+			}
+			elseif ($this->Actividad->saveAssociated($this->request->data)) {
+				$this->Session->setFlash('Actividad actualizada correctamente.');
 				return $this->redirect(array('action' => 'index'));
 			}
-			$this->Session->setFlash(__('No se pudo actualizar la actividad.'));
+			else {
+				$this->Session->setFlash('No se pudo actualizar la actividad.');
+			}
 		}
 
 		if (!$this->request->data) {
