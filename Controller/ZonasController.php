@@ -6,6 +6,10 @@ class ZonasController extends AppController {
 		'fields' => array('Zona.id', 'Zona.nombre', 'Zona.calendarioext')
 		);
 
+	private function cmphoras($a, $b) {
+		return strtotime($a['inicio']) - strtotime($b['inicio']);
+	}
+
 	public function isAuthorized($usuario) {
 		if (isset($usuario['rol'])) {
 			if (in_array($usuario['rol'], array('admin', 'produccion'))) {
@@ -128,20 +132,24 @@ class ZonasController extends AppController {
 			foreach ($zona['Actividad'] as $k => $v) {
 				if (array_key_exists($v['nombre'], $eventosext)) {
 					//Insertar el horario
-					foreach ($eventosext[$v['nombre']] as $v2) {
-						$this->Horario->save(array(
+					uasort($eventosext[$v['nombre']], array("ZonasController", "cmphoras"));
+					$bloquehorarios = array();
+					foreach ($eventosext[$v['nombre']] as $k2 => $v2) {
+						$bloquehorarios[]['Horario'] = array(
 							'actividad_id' => $v['id'],
+							'sesion' => $k2+1,
 							'inicio' => $v2['inicio'],
 							'fin' => $v2['fin']
-						));
+						);
 					}
+					$this->Horario->saveMany($bloquehorarios);
 					unset($eventosext[$v['nombre']]);
 					unset($zona['Actividad'][$k]);
 				}
 			}
 			$this->Zona->save(array(
 				'id' => $zona['Zona']['id'],
-				'sync_calext' => DboSource::expression('NOW()')
+				'sync_calext' => ConnectionManager::getDataSource('default')->expression('NOW()')
 			));
 			$this->set('faltanext', $zona['Actividad']); //Actividades que no están en el calendario externo
 			$this->set('faltanlocal', $eventosext); //Actividades que están en el calendario externo pero no en local
@@ -199,10 +207,12 @@ class ZonasController extends AppController {
 				foreach ($zona['Actividad'] as $k => $v) {
 					if (array_key_exists($v['nombre'], $eventosext)) {
 						//Insertar el horario
+						uasort($eventosext[$v['nombre']], array("ZonasController", "cmphoras"));
 						$bloquehorarios = array();
-						foreach ($eventosext[$v['nombre']] as $v2) {
+						foreach ($eventosext[$v['nombre']] as $k2 => $v2) {
 							$bloquehorarios[]['Horario'] = array(
 								'actividad_id' => $v['id'],
+								'sesion' => $k2+1,
 								'inicio' => $v2['inicio'],
 								'fin' => $v2['fin']
 							);

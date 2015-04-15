@@ -1,9 +1,14 @@
 <?php
 echo "<h1>Editar actividad</h1>\n";
 $lngnec = count($this->request['data']['Necesidadactividad']);
-$lnghorarios = count($this->request['data']['Horario']);
+if (array_key_exists('Horario', $this->request['data'])) {
+	$lnghorarios = count($this->request['data']['Horario']);
+}
+else {
+	$lnghorarios = 0;
+}
 
-echo $this->Form->create('Actividad');
+echo $this->Form->create('Actividad', array('onsubmit' => 'numSesion1()'));
 echo $this->Form->input('nombre');
 echo $this->Form->input('zona_id');
 echo $this->Form->input('enlaceweb', array('label' => 'Enlace a web de '.Configure::read('datosevento.nombre')));
@@ -30,39 +35,36 @@ echo $this->Form->input('desctecnica', array('label' => 'Descripción técnica')
 		if ($lnghorarios == 0) {
 			echo "<tr id=\"horario0\">\n";
 			echo "\t<td>1 ".$this->Form->button('&nbsp;-&nbsp;',array('type'=>'button','title'=>'Eliminar la horario', 'onclick' => 'removeHorario(0)'))."</td>\n";
+			echo "\t<td>".$this->Form->input('Horario.0.sesion', array('type' => 'text', 'size' => 3, 'div' => false, 'label' => '', 'readonly'=>'readonly', 'class' => 'faketext'))."</td>\n";
 			echo "\t<td>".$this->Form->input('Horario.0.inicio', array('div' => false, 'label' => false, 'dateFormat' => 'DMY', 'timeFormat' => 24, 'empty' => false))."</td>\n";
 			echo "\t<td>".$this->Form->input('Horario.0.fin', array('div' => false, 'label' => false, 'dateFormat' => 'DMY', 'timeFormat' => 24, 'empty' => false))."</td>\n</tr>\n";
 		}
 		else {
-			$sesion = 1;
 			foreach ($this->request['data']['Horario'] as $k => $v) {
 				echo "<tr id=\"horario$k\">\n";
 				echo '<td>'.$this->Html->Link('[X]', array('controller' => 'horarios', 'action' => 'delete', $v['id']), array('confirm' => "¿Seguro que deseas eliminar esta horario?\n¡LAS MODIFICACIONES NO GUARDADAS SE PERDERÁN!"))."</td>\n";
-				echo "\t<td>$sesion </td>\n";
+				echo "\t<td>".$this->Form->input("Horario.$k.sesion", array('type' => 'text', 'size' => 3, 'div' => false, 'label' => '', 'readonly'=>'readonly', 'class' => 'faketext'))."</td>\n";
 				echo "\t<td>".$this->Form->input("Horario.$k.inicio", array('div' => false, 'label' => false, 'dateFormat' => 'DMY', 'timeFormat' => 24))."</td>\n";
 				echo "\t<td>".$this->Form->input("Horario.$k.fin", array('div' => false, 'label' => false, 'dateFormat' => 'DMY', 'timeFormat' => 24)).$this->Form->input("Horario.$k.id", array('label' => false, 'type' => 'hidden'))."</td>\n";
 				echo "</tr>\n";
-				$sesion++;
 			}
 		}
 		?>
 		<tr id="trAdd">
 			<td><?php echo $this->Form->button('+',array('type'=>'button','title'=>'Añadir un ítem','onclick'=>'addHorario()')); ?></td>
 			<td></td>
-			<td></td>
+			<td><?php echo $this->Form->button('Asignar nº sesión',array('type'=>'button','title'=>'Asignar nº sesión','onclick'=>'numSesion()')); ?></td>
 			<td></td>
 		</tr>
 <?php
 	}
-	else {
-		$sesion = 1;
+	elseif (array_key_exists('Horario', $this->request['data'])) {
 		foreach ($this->request['data']['Horario'] as $v) {
-			echo "\t\t<tr><td></td><td>$sesion</td><td>";
+			echo "\t\t<tr><td></td><td>{$v['sesion']}</td><td>";
 			echo date('D, j/M/Y G:i:s', strtotime($v['inicio']));
 			echo "</td><td>";
 			echo date('D, j/M/Y G:i:s', strtotime($v['fin']));
 			echo "</td></tr>\n";
-			$sesion++;
 		}
 	}
 ?>
@@ -155,7 +157,7 @@ echo $this->Html->script(array('jquery-ui-autocomplete/jquery-ui'));
 		lastHorario++;
 		$("#tablahorarios tr#horario0").clone().attr('id','horario'+lastHorario).removeAttr('style').insertBefore("#tablahorarios tr#trAdd");
 		$("#horario"+lastHorario+" td:first").empty().append('<?php echo $this->Form->button('&nbsp;-&nbsp;',array('type'=>'button','title'=>'Eliminar el horario', 'onclick' => 'removeHorario(\'+lastHorario+\')')); ?>');
-		$("#horario"+lastHorario+" td:eq(1)").html("");
+		$("#horario"+lastHorario+" input:first").attr('name','data[Horario]['+lastHorario+'][sesion]').attr('id','Horario'+lastHorario+'Sesion');
 		$("#horario"+lastHorario+" select:first").attr('name','data[Horario]['+lastHorario+'][inicio][day]').attr('id','Horario'+lastHorario+'InicioDay');
 		$("#horario"+lastHorario+" select:eq(1)").attr('name','data[Horario]['+lastHorario+'][inicio][month]').attr('id','Horario'+lastHorario+'InicioMonth');
 		$("#horario"+lastHorario+" select:eq(2)").attr('name','data[Horario]['+lastHorario+'][inicio][year]').attr('id','Horario'+lastHorario+'InicioYear');
@@ -196,5 +198,22 @@ for ($i = 0; $i < $lngnec; $i++) {
 			}
 		}
 	});
+	
+	function numSesion() {
+		var horario = []; //El índice es el ide del elemento en form
+		var sesion = 1;
+		for (i = 0; i <= lastHorario; i++) {
+			datetime = $('#Horario'+i+'InicioYear').val() + $('#Horario'+i+'InicioMonth').val() + $('#Horario'+i+'InicioDay').val() + $('#Horario'+i+'InicioHour').val() + $('#Horario'+i+'InicioMin').val();
+			horario[i] = {id:i, hora:datetime}
+		}
+		horario.sort(function(a,b) {
+			console.log(a.hora)
+			return a.hora > b.hora ? 1 : a.hora < b.hora ? -1 : 0;
+		});
+		for (var v of horario) {
+			$('#Horario'+v.id+'Sesion').val(sesion);
+			sesion++;
+		}
+	}
 
 </script>
