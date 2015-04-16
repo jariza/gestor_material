@@ -818,6 +818,12 @@ input.faketext {
 	border: none;
 }
 
+td.objetoasignado input {
+	width: auto;
+	clear: none;
+	display: inline-block;
+}
+
 /** Autocomplete **/
 #url-rewriting-warning {
 	display:none;

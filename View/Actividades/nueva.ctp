@@ -31,14 +31,15 @@ echo "\t<td>".$this->Form->input('Horario.0.fin', array('div' => false, 'label' 
 <?php
 echo "<tr id=\"necesidad0\">\n";
 	echo '<td>'.$this->Form->button('&nbsp;-&nbsp;',array('type'=>'button','title'=>'Eliminar la necesidad', 'onclick' => 'removeNecesidadactividad(0)'))."</td>\n";
-	echo '<td>'.$this->Form->input("Necesidadactividad.0.descripcion",array('label'=>'','type'=>'text'))."</td>\n";
-	echo '<td>'.$this->Form->input("Necesidadactividad.0.cantidad",array('label'=>'','type'=>'text'))."</td>\n";
-	echo '<td>'.$this->Form->input("Necesidadactividad.0.sesion",array('label'=>'','type'=>'text'))."</td>\n";
-	echo '<td>'.$this->Form->input("Necesidadactividad.0.objeto_id",array('label'=>'','type'=>'text', 'readonly'=>'readonly')).$this->Form->input("Necesidadactividad.0.objeto_nombre",array('label'=>'','type'=>'text'))."</td>\n";
+	echo '<td>'.$this->Form->input("Necesidadactividad.0.descripcion",array('label'=> false,'type'=>'text', 'div' => false))."</td>\n";
+	echo '<td>'.$this->Form->input("Necesidadactividad.0.cantidad",array('label'=> false,'type'=>'text', 'div' => false))."</td>\n";
+	echo '<td>'.$this->Form->input("Necesidadactividad.0.sesion",array('label'=> false,'type'=>'text', 'div' => false))."</td>\n";
+	echo '<td class="objetoasignado">'.$this->Form->input("Necesidadactividad.0.objeto_nombre",array('label'=> false,'type'=>'text', 'div' => false)).$this->Form->input("Necesidadactividad.0.objeto_id",array('label'=> false,'type'=>'text', 'div' => false, 'size' => 4, 'readonly'=>'readonly'))."</td>\n";
 echo "</tr>\n";
 ?>
 <tr id="trAdd">
 	<td><?php echo $this->Form->button('+',array('type'=>'button','title'=>'Añadir un ítem','onclick'=>'addNecesidadactividad()')); ?></td>
+	<td></td>
 	<td></td>
 	<td></td>
 	<td></td>
@@ -62,15 +63,10 @@ echo $this->Html->script(array('jquery-ui-autocomplete/jquery-ui'));
 		$("#tablanecesidades tr#necesidad0").clone().attr('id','necesidad'+lastNecesidad).removeAttr('style').insertBefore("#tablanecesidades tr#trAdd");
 		$("#necesidad"+lastNecesidad+" button").removeAttr('onclick').attr('onclick','removeNecesidadactividad('+lastNecesidad+')');
 		$("#necesidad"+lastNecesidad+" input:first").attr('name','data[Necesidadactividad]['+lastNecesidad+'][descripcion]').attr('id','Necesidadactividad'+lastNecesidad+'Descripcion').val('');
-		$("#necesidad"+lastNecesidad+" label:first").attr('for','Necesidadactividad'+lastNecesidad+'Descripcion');
 		$("#necesidad"+lastNecesidad+" input:eq(1)").attr('name','data[Necesidadactividad]['+lastNecesidad+'][cantidad]').attr('id','Necesidadactividad'+lastNecesidad+'Cantidad').val('');
-		$("#necesidad"+lastNecesidad+" label:eq(1)").attr('for','Necesidadactividad'+lastNecesidad+'Cantidad');
 		$("#necesidad"+lastNecesidad+" input:eq(2)").attr('name','data[Necesidadactividad]['+lastNecesidad+'][sesion]').attr('id','Necesidadactividad'+lastNecesidad+'Sesion').val('');
-		$("#necesidad"+lastNecesidad+" label:eq(2)").attr('for','Necesidadactividad'+lastNecesidad+'Sesion');
 		$("#necesidad"+lastNecesidad+" input:eq(3)").attr('name','data[Necesidadactividad]['+lastNecesidad+'][objeto_id]').attr('id','Necesidadactividad'+lastNecesidad+'ObjetoId').val('');
-		$("#necesidad"+lastNecesidad+" label:eq(3)").attr('for','Necesidadactividad'+lastNecesidad+'ObjetoId');
 		$("#necesidad"+lastNecesidad+" input:eq(4)").attr('name','data[Necesidadactividad]['+lastNecesidad+'][objeto_nombre]').attr('id','Necesidadactividad'+lastNecesidad+'ObjetoNombre').val('');
-		$("#necesidad"+lastNecesidad+" label:eq(4)").attr('for','Necesidadactividad'+lastNecesidad+'ObjetoNombre');
 		$('#Necesidadactividad'+lastNecesidad+'Descripcion').autocomplete({
 			source:"<?php echo Router::url('/', true); ?>necesidadactividades/findnecesidades",
 			open: function() {$('.ui-menu').width('30em')}

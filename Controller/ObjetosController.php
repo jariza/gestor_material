@@ -20,13 +20,83 @@ class ObjetosController extends AppController {
 	public function findobjeto() {
 		$this->autoLayout = false;
 		$this->autoRender = false;
-		$this->Objeto->recursive = -1;
-		$results = $this->Objeto->find('all', array('fields' => array('id', 'descripcion'), 'conditions' => array('descripcion LIKE ' => '%'.$this->request->query('term').'%'), 'order' => array('descripcion')));
+		$this->loadModel('Necesidadzona');
+		$this->loadModel('Necesidadactividad');
+		//Obtener objetos
+		$results = $this->Objeto->find('all', array('fields' => array('id', 'descripcion', 'fungible', 'cantidad'), 'conditions' => array('descripcion LIKE ' => '%'.$this->request->query('term').'%'), 'order' => array('descripcion')));
+		$fungibles = array();
+		$inventariables = array();
+		foreach ($results as $v) {
+			if ($v['Objeto']['fungible']) {
+				$fungibles[$v['Objeto']['id']] = array (
+					'descripcion' => $v['Objeto']['descripcion'],
+					'cantidad' => $v['Objeto']['cantidad']
+				);
+			}
+			else {
+				$inventariables[$v['Objeto']['id']] = $v['Objeto']['descripcion'];
+			}
+		}
+		//Consultas para comprobar el uso
+		if (count($inventariables) > 0) {
+			$res = $this->Necesidadactividad->query("SELECT necesidadactividades.objeto_id, UNIX_TIMESTAMP(horarios.inicio) AS inicio, UNIX_TIMESTAMP(horarios.fin) AS fin FROM necesidadactividades, horarios WHERE necesidadactividades.actividad_id = horarios.actividad_id AND necesidadactividades.objeto_id IN (".implode(',', array_keys($inventariables)).')');
+			$inventariablesactividades = array();
+			foreach ($res as $v) {
+				$inventariablesactividades[$v['necesidadactividades']['objeto_id']][] = array(
+					'inicio' => $v[0]['inicio'],
+					'fin' => $v[0]['fin'],
+				);
+			}
+			$inventariableszonas = $this->Necesidadzona->find('list', array('fields' => array('objeto_id', 'id'), 'conditions' => array('objeto_id' => array_keys($inventariables))));
+		}
+		else {
+			$inventariablesactividades = array();
+			$inventariableszonas = array();
+		}
+		if (count($fungibles) > 0) {
+			$this->Necesidadzona->virtualFields['uso'] = 'SUM(Necesidadzona.cantidad)';
+			$fungibleszonas = $this->Necesidadzona->find('list', array('fields' => array('objeto_id', 'uso'), 'conditions' => array('objeto_id' => array_keys($fungibles)), 'group' => array('objeto_id'), 'recursive' => -1));
+			$this->Necesidadactividad->virtualFields['uso'] = 'SUM(Necesidadactividad.cantidad)';
+			$fungiblesactividades = $this->Necesidadactividad->find('list', array('fields' => array('objeto_id', 'uso'), 'conditions' => array('objeto_id' => array_keys($fungibles)), 'group' => array('objeto_id'), 'recursive' => -1));
+			$sumfungibles = array();
+			//Sumar los fungibles
+			foreach (array_keys($fungibleszonas + $fungiblesactividades) as $key) {
+				$sumfungibles[$key] = (isset($fungibleszonas[$key]) ? $fungibleszonas[$key] : 0) + (isset($fungiblesactividades[$key]) ? $fungiblesactividades[$key] : 0);
+			}
+		}
+		else {
+			$sumfungibles = array();
+		}
+		//Montar la respuesta
 		$response = array();
 		$i = 0;
-		foreach($results as $result){
-			$response[$i]['value'] = $result['Objeto']['descripcion'];
-			$response[$i]['id'] = $result['Objeto']['id'];
+		$limiteinicio = explode(',', $this->request->query('i'));
+		$limitefin = explode(',', $this->request->query('f'));
+		foreach($results as $v){
+			if (array_key_exists($v['Objeto']['id'], $inventariableszonas)) {
+				$comentario = ' (ocupado en zona)';
+			}
+			elseif (array_key_exists($v['Objeto']['id'], $sumfungibles)) {
+				$disponible = $v['Objeto']['cantidad'] - $sumfungibles[$v['Objeto']['id']];
+				if ($disponible > 0) {$comentario = " (quedan $disponible)";}
+				elseif ($disponible == 0) {$comentario = " (todos usados)";}
+				else {$comentario = ' (faltan '.abs($disponible).')';}
+			}
+			elseif (($limiteinicio != '') && ($limitefin != '') && (array_key_exists($v['Objeto']['id'], $inventariablesactividades))) {
+				foreach ($limiteinicio as $k2 => $v2) {
+					foreach ($inventariablesactividades[$v['Objeto']['id']] as $v3) {
+						if (($v2 < $v3['fin']) || ($limitefin[$k2] > $v3['inicio'])) {
+							$comentario = ' (ocupado en actividad)';
+							break 2;
+						}
+					}
+				}
+			}
+			else {
+				$comentario = '';
+			}
+			$response[$i]['value'] = $v['Objeto']['descripcion'].$comentario;
+			$response[$i]['id'] = $v['Objeto']['id'];
 			$i++;
 		}
 		echo json_encode($response);

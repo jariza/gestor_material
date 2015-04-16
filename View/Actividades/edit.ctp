@@ -59,8 +59,8 @@ echo $this->Form->input('desctecnica', array('label' => 'Descripción técnica')
 <?php
 	}
 	elseif (array_key_exists('Horario', $this->request['data'])) {
-		foreach ($this->request['data']['Horario'] as $v) {
-			echo "\t\t<tr><td></td><td>{$v['sesion']}</td><td>";
+		foreach ($this->request['data']['Horario'] as $k => $v) {
+			echo "\t\t<tr id=\"horario$k\"><td></td><td>{$v['sesion']}</td><td>";
 			echo date('D, j/M/Y G:i:s', strtotime($v['inicio']));
 			echo "</td><td>";
 			echo date('D, j/M/Y G:i:s', strtotime($v['fin']));
@@ -77,27 +77,27 @@ echo $this->Form->input('desctecnica', array('label' => 'Descripción técnica')
 if ($lngnec == 0) {
 	echo "<tr id=\"necesidad0\">\n";
 		echo '<td>'.$this->Form->button('&nbsp;-&nbsp;',array('type'=>'button','title'=>'Eliminar la necesidad', 'onclick' => 'removeNecesidadactividad(0)'))."</td>\n";
-		echo '<td>'.$this->Form->input("Necesidadactividad.0.descripcion",array('label'=>'','type'=>'text'))."</td>\n";
-		echo '<td>'.$this->Form->input("Necesidadactividad.0.cantidad",array('label'=>'','type'=>'text'))."</td>\n";
-		echo '<td>'.$this->Form->input("Necesidadactividad.0.objeto_id",array('label'=>'','type'=>'text', 'readonly'=>'readonly')).$this->Form->input("Necesidadactividad.0.objeto_nombre",array('label'=>'','type'=>'text'))."</td>\n";
+		echo '<td>'.$this->Form->input("Necesidadactividad.0.descripcion",array('label'=> false,'type'=>'text'))."</td>\n";
+		echo '<td>'.$this->Form->input("Necesidadactividad.0.cantidad",array('label'=> false,'type'=>'text'))."</td>\n";
+		echo '<td class="objetoasignado">'.$this->Form->input("Necesidadactividad.0.objeto_nombre",array('label'=> false,'type'=>'text')).$this->Form->input("Necesidadactividad.0.objeto_id",array('label'=> false,'type'=>'text', 'div' => false, 'size' => 4, 'readonly'=>'readonly'))."</td>\n";
 	echo "</tr>\n";
 }
 else {
 	foreach ($this->request['data']['Necesidadactividad'] as $k => $v) {
 		echo "<tr id=\"necesidad$k\">\n";
 		echo '<td>'.$this->Html->Link('[X]', array('controller' => 'necesidadactividades', 'action' => 'delete', $v['id']), array('confirm' => "¿Seguro que deseas eliminar esta necesidad?\n¡LAS MODIFICACIONES NO GUARDADAS SE PERDERÁN!"))."</td>\n";
-		echo '<td>'.$this->Form->input("Necesidadactividad.$k.descripcion",array('label'=> '', 'type'=>'text', 'div' => false))."</td>\n";
-		echo '<td>'.$this->Form->input("Necesidadactividad.$k.cantidad",array('label'=> '', 'type'=>'text', 'div' => false))."</td>\n";
-		echo '<td>'.$this->Form->input("Necesidadactividad.$k.sesion",array('label'=> '', 'type'=>'text', 'div' => false))."</td>\n";
-		echo '<td>'.$this->Form->input("Necesidadactividad.$k.objeto_id",array('label'=>'','type'=>'text', 'readonly'=>'readonly'));
-		echo $this->Form->input("Necesidadactividad.$k.id", array('label' => false, 'type' => 'hidden'));
+		echo '<td>'.$this->Form->input("Necesidadactividad.$k.descripcion",array('label'=> false, 'type'=>'text', 'div' => false))."</td>\n";
+		echo '<td>'.$this->Form->input("Necesidadactividad.$k.cantidad",array('label'=> false, 'type'=>'text', 'div' => false))."</td>\n";
+		echo '<td>'.$this->Form->input("Necesidadactividad.$k.sesion",array('label'=> false, 'type'=>'text', 'div' => false))."</td>\n";
 		if (is_null($v['objeto_id'])) {
 			$txtobjeto = '';
 		}
 		else {
 			$txtobjeto = $v['Objeto']['descripcion'];
 		}
-		echo $this->Form->input("Necesidadactividad.$k.objeto_nombre",array('label'=> $txtobjeto, 'type'=>'text', 'div' => false))."</td>\n";
+		echo '<td class="objetoasignado">'.$this->Form->input("Necesidadactividad.$k.id", array('label' => false, 'type' => 'hidden'));
+		echo $this->Form->input("Necesidadactividad.$k.objeto_nombre",array('label'=> $txtobjeto, 'type'=>'text', 'div' => false));
+		echo $this->Form->input("Necesidadactividad.$k.objeto_id",array('label'=> false,'type'=>'text', 'div' => false, 'size' => 4, 'class' => 'objetoa', 'readonly'=>'readonly'))."</td>\n";
 		echo "</tr>\n";
 	}
 }
@@ -128,23 +128,18 @@ echo $this->Html->script(array('jquery-ui-autocomplete/jquery-ui'));
 		$("#tablanecesidades tr#necesidad0").clone().attr('id','necesidad'+lastNecesidad).removeAttr('style').insertBefore("#tablanecesidades tr#trAdd");
 		$("#necesidad"+lastNecesidad+" td:first").empty().append('<?php echo $this->Form->button('&nbsp;-&nbsp;',array('type'=>'button','title'=>'Eliminar la necesidad', 'onclick' => 'removeNecesidadactividad(\'+lastNecesidad+\')')); ?>');
 		$("#necesidad"+lastNecesidad+" input:first").attr('name','data[Necesidadactividad]['+lastNecesidad+'][descripcion]').attr('id','Necesidadactividad'+lastNecesidad+'Descripcion').val('');
-		$("#necesidad"+lastNecesidad+" label:first").attr('for','Necesidadactividad'+lastNecesidad+'Descripcion');
 		$("#necesidad"+lastNecesidad+" input:eq(1)").attr('name','data[Necesidadactividad]['+lastNecesidad+'][cantidad]').attr('id','Necesidadactividad'+lastNecesidad+'Cantidad').val('');
-		$("#necesidad"+lastNecesidad+" label:eq(1)").attr('for','Necesidadactividad'+lastNecesidad+'Cantidad');
 		$("#necesidad"+lastNecesidad+" input:eq(2)").attr('name','data[Necesidadactividad]['+lastNecesidad+'][sesion]').attr('id','Necesidadactividad'+lastNecesidad+'Sesion').val('');
-		$("#necesidad"+lastNecesidad+" label:eq(2)").attr('for','Necesidadactividad'+lastNecesidad+'Sesion');
-		$("#necesidad"+lastNecesidad+" input:eq(3)").attr('name','data[Necesidadactividad]['+lastNecesidad+'][objeto_id]').attr('id','Necesidadactividad'+lastNecesidad+'ObjetoId').val('');
-		$("#necesidad"+lastNecesidad+" label:eq(3)").attr('for','Necesidadactividad'+lastNecesidad+'ObjetoId');
-		$("#necesidad"+lastNecesidad+" input:eq(4)").attr('name','data[Necesidadactividad]['+lastNecesidad+'][id]').attr('id','Necesidadactividad'+lastNecesidad+'Id').val('');
-		$("#necesidad"+lastNecesidad+" label:eq(4)").attr('for','Necesidadactividad'+lastNecesidad+'Id');
-		$("#necesidad"+lastNecesidad+" input:eq(5)").attr('name','data[Necesidadactividad]['+lastNecesidad+'][objeto_nombre]').attr('id','Necesidadactividad'+lastNecesidad+'ObjetoNombre').val('');
-		$("#necesidad"+lastNecesidad+" label:eq(5)").attr('for','Necesidadactividad'+lastNecesidad+'ObjetoNombre');
+		$("#necesidad"+lastNecesidad+" input:eq(3)").attr('name','data[Necesidadactividad]['+lastNecesidad+'][id]').attr('id','Necesidadactividad'+lastNecesidad+'Id').val('');
+		$("#necesidad"+lastNecesidad+" input:eq(4)").attr('name','data[Necesidadactividad]['+lastNecesidad+'][objeto_nombre]').attr('id','Necesidadactividad'+lastNecesidad+'ObjetoNombre').val('');
+		$("#necesidad"+lastNecesidad+" label:first").attr('for','Necesidadactividad'+lastNecesidad+'ObjetoNombre').text('');
+		$("#necesidad"+lastNecesidad+" input:eq(5)").attr('name','data[Necesidadactividad]['+lastNecesidad+'][objeto_id]').attr('id','Necesidadactividad'+lastNecesidad+'ObjetoId').val('');
 		$('#Necesidadactividad'+lastNecesidad+'Descripcion').autocomplete({
 			source:"<?php echo Router::url('/', true); ?>necesidadactividades/findnecesidades",
 			open: function() {$('.ui-menu').width('30em')}
 		});
 		$('#Necesidadactividad'+lastNecesidad+'ObjetoNombre').autocomplete({
-			source:"<?php echo Router::url('/', true); ?>objetos/findobjeto",
+			source:"<?php echo Router::url('/', true); ?>objetos/findobjeto?i="+horarioInicioSesion(lastNecesidad)+'&f='+horarioFinSesion(lastNecesidad),
 			open: function() {$('.ui-menu').width('30em')},
 			select: function(event, ui) {$('#'+event.target.id.replace('Nombre', 'Id')).val(ui.item.id); console.log(event.target.id);}
 		});
@@ -176,15 +171,17 @@ echo $this->Html->script(array('jquery-ui-autocomplete/jquery-ui'));
 <?php
 if ($lngnec == 0) {$lngnec = 1;} //Fuerza insertar al menos una cuando no hay necesidades
 for ($i = 0; $i < $lngnec; $i++) {
-	echo "\$('#Necesidadactividad{$i}Descripcion').autocomplete({\n";
-	echo "\tsource:\"".Router::url('/', true)."necesidadactividades/findnecesidades\",\n";
-	echo "\topen: function() {\$('.ui-menu').width('30em')}\n";
-	echo "});\n";
-	echo "\$('#Necesidadactividad{$i}ObjetoNombre').autocomplete({\n";
-	echo "\tsource:\"".Router::url('/', true)."objetos/findobjeto\",\n";
-	echo "\topen: function() {\$('.ui-menu').width('30em')},\n";
-	echo "\tselect: function(event, ui) {\$('#'+event.target.id.replace('Nombre', 'Id')).val(ui.item.id); console.log(event.target.id);}\n";
-	echo "});\n";
+?>
+	$('#Necesidadactividad<?php echo $i; ?>Descripcion').autocomplete({
+		source:"<?php echo Router::url('/', true); ?>necesidadactividades/findnecesidades",
+			open: function() {$('.ui-menu').width('30em')}
+		});
+	$('#Necesidadactividad<?php echo $i; ?>ObjetoNombre').autocomplete({
+		source:"<?php echo Router::url('/', true); ?>objetos/findobjeto?i="+horarioInicioSesion($('#Necesidadactividad<?php echo $i; ?>Sesion').val())+'&f='+horarioFinSesion($('#Necesidadactividad<?php echo $i; ?>Sesion').val()),
+		open: function() {$('.ui-menu').width('30em')},
+		select: function(event, ui) {$('#'+event.target.id.replace('Nombre', 'Id')).val(ui.item.id); console.log(event.target.id);}
+	});
+<?php
 }
 ?>
 
@@ -199,6 +196,54 @@ for ($i = 0; $i < $lngnec; $i++) {
 		}
 	});
 	
+	function horarioInicioSesion(id) {
+		var meses = {Jan: 1, Ene: 1, Feb: 2, Mar: 3, Apr: 4, Abr: 4, May: 5, Jun: 6, Jul: 7, Aug: 8, Ago: 8, Sep: 9, Oct: 10, Nov: 11, Dec: 12, Dic: 12};
+		var horas = [];
+		$('#tablahorarios input[readonly="readonly"]').each(function() {
+			if ((this.value == id) || (id == 0)) {
+				elem = '#'+this.id.substr(0,this.id.length-6);
+				horas.push(Math.floor(new Date($(elem+'InicioYear').val(), $(elem+'InicioMonth').val(), $(elem+'InicioDay').val(), $(elem+'InicioHour').val(), $(elem+'InicioMin').val(), 0, 0).getTime()/1000));
+				if (id != 0) {return false;}
+			}
+		})
+	
+		if (horas.length == 0) {
+			$('#tablahorarios tr').each(function() {
+				if ((this.id.length > 0) && (($('#'+this.id+' td:eq(1)').text() == id) || (id == 0))) {
+					partes = $('#'+this.id+' td:eq(2)').text().match(/^[a-zA-Z]{3}, (\d+)\/([a-zA-Z]{3})\/(\d{4}) (\d{2}):(\d{2}):(\d{2})$/);
+					horas.push(Math.floor(new Date(partes[3], meses[partes[2]], partes[1], partes[4], partes[5], partes[6], 0)/1000));
+					if (id != 0) {return false;}
+				}
+			})
+		}
+		
+		return horas.join(',');
+	}
+	
+	function horarioFinSesion(id) {
+		var meses = {Jan: 1, Ene: 1, Feb: 2, Mar: 3, Apr: 4, Abr: 4, May: 5, Jun: 6, Jul: 7, Aug: 8, Ago: 8, Sep: 9, Oct: 10, Nov: 11, Dec: 12, Dic: 12};
+		var horas = [];
+		$('#tablahorarios input[readonly="readonly"]').each(function() {
+			if ((this.value == id) || (id == 0)) {
+				elem = '#'+this.id.substr(0,this.id.length-6);
+				horas.push(Math.floor(new Date($(elem+'FinYear').val(), $(elem+'FinMonth').val(), $(elem+'FinDay').val(), $(elem+'FinHour').val(), $(elem+'FinMin').val(), 0, 0).getTime()/1000));
+				if (id != 0) {return false;}
+			}
+		})
+		
+		if (horas.length == 0) {
+			$('#tablahorarios tr').each(function() {
+				if ((this.id.length > 0) && (($('#'+this.id+' td:eq(1)').text() == id) || (id == 0))) {
+					partes = $('#'+this.id+' td:eq(2)').text().match(/^[a-zA-Z]{3}, (\d+)\/([a-zA-Z]{3})\/(\d{4}) (\d{2}):(\d{2}):(\d{2})$/);
+					horas.push(Math.floor(new Date(partes[3], meses[partes[2]], partes[1], partes[4], partes[5], partes[6], 0)/1000));
+					if (id != 0) {return false;}
+				}
+			})
+		}
+		
+		return horas.join(',');
+	}
+	
 	function numSesion() {
 		var horario = []; //El índice es el ide del elemento en form
 		var sesion = 1;
@@ -207,7 +252,6 @@ for ($i = 0; $i < $lngnec; $i++) {
 			horario[i] = {id:i, hora:datetime}
 		}
 		horario.sort(function(a,b) {
-			console.log(a.hora)
 			return a.hora > b.hora ? 1 : a.hora < b.hora ? -1 : 0;
 		});
 		for (var v of horario) {
