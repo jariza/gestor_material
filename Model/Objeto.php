@@ -1,6 +1,6 @@
 <?php
 class Objeto extends AppModel {
-	public $belongsTo = array('Ubicacion' => array('conditions' => array('Ubicacion.id !=' => '-1'))); //La condición es para los pendientes
+	public $belongsTo = array('Ubicacion' => array('conditions' => array('Ubicacion.id !=' => '-1'))); //La condición es para los pendientes de recibir
 	
 	//Si la fecha es todo 0 se considera que el objeto está aquí, en otro caso es que tiene que llegar
     public $validate = array(
