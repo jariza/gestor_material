@@ -17,8 +17,8 @@ class Actividad extends AppModel {
 	
 	public function beforeSave($options = array()) {
 		$zona = $this->Zona->findById($this->data[$this->alias]['zona_id'], 'Zona.calendarioext');
-		if ($zona['Zona']['calendarioext'] != '0') {
-			//Si se usa calendario externo, eliminar los horarios guardados
+		if (($this->data[$this->alias]['zona_id'] != $zona['Zona']['id']) && ($zona['Zona']['calendarioext'] != '0')) {
+			//Si cambia la zona y se pasa a usar una con calendario externo, eliminar los horarios guardados
 			$this->Horario->deleteAll(array('actividad_id' => $this->data[$this->alias]['id']));
 		}
 		if (isset($this->data[$this->alias]['enlaceweb'])) {

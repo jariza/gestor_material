@@ -58,12 +58,12 @@ class ActividadesController extends AppController {
 					'message' => "Debe ser un número entre 0 y $numsesiones"
 				));
 			}
-			if (array_key_exists('Horario', $this->request->data) && !$this->testNumSesion($this->request->data['Horario'])) {
+			if (array_key_exists('Horario', $this->request->data) && (count($this->request->data['Horario']) > 0) && !$this->testNumSesion($this->request->data['Horario'])) {
 				$this->Session->setFlash('Error en el orden de las sesiones, no se pudo crear la actividad.');
 			}
 			elseif ($this->Actividad->saveAssociated($this->request->data)) {
                 $this->Session->setFlash('Actividad añadida.');
-                return $this->redirect(array('action' => 'index'));
+                //return $this->redirect(array('action' => 'index'));
 			}
 			else {
 				$this->Session->setFlash('No se pudo crear la actividad, por favor, revisa el formulario.');
@@ -107,12 +107,12 @@ class ActividadesController extends AppController {
 					'message' => "Debe ser un número entre 0 y $numsesiones"
 				));
 			}
-			if (array_key_exists('Horario', $this->request->data) && !$this->testNumSesion($this->request->data['Horario'])) {
+			if (array_key_exists('Horario', $this->request->data) && (count($this->request->data['Horario']) > 0) && !$this->testNumSesion($this->request->data['Horario'])) {
 				$this->Session->setFlash('Error en el orden de las sesiones, no se pudo actualizar la actividad.');
 			}
 			elseif ($this->Actividad->saveAssociated($this->request->data)) {
 				$this->Session->setFlash('Actividad actualizada correctamente.');
-				return $this->redirect(array('action' => 'index'));
+				//return $this->redirect(array('action' => 'index'));
 			}
 			else {
 				$this->Session->setFlash('No se pudo actualizar la actividad.');
@@ -128,6 +128,14 @@ class ActividadesController extends AppController {
 			//Datos relativos a la zona (para mostrar el horario)
 			$this->Actividad->Zona->recursive = 0;
 			$this->request->data = array_merge($this->request->data, $this->Actividad->Zona->findById($this->request->data['Actividad']['zona_id']));
+			//Inserta el horario en caso de calendario externo
+			if ($this->request->data['Zona']['calendarioext'] != '0') {
+				$insertarhorario = array();
+				foreach ($this->Actividad->Horario->findAllByActividad_id($this->request->data['Actividad']['id']) as $vhora) {
+					$insertarhorario['Horario'][] = $vhora['Horario'];
+				}
+				$this->request->data = array_merge($this->request->data, $insertarhorario);
+			}
 			//Datos relativos al nombre el objeto asignado
 			$objetosid = array();
 			foreach ($this->request->data['Necesidadactividad'] as $v) {

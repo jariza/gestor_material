@@ -8,7 +8,7 @@ class HorariosController extends AppController {
 		}
 
 		if ($this->Horario->delete($id)) {
-			$this->Session->setFlash(__('Horario %s eliminada.', $id));
+			$this->Session->setFlash('Horario %s eliminada.', $id);
 			return $this->redirect(array('controller' => 'actividades', 'action' => 'index'));
 		}
 	}
