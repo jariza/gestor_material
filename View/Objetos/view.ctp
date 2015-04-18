@@ -27,5 +27,33 @@
 	echo "\t\t<li>Creado: {$objeto['Objeto']['created']}</li>\n";
 	echo "\t\t<li>Modificado: {$objeto['Objeto']['modified']}</li>\n";
 	echo "\t</ul>\n";
+	
+	echo "<h2>Usado en</h2>\n";
+	if ((count($usoactividades) == 0) && (count($usozonas) == 0)) {
+		echo "<p>Sin uso</p>\n";
+	}
+	else {
+		echo "<ul>\n";
+		foreach ($usoactividades as $v) {
+			if ($objeto['Objeto']['fungible']) {
+				$txtinicial = "Usados {$v['Necesidadactividad']} en la actividad ";
+			}
+			else {
+				$txtinicial = "Usado en la actividad ";
+			}
+			echo "<li>$txtinicial &laquo;".$this->Html->link($v['Actividad']['nombre'], array('controller' => 'Actividades', 'action' => 'view', $v['Actividad']['id']))."&raquo;</li>\n";
+		}
+		foreach ($usozonas as $v) {
+			if ($objeto['Objeto']['fungible']) {
+				$txtinicial = "Usados {$v['Necesidadzona']} en la zona ";
+			}
+			else {
+				$txtinicial = "Usado en la zona ";
+			}
+			echo "<li>$txtinicial &laquo;".$this->Html->link($v['Zona']['nombre'], array('controller' => 'Zonas', 'action' => 'view', $v['Zona']['id']))."&raquo;</li>\n";
+		}
+		echo "</ul>\n";
+	}
+	
 	echo "<p>".$this->Html->link('Volver al listado de objetos', array('action' => 'index'))."</p>";
 ?>

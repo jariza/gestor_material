@@ -8,7 +8,7 @@ else {
 	$lnghorarios = 0;
 }
 
-echo $this->Form->create('Actividad', array('onsubmit' => 'numSesion1()'));
+echo $this->Form->create('Actividad', array('onsubmit' => 'numSesion()'));
 echo $this->Form->input('nombre');
 echo $this->Form->input('zona_id');
 echo $this->Form->input('enlaceweb', array('label' => 'Enlace a web de '.Configure::read('datosevento.nombre')));
@@ -115,6 +115,7 @@ echo $this->Form->input('id', array('type' => 'hidden'));
 echo $this->Form->submit('Guardar actividad', array('after' => $this->Html->link('Cancelar', array('action' => 'index'), array('class' => 'btncancelar'))));
 echo $this->Form->end();
 
+echo $this->Html->script(array('actividades'));
 echo $this->Html->script(array('jquery'));
 echo $this->Html->script(array('jquery-ui-autocomplete/jquery-ui'));
 ?>
@@ -141,7 +142,7 @@ echo $this->Html->script(array('jquery-ui-autocomplete/jquery-ui'));
 		$('#Necesidadactividad'+lastNecesidad+'ObjetoNombre').autocomplete({
 			source:"<?php echo Router::url('/', true); ?>objetos/findobjeto?i="+horarioInicioSesion(lastNecesidad)+'&f='+horarioFinSesion(lastNecesidad),
 			open: function() {$('.ui-menu').width('30em')},
-			select: function(event, ui) {$('#'+event.target.id.replace('Nombre', 'Id')).val(ui.item.id); console.log(event.target.id);}
+			select: function(event, ui) {$('#'+event.target.id.replace('Nombre', 'Id')).val(ui.item.id);}
 		});
 	}
 	function removeNecesidadactividad(x) {
@@ -179,7 +180,7 @@ for ($i = 0; $i < $lngnec; $i++) {
 	$('#Necesidadactividad<?php echo $i; ?>ObjetoNombre').autocomplete({
 		source:"<?php echo Router::url('/', true); ?>objetos/findobjeto?i="+horarioInicioSesion($('#Necesidadactividad<?php echo $i; ?>Sesion').val())+'&f='+horarioFinSesion($('#Necesidadactividad<?php echo $i; ?>Sesion').val()),
 		open: function() {$('.ui-menu').width('30em')},
-		select: function(event, ui) {$('#'+event.target.id.replace('Nombre', 'Id')).val(ui.item.id); console.log(event.target.id);}
+		select: function(event, ui) {$('#'+event.target.id.replace('Nombre', 'Id')).val(ui.item.id);}
 	});
 <?php
 }
@@ -195,69 +196,5 @@ for ($i = 0; $i < $lngnec; $i++) {
 			}
 		}
 	});
-	
-	function horarioInicioSesion(id) {
-		var meses = {Jan: 1, Ene: 1, Feb: 2, Mar: 3, Apr: 4, Abr: 4, May: 5, Jun: 6, Jul: 7, Aug: 8, Ago: 8, Sep: 9, Oct: 10, Nov: 11, Dec: 12, Dic: 12};
-		var horas = [];
-		$('#tablahorarios input[readonly="readonly"]').each(function() {
-			if ((this.value == id) || (id == 0)) {
-				elem = '#'+this.id.substr(0,this.id.length-6);
-				horas.push(Math.floor(new Date($(elem+'InicioYear').val(), $(elem+'InicioMonth').val(), $(elem+'InicioDay').val(), $(elem+'InicioHour').val(), $(elem+'InicioMin').val(), 0, 0).getTime()/1000));
-				if (id != 0) {return false;}
-			}
-		})
-	
-		if (horas.length == 0) {
-			$('#tablahorarios tr').each(function() {
-				if ((this.id.length > 0) && (($('#'+this.id+' td:eq(1)').text() == id) || (id == 0))) {
-					partes = $('#'+this.id+' td:eq(2)').text().match(/^[a-zA-Z]{3}, (\d+)\/([a-zA-Z]{3})\/(\d{4}) (\d{2}):(\d{2}):(\d{2})$/);
-					horas.push(Math.floor(new Date(partes[3], meses[partes[2]], partes[1], partes[4], partes[5], partes[6], 0)/1000));
-					if (id != 0) {return false;}
-				}
-			})
-		}
-		
-		return horas.join(',');
-	}
-	
-	function horarioFinSesion(id) {
-		var meses = {Jan: 1, Ene: 1, Feb: 2, Mar: 3, Apr: 4, Abr: 4, May: 5, Jun: 6, Jul: 7, Aug: 8, Ago: 8, Sep: 9, Oct: 10, Nov: 11, Dec: 12, Dic: 12};
-		var horas = [];
-		$('#tablahorarios input[readonly="readonly"]').each(function() {
-			if ((this.value == id) || (id == 0)) {
-				elem = '#'+this.id.substr(0,this.id.length-6);
-				horas.push(Math.floor(new Date($(elem+'FinYear').val(), $(elem+'FinMonth').val(), $(elem+'FinDay').val(), $(elem+'FinHour').val(), $(elem+'FinMin').val(), 0, 0).getTime()/1000));
-				if (id != 0) {return false;}
-			}
-		})
-		
-		if (horas.length == 0) {
-			$('#tablahorarios tr').each(function() {
-				if ((this.id.length > 0) && (($('#'+this.id+' td:eq(1)').text() == id) || (id == 0))) {
-					partes = $('#'+this.id+' td:eq(2)').text().match(/^[a-zA-Z]{3}, (\d+)\/([a-zA-Z]{3})\/(\d{4}) (\d{2}):(\d{2}):(\d{2})$/);
-					horas.push(Math.floor(new Date(partes[3], meses[partes[2]], partes[1], partes[4], partes[5], partes[6], 0)/1000));
-					if (id != 0) {return false;}
-				}
-			})
-		}
-		
-		return horas.join(',');
-	}
-	
-	function numSesion() {
-		var horario = []; //El índice es el ide del elemento en form
-		var sesion = 1;
-		for (i = 0; i <= lastHorario; i++) {
-			datetime = $('#Horario'+i+'InicioYear').val() + $('#Horario'+i+'InicioMonth').val() + $('#Horario'+i+'InicioDay').val() + $('#Horario'+i+'InicioHour').val() + $('#Horario'+i+'InicioMin').val();
-			horario[i] = {id:i, hora:datetime}
-		}
-		horario.sort(function(a,b) {
-			return a.hora > b.hora ? 1 : a.hora < b.hora ? -1 : 0;
-		});
-		for (var v of horario) {
-			$('#Horario'+v.id+'Sesion').val(sesion);
-			sesion++;
-		}
-	}
 
 </script>

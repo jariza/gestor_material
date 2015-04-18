@@ -82,7 +82,7 @@ class ObjetosController extends AppController {
 				elseif ($disponible == 0) {$comentario = " (todos usados)";}
 				else {$comentario = ' (faltan '.abs($disponible).')';}
 			}
-			elseif (($limiteinicio != '') && ($limitefin != '') && (array_key_exists($v['Objeto']['id'], $inventariablesactividades))) {
+			elseif ((count($limiteinicio) > 0) && (count($limitefin) > 0) && (array_key_exists($v['Objeto']['id'], $inventariablesactividades))) {
 				foreach ($limiteinicio as $k2 => $v2) {
 					foreach ($inventariablesactividades[$v['Objeto']['id']] as $v3) {
 						if (($v2 < $v3['fin']) || ($limitefin[$k2] > $v3['inicio'])) {
@@ -145,7 +145,15 @@ class ObjetosController extends AppController {
 			throw new NotFoundException(__('Objeto desconocido'));
 		}
 
+		$mnecesidadactividad = $this->loadModel('Necesidadactividad');
+		$mnecesidadzona = $this->loadModel('Necesidadzona');
+		
+		$usoactividades = $this->Necesidadactividad->findAllByObjeto_id($id, array('Actividad.id, Actividad.nombre, Necesidadactividad.cantidad'));
+		$usozonas = $this->Necesidadzona->findAllByObjeto_id($id, array('Zona.id, Zona.nombre'));
+		
 		$this->set('objeto', $objeto);
+		$this->set('usoactividades', $usoactividades);
+		$this->set('usozonas', $usozonas);
 	}
 
 	public function agendarecepcion() {

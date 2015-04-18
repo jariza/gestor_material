@@ -1,7 +1,13 @@
+<script type="text/javascript">
+	function a1() {
+		console.log("HOLAKEASE");
+	}
+</script>
+
 <?php
 echo "<h1>Nueva actividad</h1>\n";
 
-echo $this->Form->create('Actividad', array('onsubmit' => 'numSesion()'));
+echo $this->Form->create('Actividad', array('onsubmit' => 'numSesion(); a1()'));
 echo $this->Form->input('nombre');
 echo $this->Form->input('zona_id');
 echo $this->Form->input('enlaceweb', array('label' => 'Enlace a web de '.Configure::read('datosevento.nombre')));
@@ -49,6 +55,7 @@ echo "</tr>\n";
 echo $this->Form->submit('Guardar actividad', array('after' => $this->Html->link('Cancelar', array('action' => 'index'), array('class' => 'btncancelar'))));
 echo $this->Form->end();
 	
+echo $this->Html->script(array('actividades'));
 echo $this->Html->script(array('jquery'));
 echo $this->Html->script(array('jquery-ui-autocomplete/jquery-ui'));
 
@@ -72,7 +79,7 @@ echo $this->Html->script(array('jquery-ui-autocomplete/jquery-ui'));
 			open: function() {$('.ui-menu').width('30em')}
 		});
 		$('#Necesidadactividad'+lastNecesidad+'ObjetoNombre').autocomplete({
-			source:"<?php echo Router::url('/', true); ?>objetos/findobjeto",
+			source:"<?php echo Router::url('/', true); ?>objetos/findobjeto?i="+horarioInicioSesion(lastNecesidad)+'&f='+horarioFinSesion(lastNecesidad),
 			open: function() {$('.ui-menu').width('30em')},
 			select: function(event, ui) {$('#'+event.target.id.replace('Nombre', 'Id')).val(ui.item.id); console.log(event.target.id);}
 		});
@@ -106,7 +113,7 @@ echo $this->Html->script(array('jquery-ui-autocomplete/jquery-ui'));
 		open: function() {$('.ui-menu').width('30em')}
 	});
 	$('#Necesidadactividad0ObjetoNombre').autocomplete({
-		source:"<?php echo Router::url('/', true); ?>objetos/findobjeto",
+		source:"<?php echo Router::url('/', true); ?>objetos/findobjeto?i="+horarioInicioSesion(0)+'&f='+horarioFinSesion(0),
 		open: function() {$('.ui-menu').width('30em')},
 		select: function(event, ui) {$('#'+event.target.id.replace('Nombre', 'Id')).val(ui.item.id); console.log(event.target.id);}
 	});
@@ -116,28 +123,15 @@ echo $this->Html->script(array('jquery-ui-autocomplete/jquery-ui'));
 		if ($.inArray($('#ActividadZonaId').val(), conhorario) == -1) {
 			$('#tablahorarios').show();
 			$('#cabecerahorario').show();
+			$('input[id^=Horario0]').prop('disabled', false);
+			$('select[id^=Horario0]').prop('disabled', false);
 		}
 		else {
 			$('#tablahorarios').hide();
 			$('#cabecerahorario').hide();
+			$('input[id^=Horario0]').prop('disabled', true);
+			$('select[id^=Horario0]').prop('disabled', true);
 		}
 	});
 	$('#ActividadZonaId').change();
-	
-	function numSesion() {
-		var horario = []; //El índice es el ide del elemento en form
-		var sesion = 1;
-		for (i = 0; i <= lastHorario; i++) {
-			datetime = $('#Horario'+i+'InicioYear').val() + $('#Horario'+i+'InicioMonth').val() + $('#Horario'+i+'InicioDay').val() + $('#Horario'+i+'InicioHour').val() + $('#Horario'+i+'InicioMin').val();
-			horario[i] = {id:i, hora:datetime}
-		}
-		horario.sort(function(a,b) {
-			console.log(a.hora)
-			return a.hora > b.hora ? 1 : a.hora < b.hora ? -1 : 0;
-		});
-		for (var v of horario) {
-			$('#Horario'+v.id+'Sesion').val(sesion);
-			sesion++;
-		}
-	}
 </script>
