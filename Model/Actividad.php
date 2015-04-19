@@ -16,10 +16,13 @@ class Actividad extends AppModel {
 	);
 	
 	public function beforeSave($options = array()) {
-		$zona = $this->Zona->findById($this->data[$this->alias]['zona_id'], 'Zona.calendarioext');
-		if (($this->data[$this->alias]['zona_id'] != $zona['Zona']['id']) && ($zona['Zona']['calendarioext'] != '0')) {
-			//Si cambia la zona y se pasa a usar una con calendario externo, eliminar los horarios guardados
-			$this->Horario->deleteAll(array('actividad_id' => $this->data[$this->alias]['id']));
+		if (array_key_exists('id', $this->data[$this->alias])) {
+			$zona = $this->Zona->findById($this->data[$this->alias]['zona_id'], 'Zona.calendarioext');
+			$actividad = $this->findById($this->data[$this->alias]['id'], 'zona_id');
+			if (($this->data[$this->alias]['zona_id'] != $actividad['Actividad']['zona_id']) && ($zona['Zona']['calendarioext'] != '0')) {
+				//Si cambia la zona y se pasa a usar una con calendario externo, eliminar los horarios guardados
+				$this->Horario->deleteAll(array('actividad_id' => $this->data[$this->alias]['id']));
+			}
 		}
 		if (isset($this->data[$this->alias]['enlaceweb'])) {
 			if (($this->data[$this->alias]['enlaceweb'] != '') && (strncmp('http://', $this->data[$this->alias]['enlaceweb'], 7) != 0)) {

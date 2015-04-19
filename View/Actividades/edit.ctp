@@ -14,7 +14,7 @@ echo $this->Form->input('zona_id');
 echo $this->Form->input('enlaceweb', array('label' => 'Enlace a web de '.Configure::read('datosevento.nombre')));
 echo $this->Form->input('desctecnica', array('label' => 'Descripción técnica'));
 ?>
-<h2>Horario</h2>
+<h2 id="cabecerahorario">Horario</h2>
 <table id="tablahorarios">
 <?php
 	if ($this->request['data']['Zona']['calendarioext'] == '0') {
@@ -34,7 +34,7 @@ echo $this->Form->input('desctecnica', array('label' => 'Descripción técnica')
 	if ($this->request['data']['Zona']['calendarioext'] == '0') {
 		if ($lnghorarios == 0) {
 			echo "<tr id=\"horario0\">\n";
-			echo "\t<td>1 ".$this->Form->button('&nbsp;-&nbsp;',array('type'=>'button','title'=>'Eliminar la horario', 'onclick' => 'removeHorario(0)'))."</td>\n";
+			echo "\t<td>".$this->Form->button('&nbsp;-&nbsp;',array('type'=>'button','title'=>'Eliminar la horario', 'onclick' => 'removeHorario(0)'))."</td>\n";
 			echo "\t<td>".$this->Form->input('Horario.0.sesion', array('type' => 'text', 'size' => 3, 'div' => false, 'label' => '', 'readonly'=>'readonly', 'class' => 'faketext'))."</td>\n";
 			echo "\t<td>".$this->Form->input('Horario.0.inicio', array('div' => false, 'label' => false, 'dateFormat' => 'DMY', 'timeFormat' => 24, 'empty' => false))."</td>\n";
 			echo "\t<td>".$this->Form->input('Horario.0.fin', array('div' => false, 'label' => false, 'dateFormat' => 'DMY', 'timeFormat' => 24, 'empty' => false))."</td>\n</tr>\n";
@@ -72,14 +72,15 @@ echo $this->Form->input('desctecnica', array('label' => 'Descripción técnica')
 
 <h2>Necesidades</h2>
 <table id="tablanecesidades">
-<tr><th></th><th>Descripción</th><th>Cantidad</th><th>Sesión</th><th>Objeto asignado</th></tr>
+<tr><th></th><th>Descripción</th><th>Cantidad</th><th>Infraestructura</th></th><th>Sesión</th><th>Objeto asignado</th></tr>
 <?php
 if ($lngnec == 0) {
 	echo "<tr id=\"necesidad0\">\n";
 		echo '<td>'.$this->Form->button('&nbsp;-&nbsp;',array('type'=>'button','title'=>'Eliminar la necesidad', 'onclick' => 'removeNecesidadactividad(0)'))."</td>\n";
-		echo '<td>'.$this->Form->input("Necesidadactividad.0.descripcion",array('label'=> false,'type'=>'text'))."</td>\n";
-		echo '<td>'.$this->Form->input("Necesidadactividad.0.cantidad",array('label'=> false,'type'=>'text'))."</td>\n";
-		echo '<td class="objetoasignado">'.$this->Form->input("Necesidadactividad.0.objeto_nombre",array('label'=> false,'type'=>'text')).$this->Form->input("Necesidadactividad.0.objeto_id",array('label'=> false,'type'=>'text', 'div' => false, 'size' => 4, 'readonly'=>'readonly'))."</td>\n";
+		echo '<td>'.$this->Form->input("Necesidadactividad.0.descripcion",array('label'=> false,'type'=>'text', 'div' => false))."</td>\n";
+		echo '<td>'.$this->Form->input("Necesidadactividad.0.cantidad",array('label'=> false,'type'=>'text', 'div' => false))."</td>\n";
+		echo '<td>'.$this->Form->input("Necesidadactividad.0.infraestructura",array('label'=> false, 'div' => false))."</td>\n";
+		echo '<td class="objetoasignado">'.$this->Form->input("Necesidadactividad.0.objeto_nombre",array('label'=> false,'type'=>'text', 'div' => false)).$this->Form->input("Necesidadactividad.0.objeto_id",array('label'=> false,'type'=>'text', 'div' => false, 'size' => 4, 'readonly'=>'readonly'))."</td>\n";
 	echo "</tr>\n";
 }
 else {
@@ -88,6 +89,7 @@ else {
 		echo '<td>'.$this->Html->Link('[X]', array('controller' => 'necesidadactividades', 'action' => 'delete', $v['id']), array('confirm' => "¿Seguro que deseas eliminar esta necesidad?\n¡LAS MODIFICACIONES NO GUARDADAS SE PERDERÁN!"))."</td>\n";
 		echo '<td>'.$this->Form->input("Necesidadactividad.$k.descripcion",array('label'=> false, 'type'=>'text', 'div' => false))."</td>\n";
 		echo '<td>'.$this->Form->input("Necesidadactividad.$k.cantidad",array('label'=> false, 'type'=>'text', 'div' => false))."</td>\n";
+		echo '<td>'.$this->Form->input("Necesidadactividad.$k.infraestructura",array('label'=> false, 'div' => false))."</td>\n";
 		echo '<td>'.$this->Form->input("Necesidadactividad.$k.sesion",array('label'=> false, 'type'=>'text', 'div' => false))."</td>\n";
 		if (is_null($v['objeto_id'])) {
 			$txtobjeto = '';
@@ -130,11 +132,13 @@ echo $this->Html->script(array('jquery-ui-autocomplete/jquery-ui'));
 		$("#necesidad"+lastNecesidad+" td:first").empty().append('<?php echo $this->Form->button('&nbsp;-&nbsp;',array('type'=>'button','title'=>'Eliminar la necesidad', 'onclick' => 'removeNecesidadactividad(\'+lastNecesidad+\')')); ?>');
 		$("#necesidad"+lastNecesidad+" input:first").attr('name','data[Necesidadactividad]['+lastNecesidad+'][descripcion]').attr('id','Necesidadactividad'+lastNecesidad+'Descripcion').val('');
 		$("#necesidad"+lastNecesidad+" input:eq(1)").attr('name','data[Necesidadactividad]['+lastNecesidad+'][cantidad]').attr('id','Necesidadactividad'+lastNecesidad+'Cantidad').val('');
-		$("#necesidad"+lastNecesidad+" input:eq(2)").attr('name','data[Necesidadactividad]['+lastNecesidad+'][sesion]').attr('id','Necesidadactividad'+lastNecesidad+'Sesion').val('');
-		$("#necesidad"+lastNecesidad+" input:eq(3)").attr('name','data[Necesidadactividad]['+lastNecesidad+'][id]').attr('id','Necesidadactividad'+lastNecesidad+'Id').val('');
-		$("#necesidad"+lastNecesidad+" input:eq(4)").attr('name','data[Necesidadactividad]['+lastNecesidad+'][objeto_nombre]').attr('id','Necesidadactividad'+lastNecesidad+'ObjetoNombre').val('');
+		$("#necesidad"+lastNecesidad+" input:eq(2)").attr('name','data[Necesidadactividad]['+lastNecesidad+'][infraestructura]').attr('id','Necesidadactividad'+lastNecesidad+'Infraestructura_').val('0');
+		$("#necesidad"+lastNecesidad+" input:eq(3)").attr('name','data[Necesidadactividad]['+lastNecesidad+'][infraestructura]').attr('id','Necesidadactividad'+lastNecesidad+'Infraestructura').prop('checked', false);
+		$("#necesidad"+lastNecesidad+" input:eq(4)").attr('name','data[Necesidadactividad]['+lastNecesidad+'][sesion]').attr('id','Necesidadactividad'+lastNecesidad+'Sesion').val('');
+		$("#necesidad"+lastNecesidad+" input:eq(5)").attr('name','data[Necesidadactividad]['+lastNecesidad+'][id]').attr('id','Necesidadactividad'+lastNecesidad+'Id').val('');
+		$("#necesidad"+lastNecesidad+" input:eq(6)").attr('name','data[Necesidadactividad]['+lastNecesidad+'][objeto_nombre]').attr('id','Necesidadactividad'+lastNecesidad+'ObjetoNombre').val('');
 		$("#necesidad"+lastNecesidad+" label:first").attr('for','Necesidadactividad'+lastNecesidad+'ObjetoNombre').text('');
-		$("#necesidad"+lastNecesidad+" input:eq(5)").attr('name','data[Necesidadactividad]['+lastNecesidad+'][objeto_id]').attr('id','Necesidadactividad'+lastNecesidad+'ObjetoId').val('');
+		$("#necesidad"+lastNecesidad+" input:eq(7)").attr('name','data[Necesidadactividad]['+lastNecesidad+'][objeto_id]').attr('id','Necesidadactividad'+lastNecesidad+'ObjetoId').val('');
 		$('#Necesidadactividad'+lastNecesidad+'Descripcion').autocomplete({
 			source:"<?php echo Router::url('/', true); ?>necesidadactividades/findnecesidades",
 			open: function() {$('.ui-menu').width('30em')}
@@ -188,13 +192,19 @@ for ($i = 0; $i < $lngnec; $i++) {
 
 	$('#ActividadZonaId').change(function() {
 		var conhorario = [<?php echo '"'.implode('", "', $horariozonas).'"'; ?>];
-		if ($.inArray($('#ActividadZonaId').val(), conhorario) != -1) {
-			if (confirm("Has cambiado a una zona vinculada a un calendario externo, se eliminarán los horarios que hayas introducido, ¿estás seguro?")) {
-				for (i = 0; i <= lastHorario; i++) {
-					removeHorario(i);
-				}
-			}
+		if ($.inArray($('#ActividadZonaId').val(), conhorario) == -1) {
+			$('#tablahorarios').show();
+			$('#cabecerahorario').show();
+			$('input[id^=Horario0]').prop('disabled', false);
+			$('select[id^=Horario0]').prop('disabled', false);
+		}
+		else {
+			$('#tablahorarios').hide();
+			$('#cabecerahorario').hide();
+			$('input[id^=Horario0]').prop('disabled', true);
+			$('select[id^=Horario0]').prop('disabled', true);
 		}
 	});
+	$('#ActividadZonaId').change();
 
 </script>

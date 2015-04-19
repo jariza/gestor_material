@@ -39,7 +39,7 @@
 	}
 	echo "\t</table>\n";
 	echo "\t<h2>Necesidades de la actividad</h2>\n\t<table>";
-	echo "\t<tr><th>Id</th><th>Descripción</th><th>Cantidad</th><th>Sesión</th><th>Objeto asignado</th></tr>\n";
+	echo "\t<tr><th>Id</th><th>Descripción</th><th>Cantidad</th><th>Infraestructura</th><th>Sesión</th><th>Objeto asignado</th></tr>\n";
 	foreach ($actividad['Necesidadactividad'] as $v) {
 		if (is_null($v['objeto_id'])) {
 			$txtdescripcion = '';
@@ -47,7 +47,8 @@
 		else {
 			$txtdescripcion = htmlspecialchars($v['Objeto']['descripcion']);
 		}
-		echo "\t\t<tr><td>{$v['id']}</td><td>".htmlspecialchars($v['descripcion'])."</td><td>{$v['cantidad']}</td><td>{$v['sesion']}</td><td>$txtdescripcion</td></tr>\n";
+		if ($v['infraestructura']) {$txtinfraestructura = 'Si'; } else {$txtinfraestructura = 'No';}
+		echo "\t\t<tr><td>{$v['id']}</td><td>".htmlspecialchars($v['descripcion'])."</td><td>{$v['cantidad']}</td><td>$txtinfraestructura</td><td>{$v['sesion']}</td><td>$txtdescripcion</td></tr>\n";
 	}
 	echo "\t</table>\n";
 	echo "<p>".$this->Html->link('Volver al listado de actividades', array('action' => 'index'))."</p>";

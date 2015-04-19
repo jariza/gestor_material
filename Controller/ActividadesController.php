@@ -112,7 +112,7 @@ class ActividadesController extends AppController {
 			}
 			elseif ($this->Actividad->saveAssociated($this->request->data)) {
 				$this->Session->setFlash('Actividad actualizada correctamente.');
-				//return $this->redirect(array('action' => 'index'));
+				return $this->redirect(array('action' => 'index'));
 			}
 			else {
 				$this->Session->setFlash('No se pudo actualizar la actividad.');
