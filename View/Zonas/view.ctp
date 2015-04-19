@@ -21,9 +21,10 @@
 	echo "<p>Descripción técnica:</p>\n";
 	echo "<pre>{$zona['Zona']['desctecnica']}</pre>\n";
 	echo "\t<h2>Necesidades de la zona</h2>\n\t<table>";
-	echo "\t<tr><th>Id</th><th>Descripción</th><th>Cantidad</th><th>Objeto asignado</th></tr>\n";
+	echo "\t<tr><th>Id</th><th>Descripción</th><th>Cantidad</th><th>Infraestructura</th><th>Objeto asignado</th></tr>\n";
 	foreach ($zona['Necesidadzona'] as $v) {
-		echo "\t\t<tr><td>{$v['id']}</td><td>".htmlspecialchars($v['descripcion'])."</td><td>{$v['cantidad']}</td><td>".htmlspecialchars($v['Objeto']['descripcion'])."</td></tr>\n";
+		if ($v['infraestructura']) {$txtinfraestructura = 'Si'; } else {$txtinfraestructura = 'No';}
+		echo "\t\t<tr><td>{$v['id']}</td><td>".htmlspecialchars($v['descripcion'])."</td><td>{$v['cantidad']}</td><td>$txtinfraestructura</td><td>".htmlspecialchars($v['Objeto']['descripcion'])."</td></tr>\n";
 	}
 	echo "\t</table>\n";
 	echo "<p>".$this->Html->link('Volver al listado de zonas', array('action' => 'index'))."</p>";
