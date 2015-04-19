@@ -9,7 +9,7 @@ echo "<h1>Nueva actividad</h1>\n";
 
 echo $this->Form->create('Actividad', array('onsubmit' => 'numSesion(); a1()'));
 echo $this->Form->input('nombre');
-echo $this->Form->input('zona_id');
+echo $this->Form->input('zona_id', array('onchange' => 'getRecursosZona(this.value)'));
 echo $this->Form->input('enlaceweb', array('label' => 'Enlace a web de '.Configure::read('datosevento.nombre')));
 echo $this->Form->input('desctecnica', array('label' => 'Descripción técnica'));
 ?>
@@ -31,6 +31,9 @@ echo "\t<td>".$this->Form->input('Horario.0.fin', array('div' => false, 'label' 
 </tr>
 </table>
 
+<h2>Recursos de la zona</h2>
+<div id="recursoszona"></div>
+
 <h2>Necesidades</h2>
 <table id="tablanecesidades">
 <tr><th></th><th>Descripción</th><th>Cantidad</th><th>Infraestructura</th><th>Sesión</th><th>Objeto asignado</th></tr>
@@ -46,6 +49,7 @@ echo "</tr>\n";
 ?>
 <tr id="trAdd">
 	<td><?php echo $this->Form->button('+',array('type'=>'button','title'=>'Añadir un ítem','onclick'=>'addNecesidadactividad()')); ?></td>
+	<td></td>
 	<td></td>
 	<td></td>
 	<td></td>
@@ -76,6 +80,7 @@ echo $this->Html->script(array('jquery-ui-autocomplete/jquery-ui'));
 		$("#necesidad"+lastNecesidad+" input:eq(3)").attr('name','data[Necesidadactividad]['+lastNecesidad+'][infraestructura]').attr('id','Necesidadactividad'+lastNecesidad+'Infraestructura').prop('checked', false);
 		$("#necesidad"+lastNecesidad+" input:eq(4)").attr('name','data[Necesidadactividad]['+lastNecesidad+'][sesion]').attr('id','Necesidadactividad'+lastNecesidad+'Sesion').val('');
 		$("#necesidad"+lastNecesidad+" input:eq(5)").attr('name','data[Necesidadactividad]['+lastNecesidad+'][objeto_id]').attr('id','Necesidadactividad'+lastNecesidad+'ObjetoId').val('');
+		$("#necesidad"+lastNecesidad+" label:first").attr('for','Necesidadactividad'+lastNecesidad+'ObjetoNombre').text("");
 		$("#necesidad"+lastNecesidad+" input:eq(6)").attr('name','data[Necesidadactividad]['+lastNecesidad+'][objeto_nombre]').attr('id','Necesidadactividad'+lastNecesidad+'ObjetoNombre').val('');
 		$('#Necesidadactividad'+lastNecesidad+'Descripcion').autocomplete({
 			source:"<?php echo Router::url('/', true); ?>necesidadactividades/findnecesidades",
@@ -137,4 +142,14 @@ echo $this->Html->script(array('jquery-ui-autocomplete/jquery-ui'));
 		}
 	});
 	$('#ActividadZonaId').change();
+	
+	function getRecursosZona(id) {
+		$.ajax({
+			type: "GET",
+			url: '<?php echo Router::url('/', true); ?>Necesidadzonas/necesidadeszona/'+id,
+			success: function(data) {
+				$('#recursoszona').html(data);
+			}
+		});
+	}
 </script>
