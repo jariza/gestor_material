@@ -38,6 +38,7 @@ echo "</tr>\n";
 	<td></td>
 	<td></td>
 	<td></td>
+	<td></td>
 </tr>
 </table>
 <?php

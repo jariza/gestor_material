@@ -85,7 +85,7 @@ echo $this->Html->script(array('jquery-ui-autocomplete/jquery-ui'));
 		$("#necesidad"+lastRow+" input:eq(3)").attr('name','data[Necesidadzona]['+lastRow+'][infraestructura]').attr('id','Necesidadzona'+lastRow+'Infraestructura').prop('checked', false);
 		$("#necesidad"+lastRow+" input:eq(4)").attr('name','data[Necesidadzona]['+lastRow+'][objeto_id]').attr('id','Necesidadzona'+lastRow+'ObjetoId').val('');
 		$("#necesidad"+lastRow+" input:eq(5)").attr('name','data[Necesidadzona]['+lastRow+'][id]').attr('id','Necesidadzona'+lastRow+'Id').val('');
-		$("#necesidad"+lastRow+" label:first").attr('for','Necesidadzona'+lastRow+'ObjetoNombre');
+		$("#necesidad"+lastRow+" label:first").attr('for','Necesidadzona'+lastRow+'ObjetoNombre').text('');
 		$("#necesidad"+lastRow+" input:eq(6)").attr('name','data[Necesidadzona]['+lastRow+'][objeto_nombre]').attr('id','Necesidadzona'+lastRow+'ObjetoNombre').val('');
 		$('#Necesidadzona'+lastRow+'Descripcion').autocomplete({
 			source:"<?php echo Router::url('/', true); ?>necesidadzonas/findnecesidades",

@@ -2,6 +2,16 @@
 class NecesidadactividadesController extends AppController {
     public $helpers = array('Html', 'Form');
 
+	public function isAuthorized($usuario) {
+		if (isset($usuario['rol'])) {
+			if (in_array($usuario['rol'], array('admin', 'produccion'))) {
+				return true;
+			}
+		}
+		// Default deny
+		return false;
+	}
+
 	public function findnecesidades() {
 		$this->autoLayout = false;
 		$this->autoRender = false;

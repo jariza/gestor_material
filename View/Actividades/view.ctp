@@ -38,6 +38,30 @@
 		echo "</td></tr>\n";
 	}
 	echo "\t</table>\n";
+	echo "\t<h2>Recursos de la zona</h2>\n";
+	if (count($actividad['Zona']['Necesidadzona']) == 0) {
+		echo "<p id=\"recursoszona\">Sin recursos.</p>\n";
+	}
+	else {
+		echo "<ul id=\"recursoszona\">\n";
+		foreach($actividad['Zona']['Necesidadzona'] as $v){
+			$txtcantidad = '';
+			$txtinfraestructura = '';
+			$txtgarantizado = '';
+			if ($v['cantidad'] > 1) {
+				$txtcantidad = $v['cantidad'].'x ';
+			}
+			if ($v['infraestructura']) {
+				$txtinfraestructura = 'Infraestructura: ';
+			}
+			elseif (is_null($v['objeto_id'])) {
+				$txtgarantizado = ' (recurso NO garantizado)';
+			}
+			
+			echo "<li>$txtinfraestructura$txtcantidad{$v['descripcion']}$txtgarantizado</li>\n";
+		}
+		echo "</ul>\n";
+	}
 	echo "\t<h2>Necesidades de la actividad</h2>\n\t<table>";
 	echo "\t<tr><th>Id</th><th>Descripción</th><th>Cantidad</th><th>Infraestructura</th><th>Sesión</th><th>Objeto asignado</th></tr>\n";
 	foreach ($actividad['Necesidadactividad'] as $v) {

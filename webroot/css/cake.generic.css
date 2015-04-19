@@ -823,6 +823,11 @@ td.objetoasignado input {
 	display: inline-block;
 }
 
+div#recursoszona, p#recursoszona, ul#recursoszona {
+	padding: 0px;
+	margin-left: 10px;
+}
+
 /** Autocomplete **/
 #url-rewriting-warning {
 	display:none;
