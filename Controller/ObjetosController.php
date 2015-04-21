@@ -7,6 +7,10 @@ class ObjetosController extends AppController {
 		$this->Security->unlockFields = array('ObjetoFechaentregaDay', 'ObjetoFechaentregaMonth', 'ObjetoFechaentregaYear', 'ObjetoFechaentregaHour', 'ObjetoFechaentregaMin', 'ObjetoComentariosentrega'); //El componente Security no se lleva bien con los cambios dinámicos de Forms
 	}
 
+	private function cmphoras($a, $b) {
+		return strtotime($b['inicio']) - strtotime($a['inicio']);
+	}
+
 	public function isAuthorized($usuario) {
 		if (isset($usuario['rol'])) {
 			if (in_array($usuario['rol'], array('admin', 'produccion'))) {
@@ -199,6 +203,83 @@ class ObjetosController extends AppController {
 			'fields' => array('Objeto.descripcion', 'Objeto.cantidad', 'Objeto.fechaentrega', 'Objeto.fechadevolucion', 'Objeto.comentariosentrega', 'Objeto.comentariosdevolucion'),
 		));
 		$this->set('objetos', $this->paginate('Objeto'));
+	}
+	
+	public function agenda($id = null) {
+		if (!$id) {
+			throw new NotFoundException('Objeto desconocido');
+		}
+
+		$objeto = $this->Objeto->findById($id);
+		if (!$objeto) {
+			throw new NotFoundException('Objeto desconocido');
+		}
+
+		if ($this->request->query('imprimir') == 1) {
+			$this->layout = 'print';
+			$this->set('imprimir', true);
+		}
+		else {
+			$this->set('imprimir', false);
+		}
+
+		$mnzona = $this->loadModel('Necesidadzona');
+		$mnactividad = $this->loadModel('Necesidadactividad');
+		$usozona = $this->Necesidadzona->findAllByObjeto_id($id, array('Necesidadzona.descripcion', 'Necesidadzona.cantidad', 'Necesidadzona.infraestructura', 'Zona.id', 'Zona.nombre'));
+		$usoactividades = $this->Necesidadactividad->findAllByObjeto_id($id, array('Necesidadactividad.id', 'Necesidadactividad.descripcion', 'Necesidadactividad.infraestructura', 'Necesidadactividad.cantidad', 'Necesidadactividad.actividad_id', 'Necesidadactividad.sesion'), array(), 0, 0, -1);
+		
+		$horarios = array();
+		foreach ($usoactividades as $v) {
+			$horarios[$v['Necesidadactividad']['id']] = array('actividad_id' => $v['Necesidadactividad']['actividad_id'], 'sesion' => $v['Necesidadactividad']['sesion']);
+		}
+		
+		//Obtener necesidades y sus horas
+		//Los que son de alguna sesión
+		$this->Necesidadactividad->bindModel(
+			array('hasOne' => array(
+				'Horario' => array('foreignKey' => false, 'type' => 'INNER', 'conditions' => array('Horario.actividad_id = Necesidadactividad.actividad_id', 'Horario.sesion = Necesidadactividad.sesion', 'Necesidadactividad.sesion != ' => 0, 'Necesidadactividad.objeto_id !=' => 'null'))
+				)
+			)
+		);
+		$results1 = $this->Necesidadactividad->findAllByObjeto_id($id, array('Necesidadactividad.descripcion', 'Necesidadactividad.cantidad', 'Necesidadactividad.infraestructura', 'Actividad.nombre', 'Horario.inicio', 'Horario.fin'));
+		//Los que son de todas las sesiones
+		$this->Necesidadactividad->unbindModel(array('hasOne' => array('Horario')));
+		$this->Necesidadactividad->bindModel(
+			array('hasOne' => array(
+				'Horario' => array('foreignKey' => false, 'type' => 'INNER', 'conditions' => array('Horario.actividad_id = Necesidadactividad.actividad_id', 'Necesidadactividad.sesion' => 0, 'Necesidadactividad.objeto_id !=' => 'null'))
+				)
+			)
+		);
+		$results2 = $this->Necesidadactividad->findAllByObjeto_id($id, array('Necesidadactividad.descripcion', 'Necesidadactividad.cantidad', 'Necesidadactividad.infraestructura', 'Actividad.nombre', 'Horario.inicio', 'Horario.fin'));
+		//Montar el horario
+		$results = array_merge($results1, $results2);
+		$horario = array();
+		foreach ($results as $v) {
+			$horario[] = array(
+				'necesidad' => $v['Necesidadactividad']['descripcion'],
+				'actividad' => $v['Actividad']['nombre'],
+				'inicio' => $v['Horario']['inicio'],
+				'fin' => $v['Horario']['fin'],
+				'cantidad' => $v['Necesidadactividad']['cantidad'],
+				'infraestructura' => $v['Necesidadactividad']['infraestructura'],
+				'solapado' => false
+			);
+		}
+		//Comprobar solapes
+		for ($i = 0; $i < count($horario); $i++) {
+			for ($j = $i+1; $j < count($horario); $j++) {
+				if (($horario[$i]['fin'] > $horario[$j]['inicio']) || ($horario[$j]['fin'] > $horario[$i]['inicio'])) {
+					$horario[$i]['solapado'] = true;
+					$horario[$j]['solapado'] = true;
+				}
+			}
+		}
+
+		usort($horario, array("ObjetosController", "cmphoras"));
+		$this->set('horario', $horario);
+		$this->set('objeto', $objeto);
+		$this->set('usozona', $usozona);
+		$this->set('usoactividades', $usoactividades);
 	}
 
 	public function edit($id = null) {
