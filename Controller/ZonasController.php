@@ -65,6 +65,100 @@ class ZonasController extends AppController {
 		$this->set('zona', $zona);
 	}
 
+	public function agenda($id = null) {
+		if (!$id) {
+			throw new NotFoundException('Zona desconocida');
+		}
+		
+		$this->Zona->recursive = 0;
+		$zona = $this->Zona->findById($id, array('Zona.id', 'Zona.nombre', 'Zona.desctecnica'));
+		if (!$zona) {
+			throw new NotFoundException('Zona desconocida');
+		}
+
+		if ($this->request->query('imprimir') == 1) {
+			$this->layout = 'print';
+			$this->set('imprimir', true);
+		}
+		else {
+			$this->set('imprimir', false);
+		}
+		
+		$necesidadzona = $this->Zona->Necesidadzona->findAllByZona_id($id, array('Necesidadzona.descripcion', 'Necesidadzona.infraestructura', 'Necesidadzona.cantidad', 'Necesidadzona.objeto_id', 'Objeto.descripcion', 'Objeto.fungible', 'Objeto.comentarios'));
+		$actividad = $this->Zona->Actividad->findAllByZona_id($id);
+
+		$horario = array();
+		$objetosid = array();
+		foreach ($actividad as $v) {
+			foreach ($v['Necesidadactividad'] as $v2) {
+				if (!is_null($v2['objeto_id'])) {
+					$objetosid[] = $v2['objeto_id'];
+				}
+			}
+			foreach ($v['Horario'] as $v2) {
+				$necesidades = array();
+				foreach ($v['Necesidadactividad'] as $necs) {
+					if (($necs['sesion'] == 0) || ($necs['sesion'] == $v2['sesion'])) {
+						$necesidades[] = $necs;
+					}
+				}
+				$horario[] = array(
+					'inicio' => $v2['inicio'],
+					'fin' => $v2['fin'],
+					'nombreactividad' => $v['Actividad']['nombre'],
+					'descactividad' => $v['Actividad']['desctecnica'],
+					'necesidades' => $necesidades
+				);
+			}
+		}
+		usort($horario, array("ZonasController", "cmphoras"));
+		
+		$mobjeto = $this->loadModel('Objeto');
+		$results = $this->Objeto->findAllById($objetosid, array('Objeto.id', 'Objeto.descripcion', 'Objeto.fungible', 'Objeto.comentarios'), array(), 0, 0, -1);
+		$objetos = array();
+		foreach ($results as $v) {
+			$objetos[$v['Objeto']['id']] = array(
+				'descripcion' => $v['Objeto']['descripcion'],
+				'fungible' => $v['Objeto']['fungible'],
+				'comentarios' => $v['Objeto']['comentarios']
+			);
+		}
+
+		$this->set('zona', $zona);
+		$this->set('necesidadzona', $necesidadzona);
+		$this->set('horario', $horario);
+		$this->set('objetos', $objetos);
+	}
+
+	public function listainfraestructura() {
+		if ($this->request->query('imprimir') == 1) {
+			$this->layout = 'print';
+			$this->set('imprimir', true);
+		}
+		else {
+			$this->set('imprimir', false);
+		}
+		
+		$mnecesidadactividad = $this->loadModel('Necesidadactividad');
+		$mnecesidadzona = $this->loadModel('Necesidadzona');
+		$neczona = $this->Necesidadzona->find('all', array('conditions' => array('infraestructura' => true), 'fields' => array('Necesidadzona.descripcion', 'Necesidadzona.cantidad', 'Zona.nombre')));
+		$necactividad = $this->Necesidadactividad->find('all', array('conditions' => array('infraestructura' => true), 'fields' => array('Necesidadactividad.descripcion', 'Necesidadactividad.cantidad', 'Actividad.nombre', 'Actividad.zona_id')));
+		
+		$zonaid = array();
+		foreach ($necactividad as $v) {
+			$zonaid[] = $v['Actividad']['zona_id'];
+		}
+		$results = $this->Zona->findAllById($zonaid);
+		$zonas = array();
+		foreach ($results as $v) {
+			$zonas[$v['Zona']['id']] = $v['Zona']['nombre'];
+		}
+		
+		$this->set('neczona', $neczona);
+		$this->set('necactividad', $necactividad);
+		$this->set('zonas', $zonas);
+	}
+
 	public function edit($id = null) {
 		if (!$id) {
 			throw new NotFoundException(__('Zona desconocida'));

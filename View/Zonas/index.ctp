@@ -14,6 +14,7 @@
 	foreach ($zonas as $v) {
 		$v['Zona'] = array_map('htmlspecialchars', $v['Zona']);
 		echo '<tr><td>'.$this->Html->link($v['Zona']['id'], array('action' => 'view', $v['Zona']['id']))." (";
+		echo $this->Html->link('A', array('action' => 'agenda', $v['Zona']['id']))."/";
 		if ($v['Zona']['calendarioext'] != '0') {
 			echo $this->Form->postLink('S', array('action' => 'synccalendario', $v['Zona']['id']), array('confirm' => "La sincronización de calendario puede tardar un tiempo, por favor, espera 5 minutos o a que salga un mensaje."))."/";
 		}
