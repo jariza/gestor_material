@@ -833,6 +833,29 @@ p.erroruso, tr.erroruso td {
 	font-weight: bold;
 }
 
+ul#menuprincipal {
+	text-align: center;
+}
+
+ul#menuprincipal h2 {
+	color: white;
+	background: black;
+	font-weight: bold;
+	padding: 5px 10px 5px 10px;
+}
+
+ul#menuprincipal ul {
+	display: block;
+	float: left;
+	border: 1px solid black;
+	padding-bottom: 10px;
+	list-style: none;
+}
+
+ul#menuprincipal li {
+	padding-top: 5px;
+}
+
 /** Autocomplete **/
 #url-rewriting-warning {
 	display:none;
