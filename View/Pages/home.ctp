@@ -31,6 +31,7 @@ if (in_array($rol, array('admin', 'produccion'))) {
 	echo "\t</ul>\n";
 	echo "\t<li>".$this->Html->link('Gestión de zonas', array('controller' => 'Zonas'))."</li>\n";
 	echo "\t<li>".$this->Html->link('Gestión de actividades', array('controller' => 'Actividades'))."</li>\n";
+	echo "\t<li>".$this->Html->link('Infraestructura necesaria', array('controller' => 'Zonas', 'action' => 'listainfraestructura'))."</li>\n";
 }
 ?>
 </ul>
