@@ -23,6 +23,6 @@
 <?php
 
 	if (!$imprimir) {
-		echo "<p>".$this->Html->link('Volver al listado de zonas', '/')."</p>";
+		echo "<p>".$this->Html->link('Volver al inicio', '/')."</p>";
 	}
 ?>
