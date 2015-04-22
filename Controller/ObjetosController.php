@@ -152,8 +152,8 @@ class ObjetosController extends AppController {
 		$mnecesidadactividad = $this->loadModel('Necesidadactividad');
 		$mnecesidadzona = $this->loadModel('Necesidadzona');
 		
-		$usoactividades = $this->Necesidadactividad->findAllByObjeto_id($id, array('Actividad.id, Actividad.nombre, Necesidadactividad.cantidad'));
-		$usozonas = $this->Necesidadzona->findAllByObjeto_id($id, array('Zona.id, Zona.nombre'));
+		$usoactividades = $this->Necesidadactividad->findAllByObjeto_id($id, array('Actividad.id', 'Actividad.nombre', 'Necesidadactividad.cantidad'));
+		$usozonas = $this->Necesidadzona->findAllByObjeto_id($id, array('Zona.id', 'Zona.nombre', 'Necesidadzona.cantidad'));
 		
 		$this->set('objeto', $objeto);
 		$this->set('usoactividades', $usoactividades);
@@ -237,7 +237,7 @@ class ObjetosController extends AppController {
 		//Los que son de alguna sesión
 		$this->Necesidadactividad->bindModel(
 			array('hasOne' => array(
-				'Horario' => array('foreignKey' => false, 'type' => 'INNER', 'conditions' => array('Horario.actividad_id = Necesidadactividad.actividad_id', 'Horario.sesion = Necesidadactividad.sesion', 'Necesidadactividad.sesion != ' => 0, 'Necesidadactividad.objeto_id !=' => 'null'))
+				'Horario' => array('foreignKey' => false, 'type' => 'INNER', 'conditions' => array('Horario.actividad_id = Necesidadactividad.actividad_id', 'Horario.sesion = Necesidadactividad.sesion', 'Necesidadactividad.sesion != ' => 0, 'Necesidadactividad.objeto_id !=' => null))
 				)
 			)
 		);
@@ -246,7 +246,7 @@ class ObjetosController extends AppController {
 		$this->Necesidadactividad->unbindModel(array('hasOne' => array('Horario')));
 		$this->Necesidadactividad->bindModel(
 			array('hasOne' => array(
-				'Horario' => array('foreignKey' => false, 'type' => 'INNER', 'conditions' => array('Horario.actividad_id = Necesidadactividad.actividad_id', 'Necesidadactividad.sesion' => 0, 'Necesidadactividad.objeto_id !=' => 'null'))
+				'Horario' => array('foreignKey' => false, 'type' => 'INNER', 'conditions' => array('Horario.actividad_id = Necesidadactividad.actividad_id', 'Necesidadactividad.sesion' => 0, 'Necesidadactividad.objeto_id !=' => null))
 				)
 			)
 		);
@@ -265,12 +265,14 @@ class ObjetosController extends AppController {
 				'solapado' => false
 			);
 		}
-		//Comprobar solapes
-		for ($i = 0; $i < count($horario); $i++) {
-			for ($j = $i+1; $j < count($horario); $j++) {
-				if (($horario[$i]['fin'] > $horario[$j]['inicio']) || ($horario[$j]['fin'] > $horario[$i]['inicio'])) {
-					$horario[$i]['solapado'] = true;
-					$horario[$j]['solapado'] = true;
+		if (!$objeto['Objeto']['fungible']) {
+			//Comprobar solapes
+			for ($i = 0; $i < count($horario); $i++) {
+				for ($j = $i+1; $j < count($horario); $j++) {
+					if (($horario[$i]['fin'] > $horario[$j]['inicio']) || ($horario[$j]['fin'] > $horario[$i]['inicio'])) {
+						$horario[$i]['solapado'] = true;
+						$horario[$j]['solapado'] = true;
+					}
 				}
 			}
 		}

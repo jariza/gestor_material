@@ -36,21 +36,21 @@
 		echo "<ul>\n";
 		foreach ($usoactividades as $v) {
 			if ($objeto['Objeto']['fungible']) {
-				$txtinicial = "Usados {$v['Necesidadactividad']} en la actividad ";
+				$txtinicial = "Usados {$v['Necesidadactividad']['cantidad']} en la actividad ";
 			}
 			else {
 				$txtinicial = "Usado en la actividad ";
 			}
-			echo "<li>$txtinicial &laquo;".$this->Html->link($v['Actividad']['nombre'], array('controller' => 'Actividades', 'action' => 'view', $v['Actividad']['id']))."&raquo;</li>\n";
+			echo "<li>$txtinicial &laquo;".$this->Html->link($v['Actividad']['nombre'], array('controller' => 'Actividades', 'action' => 'view', $v['Actividad']['id']))."&raquo;.</li>\n";
 		}
 		foreach ($usozonas as $v) {
 			if ($objeto['Objeto']['fungible']) {
-				$txtinicial = "Usados {$v['Necesidadzona']} en la zona ";
+				$txtinicial = "Usados {$v['Necesidadzona']['cantidad']} en la zona ";
 			}
 			else {
 				$txtinicial = "Usado en la zona ";
 			}
-			echo "<li>$txtinicial &laquo;".$this->Html->link($v['Zona']['nombre'], array('controller' => 'Zonas', 'action' => 'view', $v['Zona']['id']))."&raquo;</li>\n";
+			echo "<li>$txtinicial &laquo;".$this->Html->link($v['Zona']['nombre'], array('controller' => 'Zonas', 'action' => 'view', $v['Zona']['id']))."&raquo;.</li>\n";
 		}
 		echo "</ul>\n";
 	}
