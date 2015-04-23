@@ -1,6 +1,7 @@
 <h1 style="display: inline-block; width: 80%">Agenda de la zona &laquo;<?php echo htmlspecialchars($zona['Zona']['nombre']); ?>&raquo;</h1>
 <p style="display: inline-block; width: 18%; text-align: right"><?php echo $this->Html->link('[Versión para imprimir]', array($zona['Zona']['id'], '?' => 'imprimir=1'), array('id' => 'avisoimprimir', 'target' => '_blank')); ?></p>
 <p><?php echo $zona['Zona']['desctecnica']; ?></p>
+<p>Recuerda: en esta agenda no se comprueban solapes ya que estos exceden el ámbito de una zona.</p>
 <h2>Infraestructura necesaria para la zona</h2>
 <table>
 	<tr><th>Necesidad</th><th>Cantidad</th></tr>
