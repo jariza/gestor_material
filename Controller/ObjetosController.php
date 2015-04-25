@@ -134,9 +134,8 @@ class ObjetosController extends AppController {
 				$this->Session->setFlash(__('No se pudo crear el objeto, por favor, revisa el formulario.'));
 			}
 		}
-		else {
-			$this->set('ubicaciones', $this->Objeto->Ubicacion->find('list'));
-		}
+
+		$this->set('ubicaciones', $this->Objeto->Ubicacion->find('list'));
     }
 
 	public function view($id = null) {
