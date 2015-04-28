@@ -114,7 +114,7 @@ class ObjetosController extends AppController {
 		}
 		$this->paginate = array(
 			'conditions' => $conds,
-			'fields' => array('Objeto.id', 'Objeto.descripcion', 'Ubicacion.nombre', 'Objeto.fungible', 'Objeto.cantidad', 'Objeto.fechaentrega', 'Objeto.fechadevolucion'),
+			'fields' => array('Objeto.id', 'Objeto.descripcion', 'Objeto.fungible', 'Objeto.cantidad', 'Objeto.fechaentrega', 'Objeto.fechadevolucion'),
 		);
 		$this->set('objetos', $this->paginate('Objeto'));
     }
@@ -153,7 +153,7 @@ class ObjetosController extends AppController {
 		
 		$usoactividades = $this->Necesidadactividad->findAllByObjeto_id($id, array('Actividad.id', 'Actividad.nombre', 'Necesidadactividad.cantidad'));
 		$usozonas = $this->Necesidadzona->findAllByObjeto_id($id, array('Zona.id', 'Zona.nombre', 'Necesidadzona.cantidad'));
-		
+
 		$this->set('objeto', $objeto);
 		$this->set('usoactividades', $usoactividades);
 		$this->set('usozonas', $usozonas);
@@ -167,8 +167,16 @@ class ObjetosController extends AppController {
 			$opc = array('limit' => $this->Objeto->find('count'));
 			$this->set('imprimir', true);
 		}
+
 		$this->paginate = array_merge($opc, array(
-			'conditions' => array('Objeto.ubicacion_id' => -1),
+			'joins' => array(
+				array(
+					'table' => 'objetos_ubicaciones',
+					'type' => 'INNER',
+					'conditions' => array('objetos_ubicaciones.objeto_id = Objeto.id')
+				)
+			),
+			'conditions' => array('objetos_ubicaciones.ubicacion_id' => -1),
 			'fields' => array('Objeto.descripcion', 'Objeto.cantidad', 'Objeto.fechaentrega', 'Objeto.comentariosentrega'),
 		));
 		$this->set('objetos', $this->paginate('Objeto'));
@@ -198,7 +206,14 @@ class ObjetosController extends AppController {
 			$this->set('imprimir', true);
 		}
 		$this->paginate = array_merge($opc, array(
-			'conditions' => array('Objeto.ubicacion_id' => -1, 'Objeto.fechadevolucion !=' => '9999-12-31 23:59:59'),
+			'joins' => array(
+				array(
+					'table' => 'objetos_ubicaciones',
+					'type' => 'INNER',
+					'conditions' => array('objetos_ubicaciones.objeto_id = Objeto.id')
+				)
+			),
+			'conditions' => array('objetos_ubicaciones.ubicacion_id' => -1, 'Objeto.fechadevolucion !=' => '9999-12-31 23:59:59'),
 			'fields' => array('Objeto.descripcion', 'Objeto.cantidad', 'Objeto.fechaentrega', 'Objeto.fechadevolucion', 'Objeto.comentariosentrega', 'Objeto.comentariosdevolucion'),
 		));
 		$this->set('objetos', $this->paginate('Objeto'));
@@ -305,16 +320,16 @@ class ObjetosController extends AppController {
 
 		if (!$this->request->data) {
 			if ($objeto['Objeto']['fechaentrega'] == '0000-00-00 00:00:00') {
-				$objeto['Objeto']['fechaentrega'] = date('Y-m-d H:i:s'); //El campo fecha no determina nada en la vista, ajusto para comudidad del usuario
-			}
-			if ($objeto['Objeto']['fechadevolucion'] == '9999-12-31 23:59:59') {
-				$this->set('prestamo', false);
-				$objeto['Objeto']['fechadevolucion'] = date('Y-m-d H:i:s'); //El campo fecha no determina nada en la vista, ajusto para comudidad del usuario
-			}
-			else {
-				$this->set('prestamo', true);
+				$objeto['Objeto']['fechaentrega'] = date('Y-m-d H:i:s'); //El campo fecha no determina nada en la vista, ajusto para comodidad del usuario
 			}
 			$this->request->data = $objeto;
+		}
+		if ($objeto['Objeto']['fechadevolucion'] == '9999-12-31 23:59:59') {
+			$this->set('prestamo', false);
+			$objeto['Objeto']['fechadevolucion'] = date('Y-m-d H:i:s'); //El campo fecha no determina nada en la vista, ajusto para comodidad del usuario
+		}
+		else {
+			$this->set('prestamo', true);
 		}
 	}
 

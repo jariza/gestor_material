@@ -12,7 +12,6 @@
 	<tr>
 		<th><?php echo $this->Paginator->sort('id', 'Id'); ?></th>
 		<th><?php echo $this->Paginator->sort('descripcion', 'Descripción'); ?></th>
-		<th><?php echo $this->Paginator->sort('ubicacion', 'Ubicación'); ?></th>
 		<th><?php echo $this->Paginator->sort('fungible', 'Fungible'); ?></th>
 		<th><?php echo $this->Paginator->sort('cantidad', 'Cantidad'); ?></th>
 		<th><?php echo $this->Paginator->sort('fechaentrega', 'Fecha de entrega'); ?></th>
@@ -37,7 +36,7 @@
 		else {
 			$txtprestamo = '¡Préstamo! ';
 		}
-		echo "<td>$txtprestamo{$v['Objeto']['descripcion']}</td><td>".htmlspecialchars($v['Ubicacion']['nombre'])."</td><td>$txtfungible</td><td>{$v['Objeto']['cantidad']}</td><td>$txtentrega</td></tr>\n";
+		echo "<td>$txtprestamo{$v['Objeto']['descripcion']}</td><td>$txtfungible</td><td>{$v['Objeto']['cantidad']}</td><td>$txtentrega</td></tr>\n";
 	}
 ?>
 </table>

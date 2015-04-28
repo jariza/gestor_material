@@ -1,10 +1,14 @@
 <h1>Detalle de objeto</h1>
 <?php
+	$ubicaciones = array();
+	foreach ($objeto['Ubicacion'] as $v) {
+		$ubicaciones[] = $v['nombre'];
+	}
 	$objeto['Objeto'] = array_map('htmlspecialchars', $objeto['Objeto']);
 	echo "\t<ul>\n";
 	echo "\t\t<li>Id: {$objeto['Objeto']['id']}</li>\n";
 	echo "\t\t<li>Descripción: {$objeto['Objeto']['descripcion']}</li>\n";
-	echo "\t\t<li>Ubicación: ".htmlspecialchars($objeto['Ubicacion']['nombre'])."</li>\n";
+	echo "\t\t<li>Ubicación: ".htmlspecialchars(implode(', ', $ubicaciones))."</li>\n";
 	echo "\t\t<li>Fungible: ";
 	if ($objeto['Objeto']['fungible']) {
 		echo "si</li>\n";
