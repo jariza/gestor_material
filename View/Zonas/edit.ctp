@@ -73,7 +73,7 @@ echo $this->Html->script(array('jquery-ui-autocomplete/jquery-ui'));
 ?>
 
 <script type='text/javascript'>
-	var lastRow=<?php echo $lng-1; ?>;
+	var lastRow=<?php if ($lng == 0) {echo '0';} les {echo $lng-1}; ?>;
 	
 	function addNecesidadzona() {
 		lastRow++;
@@ -105,7 +105,7 @@ echo $this->Html->script(array('jquery-ui-autocomplete/jquery-ui'));
 if ($lng == 0) {$lng = 1;} //Fuerza insertar al menos una cuando no hay necesidades
 for ($i = 0; $i < $lng; $i++) {
 	echo "\$('#Necesidadzona{$i}Descripcion').autocomplete({\n";
-	echo "\tsource:\"".Router::url('/', true)."necesidadzona/sfindnecesidades\",\n";
+	echo "\tsource:\"".Router::url('/', true)."necesidadzona/findnecesidades\",\n";
 	echo "\topen: function() {\$('.ui-menu').width('30em')}\n";
 	echo "});\n";
 	echo "\$('#Necesidadzona{$i}ObjetoNombre').autocomplete({\n";
