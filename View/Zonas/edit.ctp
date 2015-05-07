@@ -73,7 +73,7 @@ echo $this->Html->script(array('jquery-ui-autocomplete/jquery-ui'));
 ?>
 
 <script type='text/javascript'>
-	var lastRow=<?php if ($lng == 0) {echo '0';} les {echo $lng-1}; ?>;
+	var lastRow=<?php if ($lng == 0) {echo '0';} else {echo $lng-1;} ?>;
 	
 	function addNecesidadzona() {
 		lastRow++;
