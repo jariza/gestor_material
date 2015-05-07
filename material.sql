@@ -31,7 +31,7 @@ CREATE TABLE `actividades` (
   `created` datetime NOT NULL,
   `modified` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -40,6 +40,7 @@ CREATE TABLE `actividades` (
 
 LOCK TABLES `actividades` WRITE;
 /*!40000 ALTER TABLE `actividades` DISABLE KEYS */;
+INSERT INTO `actividades` VALUES (1,'234234',1,'','','2015-05-07 02:46:31','2015-05-07 02:46:31');
 /*!40000 ALTER TABLE `actividades` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -143,7 +144,7 @@ CREATE TABLE `necesidadzonas` (
   `created` datetime NOT NULL,
   `modified` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -152,6 +153,7 @@ CREATE TABLE `necesidadzonas` (
 
 LOCK TABLES `necesidadzonas` WRITE;
 /*!40000 ALTER TABLE `necesidadzonas` DISABLE KEYS */;
+INSERT INTO `necesidadzonas` VALUES (1,'pulseras para acreditación',0,500,5,NULL,'2015-05-07 02:19:26','2015-05-07 02:19:26'),(2,'regleta 4 enchufes',0,1,2,NULL,'2015-05-07 02:20:59','2015-05-07 02:20:59');
 /*!40000 ALTER TABLE `necesidadzonas` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -287,7 +289,7 @@ CREATE TABLE `zonas` (
   `created` datetime NOT NULL,
   `modified` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -296,6 +298,7 @@ CREATE TABLE `zonas` (
 
 LOCK TABLES `zonas` WRITE;
 /*!40000 ALTER TABLE `zonas` DISABLE KEYS */;
+INSERT INTO `zonas` VALUES (1,'Auditorio','','0','0000-00-00 00:00:00','2015-05-07 02:13:35','2015-05-07 02:13:35'),(2,'Sala de conferencias','','0','0000-00-00 00:00:00','2015-05-07 02:13:45','2015-05-07 02:20:59'),(3,'Sala de talleres','','0','0000-00-00 00:00:00','2015-05-07 02:13:56','2015-05-07 02:13:56'),(4,'Escenario','','0','0000-00-00 00:00:00','2015-05-07 02:14:06','2015-05-07 02:14:06'),(5,'Stand Animacomic','','0','0000-00-00 00:00:00','2015-05-07 02:18:57','2015-05-07 02:19:26'),(6,'Puerta','','0','0000-00-00 00:00:00','2015-05-07 02:19:54','2015-05-07 02:19:54'),(7,'Taquillas','','0','0000-00-00 00:00:00','2015-05-07 02:20:04','2015-05-07 02:20:04'),(8,'Sala VIP','','0','0000-00-00 00:00:00','2015-05-07 02:20:13','2015-05-07 02:20:13');
 /*!40000 ALTER TABLE `zonas` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -308,4 +311,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-04-28  2:58:46
+-- Dump completed on 2015-05-07  2:50:43
