@@ -31,7 +31,7 @@ CREATE TABLE `actividades` (
   `created` datetime NOT NULL,
   `modified` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -40,7 +40,6 @@ CREATE TABLE `actividades` (
 
 LOCK TABLES `actividades` WRITE;
 /*!40000 ALTER TABLE `actividades` DISABLE KEYS */;
-INSERT INTO `actividades` VALUES (1,'234234',1,'','','2015-05-07 02:46:31','2015-05-07 02:46:31');
 /*!40000 ALTER TABLE `actividades` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -144,7 +143,7 @@ CREATE TABLE `necesidadzonas` (
   `created` datetime NOT NULL,
   `modified` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=65 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -153,7 +152,7 @@ CREATE TABLE `necesidadzonas` (
 
 LOCK TABLES `necesidadzonas` WRITE;
 /*!40000 ALTER TABLE `necesidadzonas` DISABLE KEYS */;
-INSERT INTO `necesidadzonas` VALUES (1,'pulseras para acreditación',0,500,5,NULL,'2015-05-07 02:19:26','2015-05-07 02:19:26'),(2,'regleta 4 enchufes',0,1,2,NULL,'2015-05-07 02:20:59','2015-05-07 02:20:59');
+INSERT INTO `necesidadzonas` VALUES (1,'pulseras para acreditación',0,500,5,NULL,'2015-05-07 02:19:26','2015-05-14 22:58:22'),(2,'regleta 4 enchufes',0,1,2,NULL,'2015-05-07 02:20:59','2015-05-14 22:39:16'),(3,'Caja azucar monodosis',0,1,8,NULL,'2015-05-14 22:28:23','2015-05-14 22:29:56'),(4,'Cafetera',0,1,8,NULL,'2015-05-14 22:28:23','2015-05-14 22:29:56'),(5,'Café descafeinado',0,20,8,NULL,'2015-05-14 22:28:23','2015-05-14 22:29:56'),(6,'Café express',0,20,8,NULL,'2015-05-14 22:28:23','2015-05-14 22:29:56'),(7,'Café normal',0,20,8,NULL,'2015-05-14 22:28:23','2015-05-14 22:29:56'),(8,'Lata cerveza',0,6,8,NULL,'2015-05-14 22:28:23','2015-05-14 22:29:56'),(9,'Cucharilla',0,20,8,NULL,'2015-05-14 22:28:23','2015-05-14 22:29:56'),(10,'Dosis de leche',0,20,8,NULL,'2015-05-14 22:28:23','2015-05-14 22:29:56'),(11,'Enfriador de agua',0,1,8,NULL,'2015-05-14 22:28:23','2015-05-14 22:29:56'),(12,'Botella de agua',0,3,8,NULL,'2015-05-14 22:28:23','2015-05-14 22:29:56'),(13,'Bolsa frutos secos',0,2,8,NULL,'2015-05-14 22:28:23','2015-05-14 22:29:56'),(14,'Bolsa gominolas',0,2,8,NULL,'2015-05-14 22:28:23','2015-05-14 22:29:56'),(15,'Nevera',0,1,8,NULL,'2015-05-14 22:28:23','2015-05-14 22:29:56'),(16,'Palillo de remover',0,100,8,NULL,'2015-05-14 22:28:23','2015-05-14 22:29:56'),(17,'Platos pequeños',0,20,8,NULL,'2015-05-14 22:28:23','2015-05-14 22:29:56'),(18,'Refrescos lata',0,18,8,NULL,'2015-05-14 22:28:23','2015-05-14 22:29:56'),(19,'Regleta 5 enchufes',0,1,8,NULL,'2015-05-14 22:28:23','2015-05-14 22:29:56'),(20,'Bote de sacarina',0,1,8,NULL,'2015-05-14 22:28:23','2015-05-14 22:29:56'),(21,'Bandeja de saladitos',0,2,8,NULL,'2015-05-14 22:28:23','2015-05-14 22:29:56'),(22,'Servilletas cuadradas pequeñas',0,200,8,NULL,'2015-05-14 22:28:23','2015-05-14 22:29:56'),(23,'Tarta de manzana',0,2,8,NULL,'2015-05-14 22:28:23','2015-05-14 22:29:56'),(24,'Tazas de plástico',0,20,8,NULL,'2015-05-14 22:28:23','2015-05-14 22:29:56'),(25,'Vasos de plástico',0,20,8,NULL,'2015-05-14 22:28:23','2015-05-14 22:29:56'),(26,'Regleta 5 enchufes',0,5,5,NULL,'2015-05-14 22:34:19','2015-05-14 22:58:22'),(27,'A4 blanco',0,500,5,NULL,'2015-05-14 22:34:19','2015-05-14 22:58:22'),(28,'A4 colores',0,200,5,4,'2015-05-14 22:34:19','2015-05-14 22:58:22'),(29,'Goma de borrar',0,3,5,NULL,'2015-05-14 22:34:19','2015-05-14 22:58:22'),(30,'Lápiz',0,20,5,NULL,'2015-05-14 22:34:19','2015-05-14 22:58:22'),(31,'Lápiz de color',0,20,5,NULL,'2015-05-14 22:34:19','2015-05-14 22:58:22'),(32,'Rotulador negro gordo',0,3,5,NULL,'2015-05-14 22:34:19','2015-05-14 22:58:22'),(33,'Rotulador de color',0,20,5,NULL,'2015-05-14 22:34:19','2015-05-14 22:58:22'),(34,'Sacapuntas',0,3,5,NULL,'2015-05-14 22:34:19','2015-05-14 22:58:22'),(35,'Tijeras',0,3,5,NULL,'2015-05-14 22:34:19','2015-05-14 22:58:22'),(36,'Camisetas',0,500,5,NULL,'2015-05-14 22:34:19','2015-05-14 22:58:22'),(37,'Tripticos',0,15000,5,NULL,'2015-05-14 22:34:19','2015-05-14 22:58:22'),(38,'Acreditaciones',0,500,5,NULL,'2015-05-14 22:34:19','2015-05-14 22:58:22'),(39,'Plastiquillos para acreditaciones',0,500,5,NULL,'2015-05-14 22:34:19','2015-05-14 22:58:22'),(40,'Lanyards',0,500,5,NULL,'2015-05-14 22:34:19','2015-05-14 22:58:22'),(41,'Lista de acreditaciones',0,3,5,NULL,'2015-05-14 22:34:19','2015-05-14 22:58:22'),(42,'Lista con precios de artículos en grande',0,5,5,NULL,'2015-05-14 22:34:19','2015-05-14 22:58:22'),(43,'Impresora',0,1,5,NULL,'2015-05-14 22:34:19','2015-05-14 22:58:22'),(44,'Caja de herramientas',0,1,5,NULL,'2015-05-14 22:34:19','2015-05-14 22:58:22'),(45,'Listado de matrículas de coches',0,1,5,NULL,'2015-05-14 22:34:19','2015-05-14 22:58:22'),(46,'A4 menores no pagan',0,10,7,NULL,'2015-05-14 22:35:28','2015-05-14 22:35:28'),(47,'Precios entradas',0,10,7,NULL,'2015-05-14 22:35:28','2015-05-14 22:35:28'),(48,'Lista de acreditaciones',0,6,7,NULL,'2015-05-14 22:35:28','2015-05-14 22:35:28'),(49,'Lista de invitaciones',0,6,7,NULL,'2015-05-14 22:35:28','2015-05-14 22:35:28'),(50,'Cartel armas',0,6,6,NULL,'2015-05-14 22:36:05','2015-05-14 22:36:05'),(51,'Derecho de admisión',0,6,6,NULL,'2015-05-14 22:36:05','2015-05-14 22:36:05'),(52,'Instrucciones para puerta',0,6,6,NULL,'2015-05-14 22:36:05','2015-05-14 22:36:05'),(53,'Cizallado de guardarropa',0,1,9,NULL,'2015-05-14 22:36:31','2015-05-14 22:36:31'),(54,'Lona escenario',0,1,4,NULL,'2015-05-14 22:36:54','2015-05-14 22:39:42'),(55,'Cartel de organización plastificado',0,6,10,NULL,'2015-05-14 22:37:20','2015-05-14 22:37:20'),(56,'Máscaras',0,500,11,NULL,'2015-05-14 22:37:53','2015-05-14 22:37:53'),(57,'Recortables',0,500,11,NULL,'2015-05-14 22:37:53','2015-05-14 22:37:53'),(58,'Cañón',0,1,12,NULL,'2015-05-14 22:38:07','2015-05-14 22:38:07'),(59,'Cañón',0,1,3,NULL,'2015-05-14 22:38:22','2015-05-14 22:39:06'),(60,'Cañón',0,1,2,NULL,'2015-05-14 22:38:45','2015-05-14 22:39:16'),(61,'Ordenador',0,1,1,NULL,'2015-05-14 22:38:55','2015-05-14 22:38:55'),(62,'Ordenador',0,1,3,NULL,'2015-05-14 22:39:06','2015-05-14 22:39:06'),(63,'Ordenador',0,1,2,NULL,'2015-05-14 22:39:16','2015-05-14 22:39:16'),(64,'Ordenador',0,1,4,NULL,'2015-05-14 22:39:42','2015-05-14 22:39:42');
 /*!40000 ALTER TABLE `necesidadzonas` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -289,7 +288,7 @@ CREATE TABLE `zonas` (
   `created` datetime NOT NULL,
   `modified` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -298,7 +297,7 @@ CREATE TABLE `zonas` (
 
 LOCK TABLES `zonas` WRITE;
 /*!40000 ALTER TABLE `zonas` DISABLE KEYS */;
-INSERT INTO `zonas` VALUES (1,'Auditorio','','0','0000-00-00 00:00:00','2015-05-07 02:13:35','2015-05-07 02:13:35'),(2,'Sala de conferencias','','0','0000-00-00 00:00:00','2015-05-07 02:13:45','2015-05-07 02:20:59'),(3,'Sala de talleres','','0','0000-00-00 00:00:00','2015-05-07 02:13:56','2015-05-07 02:13:56'),(4,'Escenario','','0','0000-00-00 00:00:00','2015-05-07 02:14:06','2015-05-07 02:14:06'),(5,'Stand Animacomic','','0','0000-00-00 00:00:00','2015-05-07 02:18:57','2015-05-07 02:19:26'),(6,'Puerta','','0','0000-00-00 00:00:00','2015-05-07 02:19:54','2015-05-07 02:19:54'),(7,'Taquillas','','0','0000-00-00 00:00:00','2015-05-07 02:20:04','2015-05-07 02:20:04'),(8,'Sala VIP','','0','0000-00-00 00:00:00','2015-05-07 02:20:13','2015-05-07 02:20:13');
+INSERT INTO `zonas` VALUES (1,'Auditorio','','0','0000-00-00 00:00:00','2015-05-07 02:13:35','2015-05-14 22:38:55'),(2,'Sala de conferencias','','0','0000-00-00 00:00:00','2015-05-07 02:13:45','2015-05-14 22:39:16'),(3,'Sala de talleres','','0','0000-00-00 00:00:00','2015-05-07 02:13:56','2015-05-14 22:39:06'),(4,'Escenario','','0','0000-00-00 00:00:00','2015-05-07 02:14:06','2015-05-14 22:39:42'),(5,'Stand Animacomic','','0','0000-00-00 00:00:00','2015-05-07 02:18:57','2015-05-14 22:58:22'),(6,'Puerta','','0','0000-00-00 00:00:00','2015-05-07 02:19:54','2015-05-14 22:36:05'),(7,'Taquillas','','0','0000-00-00 00:00:00','2015-05-07 02:20:04','2015-05-14 22:35:28'),(8,'Sala VIP','','0','0000-00-00 00:00:00','2015-05-07 02:20:13','2015-05-14 22:29:56'),(9,'Guardarropa','','0','0000-00-00 00:00:00','2015-05-14 22:36:31','2015-05-14 22:36:31'),(10,'Coches','','0','0000-00-00 00:00:00','2015-05-14 22:37:20','2015-05-14 22:37:20'),(11,'Zona infantil','','0','0000-00-00 00:00:00','2015-05-14 22:37:53','2015-05-14 22:37:53'),(12,'Zona asiática','','0','0000-00-00 00:00:00','2015-05-14 22:38:07','2015-05-14 22:38:07');
 /*!40000 ALTER TABLE `zonas` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -311,4 +310,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-05-07  2:51:44
+-- Dump completed on 2015-05-14 23:27:05

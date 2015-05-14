@@ -57,6 +57,7 @@ class ZonasController extends AppController {
 		}
 
 		$this->Zona->recursive = 2;
+		$this->Zona->Necesidadzona->unbindModel(array('belongsTo' => 'Zona')); //Ahorro SQL
 		$zona = $this->Zona->findById($id);
 		if (!$zona) {
 			throw new NotFoundException(__('Zona desconocida'));

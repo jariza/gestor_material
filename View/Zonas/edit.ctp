@@ -32,7 +32,7 @@ if ($lng == 0) {
 		echo '<td>'.$this->Form->input("Necesidadzona.0.descripcion",array('label'=>false,'type'=>'text', 'div' => false))."</td>\n";
 		echo '<td>'.$this->Form->input("Necesidadzona.0.cantidad",array('label'=>false,'type'=>'text', 'div' => false))."</td>\n";
 		echo '<td>'.$this->Form->input("Necesidadzona.0.infraestructura",array('label'=>false, 'div' => false))."</td>\n";
-		echo '<td>'.$this->Form->input("Necesidadzona.0.objeto_id",array('label'=>false,'type'=>'text', 'readonly'=>'readonly', 'div' => false)).$this->Form->input("Necesidadzona.0.objeto_nombre",array('label'=>false,'type'=>'text', 'div' => false))."</td>\n";
+		echo '<td class="objetoasignado">'.$this->Form->input("Necesidadzona.0.objeto_id",array('label'=>false,'type'=>'text', 'readonly'=>'readonly', 'div' => false)).$this->Form->input("Necesidadzona.0.objeto_nombre",array('label'=>false,'type'=>'text', 'div' => false))."</td>\n";
 	echo "</tr>\n";
 }
 else {
@@ -42,7 +42,7 @@ else {
 		echo '<td>'.$this->Form->input("Necesidadzona.$k.descripcion",array('label'=>false, 'type'=>'text', 'div' => false))."</td>\n";
 		echo '<td>'.$this->Form->input("Necesidadzona.$k.cantidad",array('label'=>false, 'type'=>'text', 'div' => false))."</td>\n";
 		echo '<td>'.$this->Form->input("Necesidadzona.$k.infraestructura",array('label'=>false, 'div' => false))."</td>\n";
-		echo '<td>'.$this->Form->input("Necesidadzona.$k.objeto_id",array('label'=>false,'type'=>'text', 'readonly'=>'readonly', 'div' => false	));
+		echo '<td class="objetoasignado">';
 		echo $this->Form->input("Necesidadzona.$k.id", array('label' => false, 'type' => 'hidden'));
 		if (is_null($v['objeto_id'])) {
 			$txtobjeto = '';
@@ -50,7 +50,8 @@ else {
 		else {
 			$txtobjeto = $v['Objeto']['descripcion'];
 		}
-		echo $this->Form->input("Necesidadzona.$k.objeto_nombre",array('label'=> $txtobjeto, 'type'=>'text', 'div' => false))."</td>\n";
+		echo $this->Form->input("Necesidadzona.$k.objeto_nombre",array('label'=> $txtobjeto, 'type'=>'text', 'div' => false));
+		echo $this->Form->input("Necesidadzona.$k.objeto_id",array('label'=>false, 'size' => 3, 'type'=>'text', 'readonly'=>'readonly', 'div' => false))."</td>\n";
 		echo "</tr>\n";
 	}
 }
