@@ -83,6 +83,7 @@ if ($lngnec == 0) {
 		echo '<td>'.$this->Form->input("Necesidadactividad.0.descripcion",array('label'=> false,'type'=>'text', 'div' => false))."</td>\n";
 		echo '<td>'.$this->Form->input("Necesidadactividad.0.cantidad",array('label'=> false,'type'=>'text', 'div' => false))."</td>\n";
 		echo '<td>'.$this->Form->input("Necesidadactividad.0.infraestructura",array('label'=> false, 'div' => false))."</td>\n";
+		echo '<td>'.$this->Form->input("Necesidadactividad.0.sesion",array('label'=> false, 'type'=>'text', 'div' => false))."</td>\n";
 		echo '<td class="objetoasignado">'.$this->Form->input("Necesidadactividad.0.objeto_nombre",array('label'=> false,'type'=>'text', 'div' => false)).$this->Form->input("Necesidadactividad.0.objeto_id",array('label'=> false,'type'=>'text', 'div' => false, 'size' => 4, 'readonly'=>'readonly'))."</td>\n";
 	echo "</tr>\n";
 }
