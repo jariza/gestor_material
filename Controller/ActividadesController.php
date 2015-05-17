@@ -63,7 +63,7 @@ class ActividadesController extends AppController {
 			}
 			elseif ($this->Actividad->saveAssociated($this->request->data)) {
                 $this->Session->setFlash('Actividad añadida.');
-                //return $this->redirect(array('action' => 'index'));
+                return $this->redirect(array('action' => 'index'));
 			}
 			else {
 				$this->Session->setFlash('No se pudo crear la actividad, por favor, revisa el formulario.');
