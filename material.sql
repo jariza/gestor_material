@@ -31,7 +31,7 @@ CREATE TABLE `actividades` (
   `created` datetime NOT NULL,
   `modified` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -40,6 +40,7 @@ CREATE TABLE `actividades` (
 
 LOCK TABLES `actividades` WRITE;
 /*!40000 ALTER TABLE `actividades` DISABLE KEYS */;
+INSERT INTO `actividades` VALUES (1,'Torneo Krosmaster',14,'','','2015-05-17 03:12:39','2015-05-17 03:12:39');
 /*!40000 ALTER TABLE `actividades` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -288,7 +289,7 @@ CREATE TABLE `zonas` (
   `created` datetime NOT NULL,
   `modified` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -297,7 +298,7 @@ CREATE TABLE `zonas` (
 
 LOCK TABLES `zonas` WRITE;
 /*!40000 ALTER TABLE `zonas` DISABLE KEYS */;
-INSERT INTO `zonas` VALUES (1,'Auditorio','','0','0000-00-00 00:00:00','2015-05-07 02:13:35','2015-05-14 22:38:55'),(2,'Sala de conferencias','','0','0000-00-00 00:00:00','2015-05-07 02:13:45','2015-05-14 22:39:16'),(3,'Sala de talleres','','0','0000-00-00 00:00:00','2015-05-07 02:13:56','2015-05-14 22:39:06'),(4,'Escenario','','0','0000-00-00 00:00:00','2015-05-07 02:14:06','2015-05-14 22:39:42'),(5,'Stand Animacomic','','0','0000-00-00 00:00:00','2015-05-07 02:18:57','2015-05-14 22:58:22'),(6,'Puerta','','0','0000-00-00 00:00:00','2015-05-07 02:19:54','2015-05-14 22:36:05'),(7,'Taquillas','','0','0000-00-00 00:00:00','2015-05-07 02:20:04','2015-05-14 22:35:28'),(8,'Sala VIP','','0','0000-00-00 00:00:00','2015-05-07 02:20:13','2015-05-14 22:29:56'),(9,'Guardarropa','','0','0000-00-00 00:00:00','2015-05-14 22:36:31','2015-05-14 22:36:31'),(10,'Coches','','0','0000-00-00 00:00:00','2015-05-14 22:37:20','2015-05-14 22:37:20'),(11,'Zona infantil','','0','0000-00-00 00:00:00','2015-05-14 22:37:53','2015-05-14 22:37:53'),(12,'Zona asiática','','0','0000-00-00 00:00:00','2015-05-14 22:38:07','2015-05-14 22:38:07');
+INSERT INTO `zonas` VALUES (1,'Auditorio','','0','0000-00-00 00:00:00','2015-05-07 02:13:35','2015-05-14 22:38:55'),(2,'Sala de conferencias','','0','0000-00-00 00:00:00','2015-05-07 02:13:45','2015-05-14 22:39:16'),(3,'Sala de talleres','','0','0000-00-00 00:00:00','2015-05-07 02:13:56','2015-05-14 22:39:06'),(4,'Escenario','','0','0000-00-00 00:00:00','2015-05-07 02:14:06','2015-05-14 22:39:42'),(5,'Stand Animacomic','','0','0000-00-00 00:00:00','2015-05-07 02:18:57','2015-05-14 22:58:22'),(6,'Puerta','','0','0000-00-00 00:00:00','2015-05-07 02:19:54','2015-05-14 22:36:05'),(7,'Taquillas','','0','0000-00-00 00:00:00','2015-05-07 02:20:04','2015-05-14 22:35:28'),(8,'Sala VIP','','0','0000-00-00 00:00:00','2015-05-07 02:20:13','2015-05-14 22:29:56'),(9,'Guardarropa','','0','0000-00-00 00:00:00','2015-05-14 22:36:31','2015-05-14 22:36:31'),(10,'Coches','','0','0000-00-00 00:00:00','2015-05-14 22:37:20','2015-05-14 22:37:20'),(11,'Zona infantil','','0','0000-00-00 00:00:00','2015-05-14 22:37:53','2015-05-14 22:37:53'),(12,'Zona asiática','','0','0000-00-00 00:00:00','2015-05-14 22:38:07','2015-05-14 22:38:07'),(13,'Ludoteca','','0','0000-00-00 00:00:00','2015-05-17 03:11:26','2015-05-17 03:11:26'),(14,'Vete a saber','','0','0000-00-00 00:00:00','2015-05-17 03:11:57','2015-05-17 03:12:14');
 /*!40000 ALTER TABLE `zonas` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -310,4 +311,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-05-14 23:27:05
+-- Dump completed on 2015-05-17  3:13:48
