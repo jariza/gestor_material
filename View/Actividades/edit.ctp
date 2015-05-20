@@ -34,7 +34,7 @@ echo $this->Form->input('desctecnica', array('label' => 'Descripción técnica')
 	if ($this->request['data']['Zona']['calendarioext'] == '0') {
 		if ($lnghorarios == 0) {
 			echo "<tr id=\"horario0\">\n";
-			echo "\t<td>".$this->Form->button('&nbsp;-&nbsp;',array('type'=>'button','title'=>'Eliminar la horario', 'onclick' => 'removeHorario(0)'))."</td>\n";
+			echo "\t<td>".$this->Form->button('&nbsp;-&nbsp;',array('type'=>'button','title'=>'Eliminar el horario', 'onclick' => 'removeHorario(0)'))."</td>\n";
 			echo "\t<td>".$this->Form->input('Horario.0.sesion', array('type' => 'text', 'size' => 3, 'div' => false, 'label' => '', 'readonly'=>'readonly', 'class' => 'faketext'))."</td>\n";
 			echo "\t<td>".$this->Form->input('Horario.0.inicio', array('div' => false, 'label' => false, 'dateFormat' => 'DMY', 'timeFormat' => 24, 'empty' => false))."</td>\n";
 			echo "\t<td>".$this->Form->input('Horario.0.fin', array('div' => false, 'label' => false, 'dateFormat' => 'DMY', 'timeFormat' => 24, 'empty' => false))."</td>\n</tr>\n";
@@ -42,7 +42,12 @@ echo $this->Form->input('desctecnica', array('label' => 'Descripción técnica')
 		else {
 			foreach ($this->request['data']['Horario'] as $k => $v) {
 				echo "<tr id=\"horario$k\">\n";
-				echo '<td>'.$this->Html->Link('[X]', array('controller' => 'horarios', 'action' => 'delete', $v['id']), array('confirm' => "¿Seguro que deseas eliminar esta horario?\n¡LAS MODIFICACIONES NO GUARDADAS SE PERDERÁN!"))."</td>\n";
+				if (array_key_exists('id', $v)) {
+					echo '<td>'.$this->Html->Link('[X]', array('controller' => 'horarios', 'action' => 'delete', $v['id']), array('confirm' => "¿Seguro que deseas eliminar esta horario?\n¡LAS MODIFICACIONES NO GUARDADAS SE PERDERÁN!"))."</td>\n";
+				}
+				else { //Por si hubo un fallo antes de guardar el horario
+					echo '<td>'.$this->Form->button('&nbsp;-&nbsp;',array('type'=>'button','title'=>'Eliminar el horario', 'onclick' => "removeHorario($k)"))."</td>\n";
+				}
 				echo "\t<td>".$this->Form->input("Horario.$k.sesion", array('type' => 'text', 'size' => 3, 'div' => false, 'label' => '', 'readonly'=>'readonly', 'class' => 'faketext'))."</td>\n";
 				echo "\t<td>".$this->Form->input("Horario.$k.inicio", array('div' => false, 'label' => false, 'dateFormat' => 'DMY', 'timeFormat' => 24))."</td>\n";
 				echo "\t<td>".$this->Form->input("Horario.$k.fin", array('div' => false, 'label' => false, 'dateFormat' => 'DMY', 'timeFormat' => 24)).$this->Form->input("Horario.$k.id", array('label' => false, 'type' => 'hidden'))."</td>\n";
