@@ -20,8 +20,8 @@ echo $this->Form->input('desctecnica', array('label' => 'Descripción técnica')
 echo "<tr id=\"horario0\">\n";
 echo "\t<td>".$this->Form->button('&nbsp;-&nbsp;',array('type'=>'button','title'=>'Eliminar el horario', 'onclick' => 'removeHorario(0)'))."</td>\n";
 echo "\t<td>".$this->Form->input('Horario.0.sesion', array('type' => 'text', 'size' => 3, 'div' => false, 'label' => '', 'readonly'=>'readonly', 'class' => 'faketext'))."</td>\n";
-echo "\t<td>".$this->Form->input('Horario.0.inicio', array('div' => false, 'label' => false, 'dateFormat' => 'DMY', 'timeFormat' => 24))."</td>\n";
-echo "\t<td>".$this->Form->input('Horario.0.fin', array('div' => false, 'label' => false, 'dateFormat' => 'DMY', 'timeFormat' => 24))."</td>\n</tr>\n";
+echo "\t<td>".$this->Form->input('Horario.0.inicio', array('div' => false, 'label' => false, 'dateFormat' => 'DMY', 'timeFormat' => 24, 'empty' => '-'))."</td>\n";
+echo "\t<td>".$this->Form->input('Horario.0.fin', array('div' => false, 'label' => false, 'dateFormat' => 'DMY', 'timeFormat' => 24, 'empty' => '-'))."</td>\n</tr>\n";
 ?>
 <tr id="trAdd">
 	<td><?php echo $this->Form->button('+',array('type'=>'button','title'=>'Añadir un ítem','onclick'=>'addHorario()')); ?></td>
