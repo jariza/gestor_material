@@ -106,9 +106,9 @@ else {
 		else {
 			$txtobjeto = $v['Objeto']['descripcion'];
 		}
-		echo '<td class="objetoasignado">'.$this->Form->input("Necesidadactividad.$k.id", array('label' => false, 'type' => 'hidden'));
-		echo $this->Form->input("Necesidadactividad.$k.objeto_nombre",array('label'=> $txtobjeto, 'type'=>'text', 'div' => false));
-		echo $this->Form->input("Necesidadactividad.$k.objeto_id",array('label'=> false,'type'=>'text', 'div' => false, 'size' => 4, 'class' => 'objetoa', 'readonly'=>'readonly'))."</td>\n";
+		echo '<td class="objetoasignado">'.$this->Form->input("Necesidadactividad.$k.objeto_nombre",array('label'=> $txtobjeto, 'type'=>'text', 'div' => false));
+		echo $this->Form->input("Necesidadactividad.$k.objeto_id",array('label'=> false,'type'=>'text', 'div' => false, 'size' => 4, 'class' => 'objetoa', 'readonly'=>'readonly'));
+		echo $this->Form->input("Necesidadactividad.$k.id", array('label' => false, 'type' => 'hidden'))."</td>\n";
 		echo "</tr>\n";
 	}
 }
@@ -145,10 +145,10 @@ echo $this->Html->script(array('jquery-ui-autocomplete/jquery-ui'));
 		$("#necesidad"+lastNecesidad+" input:eq(2)").attr('name','data[Necesidadactividad]['+lastNecesidad+'][infraestructura]').attr('id','Necesidadactividad'+lastNecesidad+'Infraestructura_').val('0');
 		$("#necesidad"+lastNecesidad+" input:eq(3)").attr('name','data[Necesidadactividad]['+lastNecesidad+'][infraestructura]').attr('id','Necesidadactividad'+lastNecesidad+'Infraestructura').prop('checked', false);
 		$("#necesidad"+lastNecesidad+" input:eq(4)").attr('name','data[Necesidadactividad]['+lastNecesidad+'][sesion]').attr('id','Necesidadactividad'+lastNecesidad+'Sesion').val('');
-		$("#necesidad"+lastNecesidad+" input:eq(5)").attr('name','data[Necesidadactividad]['+lastNecesidad+'][id]').attr('id','Necesidadactividad'+lastNecesidad+'Id').val('');
-		$("#necesidad"+lastNecesidad+" input:eq(6)").attr('name','data[Necesidadactividad]['+lastNecesidad+'][objeto_nombre]').attr('id','Necesidadactividad'+lastNecesidad+'ObjetoNombre').val('');
+		$("#necesidad"+lastNecesidad+" input:eq(5)").attr('name','data[Necesidadactividad]['+lastNecesidad+'][objeto_nombre]').attr('id','Necesidadactividad'+lastNecesidad+'ObjetoNombre').val('');
 		$("#necesidad"+lastNecesidad+" label:first").attr('for','Necesidadactividad'+lastNecesidad+'ObjetoNombre').text("");
-		$("#necesidad"+lastNecesidad+" input:eq(7)").attr('name','data[Necesidadactividad]['+lastNecesidad+'][objeto_id]').attr('id','Necesidadactividad'+lastNecesidad+'ObjetoId').val('');
+		$("#necesidad"+lastNecesidad+" input:eq(6)").attr('name','data[Necesidadactividad]['+lastNecesidad+'][objeto_id]').attr('id','Necesidadactividad'+lastNecesidad+'ObjetoId').val('');
+		$("#necesidad"+lastNecesidad+" input:eq(7)").attr('name','data[Necesidadactividad]['+lastNecesidad+'][id]').attr('id','Necesidadactividad'+lastNecesidad+'Id').val('');
 		$('#Necesidadactividad'+lastNecesidad+'Descripcion').autocomplete({
 			source:"<?php echo Router::url('/', true); ?>necesidadactividades/findnecesidades",
 			open: function() {$('.ui-menu').width('30em')}

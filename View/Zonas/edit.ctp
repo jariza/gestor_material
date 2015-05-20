@@ -32,7 +32,7 @@ if ($lng == 0) {
 		echo '<td>'.$this->Form->input("Necesidadzona.0.descripcion",array('label'=>false,'type'=>'text', 'div' => false))."</td>\n";
 		echo '<td>'.$this->Form->input("Necesidadzona.0.cantidad",array('label'=>false,'type'=>'text', 'div' => false))."</td>\n";
 		echo '<td>'.$this->Form->input("Necesidadzona.0.infraestructura",array('label'=>false, 'div' => false))."</td>\n";
-		echo '<td class="objetoasignado">'.$this->Form->input("Necesidadzona.0.objeto_id",array('label'=>false,'type'=>'text', 'readonly'=>'readonly', 'div' => false)).$this->Form->input("Necesidadzona.0.objeto_nombre",array('label'=>false,'type'=>'text', 'div' => false))."</td>\n";
+		echo '<td class="objetoasignado">'.$this->Form->input("Necesidadzona.0.objeto_nombre",array('label'=>false,'type'=>'text', 'div' => false)).$this->Form->input("Necesidadzona.0.objeto_id",array('label'=>false,'type'=>'text', 'readonly'=>'readonly', 'div' => false, 'size' => 3))."</td>\n";
 	echo "</tr>\n";
 }
 else {
@@ -43,7 +43,6 @@ else {
 		echo '<td>'.$this->Form->input("Necesidadzona.$k.cantidad",array('label'=>false, 'type'=>'text', 'div' => false))."</td>\n";
 		echo '<td>'.$this->Form->input("Necesidadzona.$k.infraestructura",array('label'=>false, 'div' => false))."</td>\n";
 		echo '<td class="objetoasignado">';
-		echo $this->Form->input("Necesidadzona.$k.id", array('label' => false, 'type' => 'hidden'));
 		if (is_null($v['objeto_id'])) {
 			$txtobjeto = '';
 		}
@@ -51,7 +50,8 @@ else {
 			$txtobjeto = $v['Objeto']['descripcion'];
 		}
 		echo $this->Form->input("Necesidadzona.$k.objeto_nombre",array('label'=> $txtobjeto, 'type'=>'text', 'div' => false));
-		echo $this->Form->input("Necesidadzona.$k.objeto_id",array('label'=>false, 'size' => 3, 'type'=>'text', 'readonly'=>'readonly', 'div' => false))."</td>\n";
+		echo $this->Form->input("Necesidadzona.$k.objeto_id",array('label'=>false, 'size' => 3, 'type'=>'text', 'readonly'=>'readonly', 'div' => false));
+		echo $this->Form->input("Necesidadzona.$k.id", array('label' => false, 'type' => 'hidden'))."</td>\n";
 		echo "</tr>\n";
 	}
 }
@@ -84,10 +84,10 @@ echo $this->Html->script(array('jquery-ui-autocomplete/jquery-ui'));
 		$("#necesidad"+lastRow+" input:eq(1)").attr('name','data[Necesidadzona]['+lastRow+'][cantidad]').attr('id','Necesidadzona'+lastRow+'Cantidad').val('');
 		$("#necesidad"+lastRow+" input:eq(2)").attr('name','data[Necesidadzona]['+lastRow+'][infraestructura]').attr('id','Necesidadzona'+lastRow+'Infraestructura_').val('0');
 		$("#necesidad"+lastRow+" input:eq(3)").attr('name','data[Necesidadzona]['+lastRow+'][infraestructura]').attr('id','Necesidadzona'+lastRow+'Infraestructura').prop('checked', false);
-		$("#necesidad"+lastRow+" input:eq(4)").attr('name','data[Necesidadzona]['+lastRow+'][objeto_id]').attr('id','Necesidadzona'+lastRow+'ObjetoId').val('');
-		$("#necesidad"+lastRow+" input:eq(5)").attr('name','data[Necesidadzona]['+lastRow+'][id]').attr('id','Necesidadzona'+lastRow+'Id').val('');
+		$("#necesidad"+lastRow+" input:eq(4)").attr('name','data[Necesidadzona]['+lastRow+'][objeto_nombre]').attr('id','Necesidadzona'+lastRow+'ObjetoNombre').val('');
 		$("#necesidad"+lastRow+" label:first").attr('for','Necesidadzona'+lastRow+'ObjetoNombre').text('');
-		$("#necesidad"+lastRow+" input:eq(6)").attr('name','data[Necesidadzona]['+lastRow+'][objeto_nombre]').attr('id','Necesidadzona'+lastRow+'ObjetoNombre').val('');
+		$("#necesidad"+lastRow+" input:eq(5)").attr('name','data[Necesidadzona]['+lastRow+'][objeto_id]').attr('id','Necesidadzona'+lastRow+'ObjetoId').val('');
+		$("#necesidad"+lastRow+" input:eq(6)").attr('name','data[Necesidadzona]['+lastRow+'][id]').attr('id','Necesidadzona'+lastRow+'Id').val('');
 		$('#Necesidadzona'+lastRow+'Descripcion').autocomplete({
 			source:"<?php echo Router::url('/', true); ?>necesidadzonas/findnecesidades",
 			open: function() {$('.ui-menu').width('30em')}
