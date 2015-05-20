@@ -27,7 +27,7 @@
 		if (!$v['Necesidadzona']['infraestructura']) {
 			$txterror = '';
 			$txtclass = '';
-			if ((!$v['Objeto']['fungible']) && ($v['Necesidadzona']['cantidad'] > 1)) {
+			if ((!is_null($v['Necesidadzona']['objeto_id'])) && (!$v['Objeto']['fungible']) && ($v['Necesidadzona']['cantidad'] > 1)) {
 				$txterror = 'OjO: objeto no fungible con cantidad mayor que uno. ';
 				$txtclass = ' class="erroruso"';
 			}
