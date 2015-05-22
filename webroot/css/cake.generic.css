@@ -807,7 +807,7 @@ form.buscar {
 	width: 78%;
 	text-align: right;
 }
-form.buscar input#ObjetoQ {
+form.buscar input#ObjetoQ, form.buscar input#ActividadQ {
 	width: auto;
 	clear: none;
 }

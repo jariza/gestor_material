@@ -1,7 +1,11 @@
 <?php
 	echo "<h1 style=\"display: inline-block; width: 80%\">Gestión de actividades</h1>\n";
 	echo "<p style=\"display: inline-block; width: 18%; text-align: right\">".$this->Html->image('ayuda.png', array('alt' => 'Ayuda', 'url' => array('action' => 'ayuda')))."</p>\n";
-	echo '<p>'.$this->Html->link("Añadir nueva", array('action' => 'nueva'))."</p>\n";
+	echo '<p style="display: inline-block; width: 18%">'.$this->Html->link("Añadir nueva", array('action' => 'nueva'))."</p>\n";
+
+    echo $this->Form->create('Actividad', array('class' => 'buscar'));
+    echo $this->Form->input('q', array('label' => false, 'div' => false));
+    echo $this->Form->end(array('label' => 'Filtrar por nombre', 'div' => false));
 ?>
 
 <table>
