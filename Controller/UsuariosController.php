@@ -137,7 +137,7 @@ class UsuariosController extends AppController {
         }
         $nuevopass = $this->generateRandomString();
 		$this->Usuario->password = $nuevopass;
-		if ($this->Usuario->save($this->Usuario)) {
+		if ($this->Usuario->saveField('password', $nuevopass)) {
 			$this->Session->setFlash("Contraseña cambiada a $nuevopass");
 		}
 		else {
