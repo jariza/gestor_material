@@ -112,10 +112,7 @@ class ObjetosController extends AppController {
 		if (($q !== NULL) && ($q != '')) {
 			$conds = array('Objeto.descripcion LIKE' => '%'.str_replace(' ', '%', $q).'%');
 		}
-		$this->paginate = array(
-			'conditions' => $conds,
-			'fields' => array('Objeto.id', 'Objeto.descripcion', 'Objeto.fungible', 'Objeto.cantidad', 'Objeto.fechaentrega', 'Objeto.fechadevolucion'),
-		);
+		$this->paginate = array_merge($this->paginate, array('conditions' => $conds));
 		$this->set('objetos', $this->paginate('Objeto'));
     }
 

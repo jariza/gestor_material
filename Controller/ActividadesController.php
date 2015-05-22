@@ -39,6 +39,12 @@ class ActividadesController extends AppController {
 	}
 
     public function index() {
+		$q = $this->request->data('Actividad.q');
+		$conds = array();
+		if (($q !== NULL) && ($q != '')) {
+			$conds = array('Actividad.nombre LIKE' => '%'.str_replace(' ', '%', $q).'%');
+		}
+		$this->paginate = array_merge($this->paginate, array('conditions' => $conds));
         $this->set('actividades', $this->paginate());
     }
     
