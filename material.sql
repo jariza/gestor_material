@@ -31,7 +31,7 @@ CREATE TABLE `actividades` (
   `created` datetime NOT NULL,
   `modified` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -40,7 +40,7 @@ CREATE TABLE `actividades` (
 
 LOCK TABLES `actividades` WRITE;
 /*!40000 ALTER TABLE `actividades` DISABLE KEYS */;
-INSERT INTO `actividades` VALUES (1,'Torneo Krosmaster - SharkGames',14,'http://www.animacomic.es/2015/torneo-krosmaster-sharkgames/','','2015-05-17 03:12:39','2015-05-20 21:53:30'),(2,'Torneo Heroclix',14,'http://www.animacomic.es/2015/torneo-heroclix/','','2015-05-17 03:14:54','2015-05-17 03:14:54'),(3,'Del TBO al 3D',14,'http://www.animacomic.es/2015/del-tbo-al-3d/','','2015-05-17 03:15:15','2015-05-17 03:15:15'),(4,'MálagaCrea 2015',15,'http://www.animacomic.es/2015/malagacrea-2015/','','2015-05-17 03:16:02','2015-05-20 21:53:58'),(5,'Torneo Dice Master',14,'','','2015-05-17 03:16:16','2015-05-17 03:16:16'),(6,'Duelo de dibujantes',14,'','','2015-05-17 03:16:31','2015-05-17 03:23:56'),(7,'¡Star Wars en la palma de la mano!',15,'','','2015-05-17 03:16:48','2015-05-17 03:16:48'),(8,'Bernal presenta: “Jano in corpore sano”',14,'','','2015-05-17 03:17:05','2015-05-17 03:17:05'),(9,'Mesa redonda: Webcomic y el mercado. ¿Se puede vivir del web comic?',14,'','','2015-05-17 03:17:17','2015-05-17 03:17:17'),(10,'Proyección: Mortadelo y Filemón contra Jimmy el cachondo',1,'http://www.animacomic.es/2015/proyeccion-mortadelo-y-filemon-contra-jimmy-el-cachondo/','','2015-05-17 03:17:30','2015-05-20 21:54:23'),(11,'Xavier Àgueda presenta “Una amante complaciente”',14,'http://www.animacomic.es/2015/xavier-agueda-presenta-una-amante-complaciente/','','2015-05-17 03:17:43','2015-05-20 21:54:40'),(12,'Cómo hacer un webcomic de éxito (o no)',14,'http://www.animacomic.es/2015/como-hacer-un-webcomic-de-exito-o-no/','','2015-05-17 03:18:01','2015-05-20 21:54:57'),(13,'Concurso de Cosplay',4,'http://www.animacomic.es/2015/concurso-de-cosplay/','','2015-05-17 03:18:13','2015-05-20 21:55:14'),(14,'Exposición: El Señor de los Anillos',15,'http://www.animacomic.es/2015/exposicion-el-senor-de-los-anillos/','','2015-05-17 03:18:26','2015-05-20 21:55:29'),(15,'Wonder woman: 75 añitos',15,'http://www.animacomic.es/2015/75-aniversario-wonder-woman/','','2015-05-17 03:18:38','2015-05-20 21:55:45'),(16,'Animacomic GotTalent 2015',1,'','','2015-05-20 21:50:44','2015-05-20 21:50:44'),(17,'Torneo Krosmaster – ComicStores',14,'http://www.animacomic.es/2015/torneo-krosmaster-comicstores/','','2015-05-20 21:51:09','2015-05-20 21:51:09'),(18,'Presentación de “Soy friki y tengo novia”',14,'','','2015-05-20 21:51:42','2015-05-20 21:51:42'),(19,'Cuentacuentos friki',14,'','','2015-05-20 21:51:54','2015-05-20 21:51:54'),(20,'Monólogo: “Soy frikisexual”',14,'','','2015-05-20 21:52:15','2015-05-20 21:52:15'),(21,'Humor, semiótica, análisis y chistes de pedos',14,'','','2015-05-20 21:53:00','2015-05-20 21:53:00'),(22,'Twist Comics: un año creando webcómic',14,'','Kiko Mohedano, Manuel J. Iniesta y Rocío Parra','2015-05-20 23:59:24','2015-05-21 00:00:44'),(23,'Iniciación al color digital con Photoshop',3,'','Manuel J. Iniesta y Rocío Parra','2015-05-21 00:00:00','2015-05-21 00:01:09'),(24,'Legión 501',14,'','','2015-05-21 20:29:02','2015-05-21 20:29:02'),(25,'Gottalent',14,'','','2015-05-22 23:01:27','2015-05-22 23:01:27'),(26,'Masterclass de Studio Kôsen',14,'','','2015-05-22 23:02:08','2015-05-22 23:02:08');
+INSERT INTO `actividades` VALUES (1,'Torneo Krosmaster - SharkGames',14,'http://www.animacomic.es/2015/torneo-krosmaster-sharkgames/','','2015-05-17 03:12:39','2015-05-20 21:53:30'),(2,'Torneo Heroclix',14,'http://www.animacomic.es/2015/torneo-heroclix/','','2015-05-17 03:14:54','2015-05-17 03:14:54'),(3,'Del TBO al 3D',14,'http://www.animacomic.es/2015/del-tbo-al-3d/','','2015-05-17 03:15:15','2015-05-17 03:15:15'),(4,'MálagaCrea 2015',15,'http://www.animacomic.es/2015/malagacrea-2015/','','2015-05-17 03:16:02','2015-05-20 21:53:58'),(5,'Torneo Dice Master',14,'','','2015-05-17 03:16:16','2015-05-17 03:16:16'),(6,'Duelo de dibujantes',14,'','','2015-05-17 03:16:31','2015-05-17 03:23:56'),(7,'¡Star Wars en la palma de la mano!',15,'','','2015-05-17 03:16:48','2015-05-17 03:16:48'),(8,'Bernal presenta: “Jano in corpore sano”',14,'','','2015-05-17 03:17:05','2015-05-17 03:17:05'),(9,'Mesa redonda: Webcomic y el mercado. ¿Se puede vivir del web comic?',14,'','','2015-05-17 03:17:17','2015-05-17 03:17:17'),(10,'Proyección: Mortadelo y Filemón contra Jimmy el cachondo',1,'http://www.animacomic.es/2015/proyeccion-mortadelo-y-filemon-contra-jimmy-el-cachondo/','','2015-05-17 03:17:30','2015-05-20 21:54:23'),(11,'Xavier Àgueda presenta “Una amante complaciente”',14,'http://www.animacomic.es/2015/xavier-agueda-presenta-una-amante-complaciente/','','2015-05-17 03:17:43','2015-05-20 21:54:40'),(12,'Cómo hacer un webcomic de éxito (o no)',14,'http://www.animacomic.es/2015/como-hacer-un-webcomic-de-exito-o-no/','','2015-05-17 03:18:01','2015-05-20 21:54:57'),(13,'Concurso de Cosplay',4,'http://www.animacomic.es/2015/concurso-de-cosplay/','','2015-05-17 03:18:13','2015-05-22 23:25:14'),(14,'Exposición: El Señor de los Anillos',15,'http://www.animacomic.es/2015/exposicion-el-senor-de-los-anillos/','','2015-05-17 03:18:26','2015-05-20 21:55:29'),(15,'Wonder woman: 75 añitos',15,'http://www.animacomic.es/2015/75-aniversario-wonder-woman/','','2015-05-17 03:18:38','2015-05-20 21:55:45'),(16,'Animacomic GotTalent 2015',4,'','','2015-05-20 21:50:44','2015-05-22 23:25:33'),(17,'Torneo Krosmaster – ComicStores',14,'http://www.animacomic.es/2015/torneo-krosmaster-comicstores/','','2015-05-20 21:51:09','2015-05-20 21:51:09'),(18,'Presentación de “Soy friki y tengo novia”',14,'','','2015-05-20 21:51:42','2015-05-20 21:51:42'),(19,'Cuentacuentos friki',14,'','','2015-05-20 21:51:54','2015-05-20 21:51:54'),(20,'Monólogo: “Soy frikisexual”',14,'','','2015-05-20 21:52:15','2015-05-20 21:52:15'),(21,'Humor, semiótica, análisis y chistes de pedos',14,'','','2015-05-20 21:53:00','2015-05-20 21:53:00'),(22,'Twist Comics: un año creando webcómic',14,'','Kiko Mohedano, Manuel J. Iniesta y Rocío Parra','2015-05-20 23:59:24','2015-05-21 00:00:44'),(23,'Iniciación al color digital con Photoshop',3,'','Manuel J. Iniesta y Rocío Parra','2015-05-21 00:00:00','2015-05-21 00:01:09'),(24,'Legión 501',14,'','','2015-05-21 20:29:02','2015-05-21 20:29:02'),(26,'Masterclass de Studio Kôsen',14,'','','2015-05-22 23:02:08','2015-05-22 23:02:08'),(27,'Presentación y proyección: Draw My Life',1,'','','2015-05-22 23:36:57','2015-05-22 23:36:57');
 /*!40000 ALTER TABLE `actividades` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -115,7 +115,7 @@ CREATE TABLE `necesidadactividades` (
   `created` datetime NOT NULL,
   `modified` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -124,7 +124,7 @@ CREATE TABLE `necesidadactividades` (
 
 LOCK TABLES `necesidadactividades` WRITE;
 /*!40000 ALTER TABLE `necesidadactividades` DISABLE KEYS */;
-INSERT INTO `necesidadactividades` VALUES (1,'Set de tarjetas con temas',0,1,6,0,NULL,'2015-05-17 03:23:56','2015-05-17 03:23:56'),(2,'Pizarra o papel grande',0,2,6,0,NULL,'2015-05-17 03:23:56','2015-05-17 03:23:56'),(3,'Material de dibujo',0,1,6,0,NULL,'2015-05-17 03:23:56','2015-05-17 03:23:56'),(4,'rollup aladina',0,1,24,0,NULL,'2015-05-21 20:29:02','2015-05-21 20:29:02'),(5,'urna aladina',0,1,24,0,NULL,'2015-05-21 20:29:02','2015-05-21 20:29:02'),(6,'kit flyers aladina',0,1,24,0,NULL,'2015-05-21 20:29:02','2015-05-21 20:29:02');
+INSERT INTO `necesidadactividades` VALUES (1,'Set de tarjetas con temas',0,1,6,0,NULL,'2015-05-17 03:23:56','2015-05-17 03:23:56'),(2,'Pizarra o papel grande',0,2,6,0,NULL,'2015-05-17 03:23:56','2015-05-17 03:23:56'),(3,'Material de dibujo',0,1,6,0,NULL,'2015-05-17 03:23:56','2015-05-17 03:23:56'),(4,'rollup aladina',0,1,24,0,NULL,'2015-05-21 20:29:02','2015-05-21 20:29:02'),(5,'urna aladina',0,1,24,0,NULL,'2015-05-21 20:29:02','2015-05-21 20:29:02'),(6,'kit flyers aladina',0,1,24,0,NULL,'2015-05-21 20:29:02','2015-05-21 20:29:02'),(7,'bolígrafo',0,3,13,0,67,'2015-05-22 23:22:28','2015-05-22 23:25:14'),(8,'botella de agua',0,3,13,0,NULL,'2015-05-22 23:22:28','2015-05-22 23:25:14'),(9,'carpetillas',0,3,13,0,66,'2015-05-22 23:22:28','2015-05-22 23:25:14'),(10,'cronómetro',0,1,13,0,NULL,'2015-05-22 23:22:28','2015-05-22 23:25:14'),(11,'Chuleta del presentador',0,1,13,0,NULL,'2015-05-22 23:22:28','2015-05-22 23:25:14'),(12,'Lista del orden a aparición',0,3,13,0,NULL,'2015-05-22 23:22:28','2015-05-22 23:25:14'),(13,'Lista del orden a aparición',0,3,13,0,NULL,'2015-05-22 23:22:28','2015-05-22 23:25:14'),(14,'Bolígrafo',0,3,16,0,67,'2015-05-22 23:24:18','2015-05-22 23:25:33'),(15,'Botella de agua',0,3,16,0,NULL,'2015-05-22 23:24:18','2015-05-22 23:25:33'),(16,'Carpetillas',0,3,16,0,66,'2015-05-22 23:24:18','2015-05-22 23:25:33'),(17,'Cronómetro',0,1,16,0,NULL,'2015-05-22 23:24:18','2015-05-22 23:25:33'),(18,'Chuleta del presentador',0,1,16,0,NULL,'2015-05-22 23:24:18','2015-05-22 23:25:33'),(19,'Lista del orden a aparición',0,3,16,0,NULL,'2015-05-22 23:24:18','2015-05-22 23:25:33'),(20,'Plantillas de puntuación',0,3,16,0,NULL,'2015-05-22 23:24:18','2015-05-22 23:25:33'),(21,'Mesa',0,1,16,0,NULL,'2015-05-22 23:24:18','2015-05-22 23:25:33'),(22,'Sillas',0,3,16,0,NULL,'2015-05-22 23:24:18','2015-05-22 23:25:33');
 /*!40000 ALTER TABLE `necesidadactividades` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -255,13 +255,13 @@ CREATE TABLE `usuarios` (
   `name` varchar(100) COLLATE utf8_spanish_ci NOT NULL,
   `username` varchar(50) COLLATE utf8_spanish_ci DEFAULT NULL,
   `rol` varchar(20) COLLATE utf8_spanish_ci NOT NULL,
-  `zonas` varchar(50) COLLATE utf8_spanish_ci NOT NULL,
+  `zonas` varchar(50) COLLATE utf8_spanish_ci DEFAULT NULL,
   `password` varchar(50) COLLATE utf8_spanish_ci DEFAULT NULL,
   `email` varchar(100) COLLATE utf8_spanish_ci NOT NULL,
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -270,7 +270,7 @@ CREATE TABLE `usuarios` (
 
 LOCK TABLES `usuarios` WRITE;
 /*!40000 ALTER TABLE `usuarios` DISABLE KEYS */;
-INSERT INTO `usuarios` VALUES (1,'Usuario','admin','admin','','6fb913c8c31f6db76281163a5a0de50e9d8ed128','pepe@jariza.net','2015-03-18 23:48:46','2015-03-22 23:05:44');
+INSERT INTO `usuarios` VALUES (1,'Usuario1','admin','admin','','6fb913c8c31f6db76281163a5a0de50e9d8ed128','pepe@jariza.net','2015-03-18 23:48:46','2015-05-23 00:29:06'),(2,'Usuario1','user12','produccion','','9e79ad14916c74d6b6aeeb779986f492ae0b64e5','elmail@electronico.es','2015-05-23 00:18:51','2015-05-23 00:27:01');
 /*!40000 ALTER TABLE `usuarios` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -312,4 +312,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-05-22 23:13:26
+-- Dump completed on 2015-05-23  0:30:45

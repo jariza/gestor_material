@@ -42,7 +42,7 @@ class Usuario extends AppModel {
 				$this->data[$this->alias]['password']
 			);
 		}
-		if (isset($this->data[$this->alias]['zonas'])) {
+		if ((isset($this->data[$this->alias]['zonas'])) && (strlen($this->data[$this->alias]['zonas']) > 0)) {
 			$this->data[$this->alias]['zonas'] = implode(',', $this->data[$this->alias]['zonas']);
 		}
 		return true;
