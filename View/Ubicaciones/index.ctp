@@ -15,7 +15,7 @@
 		if ($v['Ubicacion']['id'] != -1) { //-1 es la ubicación ficticia "Pendiente de entrega"
 			echo "<tr><td>{$v['Ubicacion']['id']}";
 			echo " (".$this->Html->link('E', array('action' => 'edit', $v['Ubicacion']['id']), array('title' => 'Editar'));
-			echo "/".$this->Form->postLink('X', array('action' => 'delete', $v['Ubicacion']['id']), array('confirm' => "¿Seguro que deseas eliminar la ubicación {$v['Ubicacion']['nombre']}?")).")</td>";
+			echo "/".$this->Form->postLink('X', array('action' => 'delete', $v['Ubicacion']['id']), array('title' => 'Borrar', 'confirm' => "¿Seguro que deseas eliminar la ubicación {$v['Ubicacion']['nombre']}?")).")</td>";
 			echo "<td>{$v['Ubicacion']['nombre']}</td></tr>\n";
 		}
 	}

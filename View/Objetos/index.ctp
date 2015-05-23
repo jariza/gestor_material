@@ -18,10 +18,10 @@
 <?php
 	foreach ($objetos as $v) {
 		$v['Objeto'] = array_map('htmlspecialchars', $v['Objeto']);
-		echo '<tr><td>'.$this->Html->link($v['Objeto']['id'], array('action' => 'view', $v['Objeto']['id']));
+		echo '<tr><td>'.$this->Html->link($v['Objeto']['id'], array('action' => 'view', $v['Objeto']['id']), array('title' => 'Detalle del objeto'));
 		echo " (".$this->Html->link('A', array('action' => 'agenda', $v['Objeto']['id']), array('title' => 'Agenda'));
 		echo "/".$this->Html->link('E', array('action' => 'edit', $v['Objeto']['id']), array('title' => 'Editar'));
-		echo "/".$this->Form->postLink('X', array('action' => 'delete', $v['Objeto']['id']), array('confirm' => "¿Seguro que deseas eliminar el objeto {$v['Objeto']['descripcion']}?")).")</td>";		
+		echo "/".$this->Form->postLink('X', array('action' => 'delete', $v['Objeto']['id']), array('title' => 'Borrar', 'confirm' => "¿Seguro que deseas eliminar el objeto {$v['Objeto']['descripcion']}?")).")</td>";		
 		$txtfungible = $v['Objeto']['fungible'] ? 'Si' : 'No';
 		if ($v['Objeto']['fechaentrega'] == '0000-00-00 00:00:00') {
 			$txtentrega = 'En stock';

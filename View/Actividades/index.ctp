@@ -18,9 +18,9 @@
 <?php
 	foreach ($actividades as $v) {
 		$v['Actividad'] = array_map('htmlspecialchars', $v['Actividad']);
-		echo '<tr><td>'.$this->Html->link($v['Actividad']['id'], array('action' => 'view', $v['Actividad']['id']));
+		echo '<tr><td>'.$this->Html->link($v['Actividad']['id'], array('action' => 'view', $v['Actividad']['id']), array('title' => 'Detalle de la actividad'));
 		echo " (".$this->Html->link('E', array('action' => 'edit', $v['Actividad']['id']), array('title' => 'Editar'));
-		echo "/".$this->Form->postLink('X', array('action' => 'delete', $v['Actividad']['id']), array('confirm' => "¿Seguro que deseas eliminar la actividad {$v['Actividad']['nombre']}?")).")</td>";
+		echo "/".$this->Form->postLink('X', array('action' => 'delete', $v['Actividad']['id']), array('title' => 'Borrar', 'confirm' => "¿Seguro que deseas eliminar la actividad {$v['Actividad']['nombre']}?")).")</td>";
 		if ($v['Actividad']['enlaceweb'] != '') {
 			$txtenlaceweb = " [<a href=\"{$v['Actividad']['enlaceweb']}\" target=\"_blank\">Web</a>]";
 		}
