@@ -47,13 +47,16 @@ function horarioFinSesion(id) {
 }
 
 function numSesion() {
-	console.log("OLA2222");
 	var horario = []; //El índice es el id del elemento en form
 	var sesion = 1;
 	for (i = 0; i <= lastHorario; i++) {
-		datetime = $('#Horario'+i+'InicioYear').val() + $('#Horario'+i+'InicioMonth').val() + $('#Horario'+i+'InicioDay').val() + $('#Horario'+i+'InicioHour').val() + $('#Horario'+i+'InicioMin').val();
-		horario[i] = {id:i, hora:datetime}
+		if ($('#Horario'+i+'InicioYear').length > 0) {
+			//El objeto existe
+			datetime = $('#Horario'+i+'InicioYear').val() + $('#Horario'+i+'InicioMonth').val() + $('#Horario'+i+'InicioDay').val() + $('#Horario'+i+'InicioHour').val() + $('#Horario'+i+'InicioMin').val();
+			horario.push({id:i, hora:datetime});
+		}
 	}
+	console.log(horario);
 	horario.sort(function(a,b) {
 		return a.hora > b.hora ? 1 : a.hora < b.hora ? -1 : 0;
 	});
