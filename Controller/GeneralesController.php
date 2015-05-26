@@ -63,6 +63,23 @@ class GeneralesController extends AppController {
 		));
 		$nosatzona = $this->Necesidadzona->find('all', array('conditions' => array('infraestructura' => 0, 'objeto_id' => null), 'fields' => array('Necesidadzona.cantidad', 'Necesidadzona.descripcion', 'Zona.nombre', 'Zona.id'), 'order' => 'Zona.nombre'));
 		$nosatactividad = $this->Necesidadactividad->find('all', array('conditions' => array('infraestructura' => 0, 'objeto_id' => null), 'fields' => array('Necesidadactividad.cantidad', 'Necesidadactividad.cantidad', 'Necesidadactividad.descripcion', 'Zona.nombre', 'Actividad.nombre', 'Zona.id', 'Actividad.id'), 'order' => array('Zona.nombre', 'Actividad.nombre')));
+		
+		//No satisfechas por descripción
+		$this->Necesidadactividad->virtualFields['acumulado'] = 'SUM(Necesidadactividad.cantidad)';
+		$this->Necesidadzona->virtualFields['acumulado'] = 'SUM(Necesidadzona.cantidad)';
+		$czona = $this->Necesidadzona->find('list', array('fields' => array('descripcion', 'acumulado'), 'group' => 'Necesidadzona.descripcion'));
+		$cactividad = $this->Necesidadactividad->find('list', array('fields' => array('descripcion', 'acumulado'), 'group' => 'Necesidadactividad.descripcion'));
+		foreach($czona as $k => $v) {
+			if (array_key_exists($k, $cactividad)) {
+				$cactividad[$k] += $v;
+			}
+			else {
+				
+				$cactividad[$k] = $v;
+			}
+		}
+		ksort($cactividad);
+		$nosatdesc = $cactividad;
 
 		//Objetos asignados a zonas
 		$this->Necesidadactividad->bindModel(array(
@@ -239,6 +256,7 @@ class GeneralesController extends AppController {
 
 		$this->set('nosatzona', $nosatzona);
 		$this->set('nosatactividad', $nosatactividad);
+		$this->set('nosatdesc', $nosatdesc);
 		$this->set('infraobjeto', $infraobjeto);
 		$this->set('multiobjeto', $multiobjeto);
 		$this->set('sobreasignacion', $sobreasignacion);

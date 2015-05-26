@@ -28,6 +28,18 @@ echo $this->Html->script('jquery');
 	</table>
 </div>
 
+<h2 onclick="$('#nosatdesc').toggle('slow')"><?php echo count($nosatdesc); ?> necesidades agrupadas por descripción (+)</h2>
+<div id="nosatdesc">
+	<table>
+		<tr><th>Necesidad</th><th>Cantidad</th></tr>
+<?php
+	foreach ($nosatdesc as $k => $v) {
+		echo "\t\t<tr><td>".htmlspecialchars($k)."</td><td>$v</td></tr>\n";
+	}
+?>
+	</table>
+</div>
+
 <h2 onclick="$('#infraobjeto').toggle('slow')"><?php echo count($infraobjeto); ?> necesidades de infraestructura con objeto asignado (+)</h2>
 <div id="infraobjeto">
 	<table>
@@ -125,6 +137,7 @@ echo $this->Html->script('jquery');
 	echo $this->Html->scriptBlock('
 		$(\'#nosatzona\').hide();
 		$(\'#nosatactividad\').hide();
+		$(\'#nosatdesc\').hide();
 		$(\'#infraobjeto\').hide();
 		$(\'#multiobjeto\').hide();
 		$(\'#sobreasignacion\').hide();
