@@ -104,8 +104,8 @@ class ZonasController extends AppController {
 					}
 				}
 				$horario[] = array(
-					'inicio' => $v2['inicio'],
-					'fin' => $v2['fin'],
+					'inicio' => preg_replace('/:00$/', '', $v2['inicio']),
+					'fin' => preg_replace('/:00$/', '', $v2['fin']),
 					'nombreactividad' => $v['Actividad']['nombre'],
 					'descactividad' => $v['Actividad']['desctecnica'],
 					'necesidades' => $necesidades
