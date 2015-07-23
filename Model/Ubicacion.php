@@ -1,6 +1,7 @@
 <?php
 class Ubicacion extends AppModel {
 	public $displayField = 'nombre';
+	public $hasAndBelongsToMany = array('Objeto');
 	
     public $validate = array(
        'nombre' => array(

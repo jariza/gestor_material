@@ -38,6 +38,19 @@ class UbicacionesController extends AppController {
 		}
     }
     
+	public function view($id = null) {
+		if (!$id) {
+			throw new NotFoundException('Ubicación desconocida');
+		}
+
+		$ubicacion = $this->Ubicacion->findById($id);
+		if (!$ubicacion) {
+			throw new NotFoundException('Ubicación desconocida');
+		}
+
+		$this->set('ubicacion', $ubicacion);
+	}
+    
 	public function edit($id = null) {
 		if (!$id) {
 			throw new NotFoundException(__('Ubicación desconocida'));

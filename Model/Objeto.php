@@ -49,15 +49,17 @@ class Objeto extends AppModel {
 	}
 	
 	public function afterFind($results, $primary = false) {
-		foreach ($results as $k => $v) {
-			if ((array_key_exists('Objeto', $v)) && (array_key_exists('id', $v['Objeto']))) {
-				$ubicaciones = $this->ObjetosUbicacion->findAllByObjeto_id($v['Objeto']['id'], 'ubicacion_id');
-				foreach ($ubicaciones as $k2 => $v2) {
-					if ($v2['ObjetosUbicacion']['ubicacion_id'] == -1) {
-						$results[$k]['Ubicacion'][] = array(
-							'id' => -1,
-							'nombre' => 'Pendiente de entrega'
-						);
+		if ($primary) {
+			foreach ($results as $k => $v) {
+				if ((array_key_exists('Objeto', $v)) && (array_key_exists('id', $v['Objeto']))) {
+					$ubicaciones = $this->ObjetosUbicacion->findAllByObjeto_id($v['Objeto']['id'], 'ubicacion_id');
+					foreach ($ubicaciones as $k2 => $v2) {
+						if ($v2['ObjetosUbicacion']['ubicacion_id'] == -1) {
+							$results[$k]['Ubicacion'][] = array(
+								'id' => -1,
+								'nombre' => 'Pendiente de entrega'
+							);
+						}
 					}
 				}
 			}
