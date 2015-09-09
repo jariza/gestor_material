@@ -1,4 +1,5 @@
 Config/*.p12
+Config/material.php
 Console
 tmp
 .htaccess
