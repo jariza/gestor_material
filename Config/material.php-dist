@@ -20,3 +20,6 @@ Configure::write('datosevento', array(
 //Calendario externo, Google Calendar
 Configure::write('GC_email', 'GC EMAIL');
 Configure::write('GC_keyfile', 'ARCHIVO P12'); //Relativo al directorio app
+
+//Modo "post-evento", activar al finalizar el evento para realizar el contrainventario
+Configure::write('postevento', false);
