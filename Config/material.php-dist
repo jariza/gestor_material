@@ -1,0 +1,22 @@
+<?php
+//PARTE DE NO TOCAR
+Configure::write('roles', array('admin' => 'Administrador', 'produccion' => 'Producción', 'managerzona' => 'Manager de zona'));
+//FIN DE PARTE DE NO TOCAR
+
+//Número máximo de fallos de login antes de bloquear
+Configure::write('maxfallos', 3);
+
+//Datos del evento
+Configure::write('datosevento', array(
+	'nombre' => '', //Nombre del evento
+	'imagencabecera' => '', //Imagen de la cabecera
+	//'imagenpie' => '', //Imagen del pie
+	'customcss' => '', //CSS propios
+	'horario' => array(
+		//'YYYY-MM-DD' => array('inicio' => 'HH:MM', 'fin' => 'HH:MM')
+	),
+));
+
+//Calendario externo, Google Calendar
+Configure::write('GC_email', 'GC EMAIL');
+Configure::write('GC_keyfile', 'ARCHIVO P12'); //Relativo al directorio app
