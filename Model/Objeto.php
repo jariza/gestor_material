@@ -26,8 +26,8 @@ class Objeto extends AppModel {
 	}
 
     public function validarCantidad($check) {
-		if ($check['cantidad'] < 1) {
-			return '¿Menos de un objeto?';
+		if ($check['cantidad'] < 0) {
+			return '¿Cantidad negativa?';
 		}
 		else if (($this->data['Objeto']['fungible'] == 0) && ($check['cantidad'] > 1)) {
 			return 'Un objeto no fungible no se puede inventariar en cantidad superior a uno.';
