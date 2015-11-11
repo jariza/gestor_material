@@ -6,6 +6,7 @@
     echo $this->Form->create('Objeto', array('class' => 'buscar'));
     echo $this->Form->input('q', array('label' => false, 'div' => false));
     echo $this->Form->end(array('label' => 'Filtrar por descripción', 'div' => false));
+	$postevento = Configure::read('postevento', false);
 ?> 
 <table>
 	<tr>
@@ -13,6 +14,7 @@
 		<th><?php echo $this->Paginator->sort('descripcion', 'Descripción'); ?></th>
 		<th><?php echo $this->Paginator->sort('fungible', 'Fungible'); ?></th>
 		<th><?php echo $this->Paginator->sort('cantidad', 'Cantidad'); ?></th>
+		<?php if ($postevento) {echo '<th>'.$this->Paginator->sort('cantidad', 'Cantidad post-evento')."</th>\n";} ?>
 		<th><?php echo $this->Paginator->sort('fechaentrega', 'Fecha de entrega'); ?></th>
 	</tr>
 <?php
@@ -35,7 +37,9 @@
 		else {
 			$txtprestamo = '¡Préstamo! ';
 		}
-		echo "<td>$txtprestamo{$v['Objeto']['descripcion']}</td><td>$txtfungible</td><td>{$v['Objeto']['cantidad']}</td><td>$txtentrega</td></tr>\n";
+		echo "<td>$txtprestamo{$v['Objeto']['descripcion']}</td><td>$txtfungible</td><td>{$v['Objeto']['cantidad']}</td>";
+		if ($postevento) {echo "<td>{$v['Objeto']['cantidad_postevento']}</td>";}
+		echo "<td>$txtentrega</td></tr>\n";
 	}
 ?>
 </table>

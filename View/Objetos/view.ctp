@@ -17,6 +17,7 @@
 	else {
 		echo "no";
 	}
+	if (Configure::read('postevento', false)) {echo "\t\t<li>Cantidad post-evento: {$objeto['Objeto']['cantidad_postevento']}</li>\n";}
 	$fechaentrega = $objeto['Objeto']['fechaentrega'];
 	if ($fechaentrega != '0000-00-00 00:00:00') {
 		echo "\t\t<li>Fecha de entrega: $fechaentrega</li>\n";

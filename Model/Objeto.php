@@ -51,7 +51,8 @@ class Objeto extends AppModel {
 	public function afterFind($results, $primary = false) {
 		if ($primary) {
 			foreach ($results as $k => $v) {
-				if ((array_key_exists('Objeto', $v)) && (array_key_exists('id', $v['Objeto']))) {
+				//Al comprobar la existencia de la key Ubicacion evito que se ejecute la query siempre, solo se ejecutará cuando se tenga que comprobar la ubicación
+				if ((array_key_exists('Ubicacion', $v)) && (array_key_exists('Objeto', $v)) && (array_key_exists('id', $v['Objeto']))) {
 					$ubicaciones = $this->ObjetosUbicacion->findAllByObjeto_id($v['Objeto']['id'], 'ubicacion_id');
 					foreach ($ubicaciones as $k2 => $v2) {
 						if ($v2['ObjetosUbicacion']['ubicacion_id'] == -1) {

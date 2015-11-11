@@ -42,6 +42,11 @@ if (in_array($rol, array('admin', 'produccion'))) {
 	echo "\t\t<h2>Globales</h2>\n";
 	echo "\t\t<li>".$this->Html->link('Infraestructura necesaria', array('controller' => 'Generales', 'action' => 'listainfraestructura'))."</li>\n";
 	echo "\t\t<li>".$this->Html->link('Verificar estado', array('controller' => 'Generales', 'action' => 'estado'))."</li>\n";
+	if (Configure::read('postevento', false)) {
+		echo "\t\t<li>".$this->Html->link('Evolución de inventario', array('controller' => 'Generales', 'action' => 'evolucion'))."</li>\n";
+		echo "\t\t<li>".$this->Form->postLink('Rellenar cantidades post-evento', array('controller' => 'Generales', 'action' => 'rellenar'), array('title' => 'Transicionar', 'confirm' => "Se sustituirán las cantidades post-evento por las actuales, ¿estás seguro?"))."</li>\n";
+		echo "\t\t<li>".$this->Form->postLink('Transicionar inventario', array('controller' => 'Generales', 'action' => 'transicionar'), array('title' => 'Transicionar', 'confirm' => "Se sustituirán las cantidades actuales por la cantidades post-evento, se eliminarán los objetos agotados y se establecerán a 0 las cantidades post-evento, ¿estás seguro?"))."</li>\n";
+	}
 	echo "\t</ul>\n";
 }
 ?>

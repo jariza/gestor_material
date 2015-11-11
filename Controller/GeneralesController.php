@@ -263,4 +263,62 @@ class GeneralesController extends AppController {
 		$this->set('activzona', $activzona);
 		$this->set('solapados', $solapados);
 	}
+	
+	function evolucion() {
+		$mobjeto = $this->loadModel('Objeto');
+
+		$this->Objeto->virtualFields['uso'] = 'Objeto.cantidad - Objeto.cantidad_postevento';
+		$uso = $this->Objeto->find('all', array('fields' => array('id', 'descripcion', 'cantidad', 'cantidad_postevento', 'uso'), 'recursive' => -1));
+		
+		$gastados = array();
+		$nousados = array();
+		$nuevos = array();
+		$resto = array();
+
+		foreach ($uso as $v) {
+			if ($v['Objeto']['cantidad_postevento'] == 0) {
+				$gastados[] = $v;
+			}
+			elseif ($v['Objeto']['uso'] == 0) {
+				$nousados[] = $v;
+			}
+			elseif ($v['Objeto']['uso'] < 0) {
+				$nuevos[] = $v;
+			}
+			else {
+				$resto[] = $v;
+			}
+		}
+		
+		$this->set('gastados', $gastados);
+		$this->set('nousados', $nousados);
+		$this->set('nuevos', $nuevos);
+		$this->set('resto', $resto);
+	}
+
+	function rellenar() {
+		if ($this->request->is('get')) {
+			throw new MethodNotAllowedException();
+		}
+
+		$mobjeto = $this->loadModel('Objeto');
+		$this->Objeto->updateAll(array('Objeto.cantidad_postevento' => 'Objeto.cantidad'));
+	
+		$this->Session->setFlash('Cantidades post-evento actualizadas');
+		return $this->redirect('/');
+	}
+
+	function transicionar() {
+		if ($this->request->is('get')) {
+			throw new MethodNotAllowedException();
+		}
+
+		$mobjeto = $this->loadModel('Objeto');
+		$this->Objeto->updateAll(array('Objeto.cantidad' => 'Objeto.cantidad_postevento'));
+		$this->Objeto->updateAll(array('Objeto.cantidad_postevento' => 0));
+		$this->Objeto->deleteAll(array('Objeto.cantidad' => 0));
+		
+		$this->Session->setFlash('Inventario transicionado, ¡recuerda descativar el modo post-evento!');
+		return $this->redirect('/');
+	}
 }

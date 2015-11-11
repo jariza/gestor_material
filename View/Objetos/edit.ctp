@@ -7,6 +7,7 @@ echo $this->Form->input('descripcion');
 echo $this->Form->input('Objeto.Ubicacion', array('multiple' => true));
 echo $this->Form->input('fungible');
 echo $this->Form->input('cantidad', array('default' => 1));
+if (Configure::read('postevento', false)) {echo $this->Form->input('cantidad_postevento');}
 echo $this->Form->input('fechaentrega', array('div' => array('id' => 'fechaentrega'), 'label' => 'Fecha de entrega', 'dateFormat' => 'DMY', 'timeFormat' => 24));
 echo $this->Form->input('comentariosentrega', array('div' => array('id' => 'comentariosentrega'), 'label' => 'Comentarios sobre la entrega'));
 echo $this->Form->input('prestamo', array('type' => 'checkbox', 'label' => 'Préstamo', 'checked' => $prestamo));

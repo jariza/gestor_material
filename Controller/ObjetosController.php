@@ -322,6 +322,7 @@ class ObjetosController extends AppController {
 			}
 			$this->request->data = $objeto;
 		}
+		
 		if ($objeto['Objeto']['fechadevolucion'] == '9999-12-31 23:59:59') {
 			$this->set('prestamo', false);
 			$objeto['Objeto']['fechadevolucion'] = date('Y-m-d H:i:s'); //El campo fecha no determina nada en la vista, ajusto para comodidad del usuario

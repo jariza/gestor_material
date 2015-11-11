@@ -122,6 +122,7 @@ CREATE TABLE `objetos` (
   `descripcion` varchar(100) COLLATE utf8_spanish_ci NOT NULL,
   `fungible` tinyint(1) NOT NULL,
   `cantidad` int(11) NOT NULL,
+  `cantidad_postevento` int(11) NOT NULL,
   `fechaentrega` datetime NOT NULL,
   `comentariosentrega` text COLLATE utf8_spanish_ci NOT NULL,
   `fechadevolucion` datetime NOT NULL,
