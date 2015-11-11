@@ -308,7 +308,7 @@ class GeneralesController extends AppController {
 		return $this->redirect('/');
 	}
 
-	function transicionar() {
+	function reiniciar_evento() {
 		if ($this->request->is('get')) {
 			throw new MethodNotAllowedException();
 		}
@@ -317,8 +317,13 @@ class GeneralesController extends AppController {
 		$this->Objeto->updateAll(array('Objeto.cantidad' => 'Objeto.cantidad_postevento'));
 		$this->Objeto->updateAll(array('Objeto.cantidad_postevento' => 0));
 		$this->Objeto->deleteAll(array('Objeto.cantidad' => 0));
+		$this->Objeto->query('TRUNCATE TABLE actividades');
+		$this->Objeto->query('TRUNCATE TABLE horarios');
+		$this->Objeto->query('TRUNCATE TABLE necesidadactividades');
+		$this->Objeto->query('TRUNCATE TABLE necesidadzonas');
+		$this->Objeto->query('TRUNCATE TABLE zonas');
 		
-		$this->Session->setFlash('Inventario transicionado, ¡recuerda descativar el modo post-evento!');
+		$this->Session->setFlash('Evento reiniciado, ¡recuerda descativar el modo post-evento!');
 		return $this->redirect('/');
 	}
 }
