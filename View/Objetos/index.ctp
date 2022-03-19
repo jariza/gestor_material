@@ -10,8 +10,8 @@
 ?> 
 <table>
 	<tr>
-		<th><?php echo $this->Paginator->sort('id', 'Id'); ?></th>
-		<th><?php echo $this->Paginator->sort('descripcion', 'Descripción'); ?></th>
+		<th>Opciones</th>
+		<th><?php echo $this->Paginator->sort('descripcion', 'Descripción del objeto'); ?></th>
 		<th><?php echo $this->Paginator->sort('fungible', 'Fungible'); ?></th>
 		<th><?php echo $this->Paginator->sort('cantidad', 'Cantidad'); ?></th>
 		<?php if ($postevento) {echo '<th>'.$this->Paginator->sort('cantidad', 'Cantidad post-evento')."</th>\n";} ?>
@@ -20,7 +20,7 @@
 <?php
 	foreach ($objetos as $v) {
 		$v['Objeto'] = array_map('htmlspecialchars', $v['Objeto']);
-		echo '<tr><td>'.$this->Html->link($v['Objeto']['id'], array('action' => 'view', $v['Objeto']['id']), array('title' => 'Detalle del objeto'));
+		echo '<tr><td>'.$this->Html->link("Detalles", array('action' => 'view', $v['Objeto']['id']), array('title' => 'Detalle del objeto'));
 		echo " (".$this->Html->link('A', array('action' => 'agenda', $v['Objeto']['id']), array('title' => 'Agenda'));
 		echo "/".$this->Html->link('E', array('action' => 'edit', $v['Objeto']['id']), array('title' => 'Editar'));
 		echo "/".$this->Form->postLink('X', array('action' => 'delete', $v['Objeto']['id']), array('title' => 'Borrar', 'confirm' => "¿Seguro que deseas eliminar el objeto {$v['Objeto']['descripcion']}?")).")</td>";		

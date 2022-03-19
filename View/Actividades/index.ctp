@@ -10,7 +10,7 @@
 
 <table>
 	<tr>
-		<th><?php echo $this->Paginator->sort('id', 'Id'); ?></th>
+		<th>Opciones</th>
 		<th><?php echo $this->Paginator->sort('nombre', 'Nombre'); ?></th>
 		<th><?php echo $this->Paginator->sort('zona', 'Zona'); ?></th>
 		<th><?php echo $this->Paginator->sort('horario', 'Horario'); ?></th>
@@ -18,7 +18,7 @@
 <?php
 	foreach ($actividades as $v) {
 		$v['Actividad'] = array_map('htmlspecialchars', $v['Actividad']);
-		echo '<tr><td>'.$this->Html->link($v['Actividad']['id'], array('action' => 'view', $v['Actividad']['id']), array('title' => 'Detalle de la actividad'));
+		echo '<tr><td>'.$this->Html->link("Detalles", array('action' => 'view', $v['Actividad']['id']), array('title' => 'Detalle de la actividad'));
 		echo " (".$this->Html->link('E', array('action' => 'edit', $v['Actividad']['id']), array('title' => 'Editar'));
 		echo "/".$this->Form->postLink('X', array('action' => 'delete', $v['Actividad']['id']), array('title' => 'Borrar', 'confirm' => "¿Seguro que deseas eliminar la actividad {$v['Actividad']['nombre']}?")).")</td>";
 		if ($v['Actividad']['enlaceweb'] != '') {

@@ -84,6 +84,7 @@ CREATE TABLE `necesidadactividades` (
   `actividad_id` int(11) NOT NULL,
   `sesion` int(11) NOT NULL,
   `objeto_id` int(11) DEFAULT NULL,
+  `proveedor_infra` varchar(50) COLLATE utf8_spanish_ci DEFAULT NULL,
   `created` datetime NOT NULL,
   `modified` datetime NOT NULL,
   PRIMARY KEY (`id`)
@@ -104,6 +105,7 @@ CREATE TABLE `necesidadzonas` (
   `cantidad` int(11) NOT NULL,
   `zona_id` int(11) NOT NULL,
   `objeto_id` int(11) DEFAULT NULL,
+  `proveedor_infra` varchar(50) COLLATE utf8_spanish_ci DEFAULT NULL,
   `created` datetime NOT NULL,
   `modified` datetime NOT NULL,
   PRIMARY KEY (`id`)
@@ -122,7 +124,7 @@ CREATE TABLE `objetos` (
   `descripcion` varchar(100) COLLATE utf8_spanish_ci NOT NULL,
   `fungible` tinyint(1) NOT NULL,
   `cantidad` int(11) NOT NULL,
-  `cantidad_postevento` int(11) NOT NULL,
+  `cantidad_postevento` int(11) NOT NULL DEFAULT 0,
   `fechaentrega` datetime NOT NULL,
   `comentariosentrega` text COLLATE utf8_spanish_ci NOT NULL,
   `fechadevolucion` datetime NOT NULL,

@@ -28,31 +28,13 @@ echo $this->Html->script('jquery');
 	</table>
 </div>
 
-<h2 onclick="$('#nosatdesc').toggle('slow')"><?php echo count($nosatdesc); ?> necesidades agrupadas por descripción (+)</h2>
+<h2 onclick="$('#nosatdesc').toggle('slow')"><?php echo count($nosatdesc); ?> necesidades no satisfechas agrupadas por descripción (+)</h2>
 <div id="nosatdesc">
 	<table>
 		<tr><th>Necesidad</th><th>Cantidad</th></tr>
 <?php
 	foreach ($nosatdesc as $k => $v) {
 		echo "\t\t<tr><td>".htmlspecialchars($k)."</td><td>$v</td></tr>\n";
-	}
-?>
-	</table>
-</div>
-
-<h2 onclick="$('#infraobjeto').toggle('slow')"><?php echo count($infraobjeto); ?> necesidades de infraestructura con objeto asignado (+)</h2>
-<div id="infraobjeto">
-	<table>
-		<tr><th>Dónde</th><th>Necesidad</th><th>Cantidad</th><th>Objeto</th></tr>
-<?php
-	foreach ($infraobjeto as $v) {
-		if ($v['idactividad'] == -1) {
-			$donde = 'Zona: '.$this->Html->link($v['nomzona'], array($v['idzona'], 'action' => 'view', 'controller' => 'Zonas'));
-		}
-		else {
-			$donde = 'Actividad: '.$this->Html->link($v['nomactividad'], array($v['idactividad'], 'action' => 'view', 'controller' => 'Actividades')).', en '.$this->Html->link($v['nomzona'], array($v['idzona'], 'action' => 'view', 'controller' => 'Zonas'));
-		}
-		echo "\t\t<tr><td>$donde</td><td>".htmlspecialchars($v['necesidad'])."</td><td>{$v['cantidad']}</td><td>".$this->Html->link($v['descobjeto'], array($v['idobjeto'], 'action' => 'view', 'controller' => 'Objetos'))."</td></tr>\n";
 	}
 ?>
 	</table>

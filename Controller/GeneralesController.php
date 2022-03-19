@@ -36,7 +36,7 @@ class GeneralesController extends AppController {
 		$mnecesidadzona = $this->loadModel('Necesidadzona');
 		$mzona = $this->loadModel('Zona');
 		$neczona = $this->Necesidadzona->find('all', array('conditions' => array('infraestructura' => true), 'fields' => array('Necesidadzona.descripcion', 'Necesidadzona.cantidad', 'Zona.nombre')));
-		$necactividad = $this->Necesidadactividad->find('all', array('conditions' => array('infraestructura' => true), 'fields' => array('Necesidadactividad.descripcion', 'Necesidadactividad.cantidad', 'Actividad.nombre', 'Actividad.zona_id')));
+		$necactividad = $this->Necesidadactividad->find('all', array('conditions' => array('infraestructura' => true), 'fields' => array('Necesidadactividad.descripcion', 'Necesidadactividad.cantidad', 'Necesidadactividad.proveedor_infra', 'Actividad.nombre', 'Actividad.zona_id')));
 
 		$zonaid = array();
 		foreach ($necactividad as $v) {
@@ -57,12 +57,18 @@ class GeneralesController extends AppController {
 		$mnecesidadzona = $this->loadModel('Necesidadzona');
 		$mnecesidadactividad = $this->loadModel('Necesidadactividad');
 
-		//No satisfechas
-		$this->Necesidadactividad->bindModel(array(
-			'hasOne' => array('Zona' => array('foreignKey' => false, 'conditions' => 'Actividad.zona_id = Zona.id'))
-		));
+		//No satisfechas - zona
 		$nosatzona = $this->Necesidadzona->find('all', array('conditions' => array('infraestructura' => 0, 'objeto_id' => null), 'fields' => array('Necesidadzona.cantidad', 'Necesidadzona.descripcion', 'Zona.nombre', 'Zona.id'), 'order' => 'Zona.nombre'));
-		$nosatactividad = $this->Necesidadactividad->find('all', array('conditions' => array('infraestructura' => 0, 'objeto_id' => null), 'fields' => array('Necesidadactividad.cantidad', 'Necesidadactividad.cantidad', 'Necesidadactividad.descripcion', 'Zona.nombre', 'Actividad.nombre', 'Zona.id', 'Actividad.id'), 'order' => array('Zona.nombre', 'Actividad.nombre')));
+		$nosatzona_infra = $this->Necesidadzona->find('all', array('conditions' => array('infraestructura' => 0, 'objeto_id' => null), 'fields' => array('Necesidadzona.cantidad', 'Necesidadzona.descripcion', 'Zona.nombre', 'Zona.id'), 'order' => 'Zona.nombre'));
+		$nosatzona_obj = $this->Necesidadzona->find('all', array('conditions' => array('infraestructura' => 1, 'proveedor_infra' => ''), 'fields' => array('Necesidadzona.cantidad', 'Necesidadzona.descripcion', 'Zona.nombre', 'Zona.id'), 'order' => 'Zona.nombre'));
+		$nosatzona = array_merge($nosatzona_obj, $nosatzona_infra);
+
+		//No satisfechas - actividad
+		$this->Necesidadactividad->bindModel(array('hasOne' => array('Zona' => array('foreignKey' => false, 'conditions' => 'Actividad.zona_id = Zona.id'))));
+		$nosatactividad_obj = $this->Necesidadactividad->find('all', array('conditions' => array('infraestructura' => 0, 'objeto_id' => null), 'fields' => array('Necesidadactividad.cantidad', 'Necesidadactividad.cantidad', 'Necesidadactividad.descripcion', 'Zona.nombre', 'Actividad.nombre', 'Zona.id', 'Actividad.id')));
+		$this->Necesidadactividad->bindModel(array('hasOne' => array('Zona' => array('foreignKey' => false, 'conditions' => 'Actividad.zona_id = Zona.id')))); //Sí, hay que repetirla para que pille la zona
+		$nosatactividad_infra = $this->Necesidadactividad->find('all', array('conditions' => array('infraestructura' => 1, 'proveedor_infra' => ''), 'fields' => array('Necesidadactividad.cantidad', 'Necesidadactividad.cantidad', 'Necesidadactividad.descripcion', 'Zona.nombre', 'Actividad.nombre', 'Zona.id', 'Actividad.id')));
+		$nosatactividad = array_merge($nosatactividad_obj, $nosatactividad_infra);
 		
 		//No satisfechas por descripción
 		$this->Necesidadactividad->virtualFields['acumulado'] = 'SUM(Necesidadactividad.cantidad)';
@@ -80,38 +86,6 @@ class GeneralesController extends AppController {
 		}
 		ksort($cactividad);
 		$nosatdesc = $cactividad;
-
-		//Objetos asignados a zonas
-		$this->Necesidadactividad->bindModel(array(
-			'hasOne' => array('Zona' => array('foreignKey' => false, 'conditions' => 'Actividad.zona_id = Zona.id'))
-		));
-		$results1 = $this->Necesidadzona->find('all', array('conditions' => array('infraestructura' => 1, 'objeto_id !=' => null), 'fields' => array('Necesidadzona.cantidad', 'Necesidadzona.descripcion', 'Zona.nombre', 'Zona.id', 'Objeto.descripcion', 'Objeto.id'), 'order' => 'Zona.nombre'));
-		$results2 = $this->Necesidadactividad->find('all', array('conditions' => array('infraestructura' => 1, 'objeto_id !=' => null), 'fields' => array('Necesidadactividad.cantidad', 'Necesidadactividad.cantidad', 'Necesidadactividad.descripcion', 'Zona.nombre', 'Zona.id', 'Actividad.nombre', 'Actividad.id', 'Objeto.descripcion', 'Objeto.id'), 'order' => array('Zona.nombre', 'Actividad.nombre')));
-		$infraobjeto = array();
-		foreach ($results1 as $v) {
-			$infraobjeto[] = array(
-				'nomzona' => $v['Zona']['nombre'],
-				'idzona' => $v['Zona']['id'],
-				'nomactividad' => '',
-				'idactividad' => -1,
-				'descobjeto' => $v['Objeto']['descripcion'],
-				'idobjeto' => $v['Objeto']['id'],
-				'necesidad' => $v['Necesidadzona']['descripcion'],
-				'cantidad' => $v['Necesidadzona']['cantidad']
-			);
-		}
-		foreach ($results2 as $v) {
-			$infraobjeto[] = array(
-				'nomzona' => $v['Zona']['nombre'],
-				'idzona' => $v['Zona']['id'],
-				'nomactividad' => $v['Actividad']['nombre'],
-				'idactividad' => $v['Actividad']['id'],
-				'descobjeto' => $v['Objeto']['descripcion'],
-				'idobjeto' => $v['Objeto']['id'],
-				'necesidad' => $v['Necesidadactividad']['descripcion'],
-				'cantidad' => $v['Necesidadactividad']['cantidad']
-			);
-		}
 
 		//No fungible con cantidad superior a uno
 		$this->Necesidadactividad->bindModel(array(
@@ -257,7 +231,6 @@ class GeneralesController extends AppController {
 		$this->set('nosatzona', $nosatzona);
 		$this->set('nosatactividad', $nosatactividad);
 		$this->set('nosatdesc', $nosatdesc);
-		$this->set('infraobjeto', $infraobjeto);
 		$this->set('multiobjeto', $multiobjeto);
 		$this->set('sobreasignacion', $sobreasignacion);
 		$this->set('activzona', $activzona);

@@ -3,7 +3,7 @@
 
 <h2>Infraestructura para zonas</h2>
 <table>
-	<tr><th>Zona</th><th>Necesidad</th><th>Cantidad</th></tr>
+	<tr><th>Zona</th><th>Necesidad</th><th>Cantidad</th><th>Provista por</th></tr>
 <?php
 	foreach ($neczona as $v) {
 		echo "\t<tr><td>".htmlspecialchars($v['Zona']['nombre']).'</td><td>'.htmlspecialchars($v['Necesidadzona']['descripcion']).'</td><td>'.htmlspecialchars($v['Necesidadzona']['cantidad'])."</td></tr>\n";
@@ -13,10 +13,10 @@
 
 <h2>Infraestructura para actividades</h2>
 <table>
-	<tr><th>Actividad</th><th>Zona</th><th>Necesidad</th><th>Cantidad</th></tr>
+	<tr><th>Actividad</th><th>Zona</th><th>Necesidad</th><th>Cantidad</th><th>Provista por</th></tr>
 <?php
 	foreach($necactividad as $v) {
-		echo "\t<tr><td>".htmlspecialchars($v['Actividad']['nombre']).'</td><td>'.htmlspecialchars($zonas[$v['Actividad']['zona_id']]).'</td><td>'.htmlspecialchars($v['Necesidadactividad']['descripcion']).'</td><td>'.htmlspecialchars($v['Necesidadactividad']['cantidad'])."</td></tr>\n";
+		echo "\t<tr><td>".htmlspecialchars($v['Actividad']['nombre']).'</td><td>'.htmlspecialchars($zonas[$v['Actividad']['zona_id']]).'</td><td>'.htmlspecialchars($v['Necesidadactividad']['descripcion']).'</td><td>'.htmlspecialchars($v['Necesidadactividad']['cantidad']).'</td><td>'.htmlspecialchars($v['Necesidadactividad']['proveedor_infra'])."</td></tr>\n";
 	}
 ?>
 </table>

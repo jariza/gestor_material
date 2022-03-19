@@ -8,7 +8,7 @@
 	echo "\t<ul>\n";
 	echo "\t\t<li>Id: {$objeto['Objeto']['id']}</li>\n";
 	echo "\t\t<li>Descripción: {$objeto['Objeto']['descripcion']}</li>\n";
-	echo "\t\t<li>Ubicación: ".htmlspecialchars(implode(', ', $ubicaciones))."</li>\n";
+	echo "\t\t<li>Ubicación en almacén: ".htmlspecialchars(implode(', ', $ubicaciones))."</li>\n";
 	echo "\t\t<li>Fungible: ";
 	if ($objeto['Objeto']['fungible']) {
 		echo "si</li>\n";
@@ -59,6 +59,5 @@
 		}
 		echo "</ul>\n";
 	}
-	
-	echo "<p>".$this->Html->link('Volver al listado de objetos', array('action' => 'index'))."</p>";
+	echo "<p>".$this->Html->link('Volver al listado de objetos', array('action' => 'index'))." - ".$this->Html->link('Editar objeto', array('action' => 'edit', $objeto['Objeto']['id']), array('title' => 'Editar'))."</p>";
 ?>

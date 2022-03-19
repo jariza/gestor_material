@@ -24,7 +24,7 @@ echo $this->Form->input('desctecnica', array('label' => 'Descripción técnica')
 ?>
 <h2>Necesidades</h2>
 <table id="tablanecesidades">
-<tr><th></th><th>Descripción</th><th>Cantidad</th><th>Infraestructura</th><th>Objeto asignado</th></tr>
+<tr><th></th><th>Descripción</th><th>Cantidad</th><th>Infraestructura</th><th>Recurso asignado</th></tr>
 <?php
 if ($lng == 0) {
 	echo "<tr id=\"necesidad0\">\n";
@@ -41,7 +41,7 @@ else {
 		echo '<td>'.$this->Html->Link('[X]', array('controller' => 'necesidadzonas', 'action' => 'delete', $v['id']), array('confirm' => "¿Seguro que deseas eliminar esta necesidad?\n¡LAS MODIFICACIONES NO GUARDADAS SE PERDERÁN!"))."</td>\n";
 		echo '<td>'.$this->Form->input("Necesidadzona.$k.descripcion",array('label'=>false, 'type'=>'text', 'div' => false))."</td>\n";
 		echo '<td>'.$this->Form->input("Necesidadzona.$k.cantidad",array('label'=>false, 'type'=>'text', 'div' => false))."</td>\n";
-		echo '<td>'.$this->Form->input("Necesidadzona.$k.infraestructura",array('label'=>false, 'div' => false))."</td>\n";
+		echo '<td>'.$this->Form->input("Necesidadzona.$k.infraestructura",array('label'=> false, 'div' => false, 'onChange' => 'toggleMe('.$k.')'))."</td>\n";
 		echo '<td class="objetoasignado">';
 		if (is_null($v['objeto_id'])) {
 			$txtobjeto = '';
@@ -49,8 +49,17 @@ else {
 		else {
 			$txtobjeto = $v['Objeto']['descripcion'];
 		}
-		echo $this->Form->input("Necesidadzona.$k.objeto_nombre",array('label'=> $txtobjeto, 'type'=>'text', 'div' => false));
-		echo $this->Form->input("Necesidadzona.$k.objeto_id",array('label'=>false, 'size' => 3, 'type'=>'text', 'readonly'=>'readonly', 'div' => false));
+		if ($v['infraestructura']) {
+			$objeto_style = 'display:none';
+			$infra_style = '';
+		}
+		else {
+			$objeto_style = '';
+			$infra_style = 'display:none';
+		}
+		echo $this->Form->input("Necesidadzona.$k.objeto_nombre",array('label'=> $txtobjeto, 'type'=>'text', 'style' => $objeto_style, 'div' => false));
+		echo $this->Form->input("Necesidadzona.$k.objeto_id",array('label'=>false, 'size' => 3, 'type'=>'text', 'readonly'=>'readonly', 'style' => $objeto_style, 'div' => false));
+		echo $this->Form->input("Necesidadzona.$k.proveedor_infra",array('label'=> false, 'type'=>'text', 'style' => $infra_style, 'div' => false));
 		echo $this->Form->input("Necesidadzona.$k.id", array('label' => false, 'type' => 'hidden'))."</td>\n";
 		echo "</tr>\n";
 	}
@@ -116,5 +125,26 @@ for ($i = 0; $i < $lng; $i++) {
 	echo "});\n";
 }
 ?>
+
+	function toggleMe(id) {
+		if ($('#Necesidadzona'.concat(id, 'ObjetoNombre')).css("display")  == 'none') {
+			$('#Necesidadzona'.concat(id, 'ObjetoNombre')).css("display", "");
+		}
+		else {
+			$('#Necesidadzona'.concat(id, 'ObjetoNombre')).css("display", "none");
+		}
+		if ($('#Necesidadzona'.concat(id, 'ObjetoId')).css("display")  == 'none') {
+			$('#Necesidadzona'.concat(id, 'ObjetoId')).css("display", "");
+		}
+		else {
+			$('#Necesidadzona'.concat(id, 'ObjetoId')).css("display", "none");
+		}
+		if ($('#Necesidadzona'.concat(id, 'ProveedorInfra')).css("display")  == 'none') {
+			$('#Necesidadzona'.concat(id, 'ProveedorInfra')).css("display", "");
+		}
+		else {
+			$('#Necesidadzona'.concat(id, 'ProveedorInfra')).css("display", "none");
+		}
+	}
 </script>
 
