@@ -1,9 +1,3 @@
-<script type="text/javascript">
-	function a1() {
-		console.log("HOLAKEASE");
-	}
-</script>
-
 <?php
 echo "<h1>Nueva actividad</h1>\n";
 

@@ -196,10 +196,10 @@ DROP TABLE IF EXISTS `zonas`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `zonas` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `nombre` varchar(20) COLLATE utf8_spanish_ci NOT NULL,
+  `nombre` varchar(40) COLLATE utf8_spanish_ci NOT NULL,
   `desctecnica` text COLLATE utf8_spanish_ci NOT NULL,
   `calendarioext` varchar(100) COLLATE utf8_spanish_ci NOT NULL,
-  `sync_calext` datetime NOT NULL,
+  `sync_calext` datetime,
   `created` datetime NOT NULL,
   `modified` datetime NOT NULL,
   PRIMARY KEY (`id`)
