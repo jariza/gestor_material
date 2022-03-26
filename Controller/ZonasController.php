@@ -56,7 +56,7 @@ class ZonasController extends AppController {
 			throw new NotFoundException(__('Zona desconocida'));
 		}
 
-		$this->Zona->recursive = 2;
+		$this->Zona->recursive = 3;
 		$this->Zona->Necesidadzona->unbindModel(array('belongsTo' => 'Zona')); //Ahorro SQL
 		$zona = $this->Zona->findById($id);
 		if (!$zona) {
@@ -85,9 +85,8 @@ class ZonasController extends AppController {
 			$this->set('imprimir', false);
 		}
 		
-		$necesidadzona = $this->Zona->Necesidadzona->findAllByZona_id($id, array('Necesidadzona.descripcion', 'Necesidadzona.infraestructura', 'Necesidadzona.cantidad', 'Necesidadzona.objeto_id', 'Objeto.descripcion', 'Objeto.fungible', 'Objeto.comentarios'));
-		$actividad = $this->Zona->Actividad->findAllByZona_id($id);
-
+		$necesidadzona = $this->Zona->Necesidadzona->findAllByZona_id($id, array('Necesidadzona.descripcion', 'Necesidadzona.infraestructura', 'Necesidadzona.cantidad', 'Necesidadzona.objeto_id', 'Necesidadzona.proveedor_infra', 'Objeto.descripcion', 'Objeto.fungible', 'Objeto.comentarios'));	
+		$actividad = $this->Zona->Actividad->findAllByZona_id($id, array());
 		$horario = array();
 		$objetosid = array();
 		foreach ($actividad as $v) {
@@ -114,8 +113,8 @@ class ZonasController extends AppController {
 		}
 		usort($horario, array("ZonasController", "cmphoras"));
 		
-		$mobjeto = $this->loadModel('Objeto');
-		$results = $this->Objeto->findAllById($objetosid, array('Objeto.id', 'Objeto.descripcion', 'Objeto.fungible', 'Objeto.comentarios'), array(), 0, 0, -1);
+		$mobjeto = $this->loadModel('Objeto');	
+		$results = $this->Objeto->findAllById($objetosid, array(), array(), 0, 0, -1);
 		$objetos = array();
 		foreach ($results as $v) {
 			$objetos[$v['Objeto']['id']] = array(

@@ -82,7 +82,7 @@ class ActividadesController extends AppController {
 			throw new NotFoundException(__('Actividad desconocida'));
 		}
 
-		$this->Actividad->recursive = 2; //Para mostrar el nombre del objeto
+		$this->Actividad->recursive = 3; //Para mostrar el nombre del objeto
 		$this->Actividad->Necesidadactividad->unbindModel(array('belongsTo' => 'Actividad')); //Ahorro SQL
 		$actividad = $this->Actividad->findById($id);
 		if (!$actividad) {

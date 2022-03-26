@@ -9,17 +9,17 @@ Configure::write('maxfallos', 3);
 //Datos del evento
 Configure::write('datosevento', array(
 	'nombre' => '', //Nombre del evento
-	'imagencabecera' => '', //Imagen de la cabecera
-	//'imagenpie' => '', //Imagen del pie
+	'imagencabecera' => '/img/cabecera.jpg', //Imagen de la cabecera
+	'imagenpie' => '/img/pie.jpg', //Imagen del pie
 	'customcss' => '', //CSS propios
 	'horario' => array(
-		//'YYYY-MM-DD' => array('inicio' => 'HH:MM', 'fin' => 'HH:MM')
+		'YYYY-MM-DD' => array('inicio' => 'HH:MM', 'fin' => 'HH:MM')
 	),
 ));
 
 //Calendario externo, Google Calendar
-Configure::write('GC_email', 'GC EMAIL');
-Configure::write('GC_keyfile', 'ARCHIVO P12'); //Relativo al directorio app
+#Configure::write('GC_email', '');
+#Configure::write('GC_keyfile', ''); //Relativo al directorio app
 
 //Modo "post-evento", activar al finalizar el evento para realizar el contrainventario
 Configure::write('postevento', false);

@@ -1,6 +1,10 @@
 Config/*.p12
 Config/material.php
+Config/core.php
 Console
 tmp
 .htaccess
 app.zip
+webroot/img/cabecera.jpg
+webroot/img/pie.jpg
+webroot/img/patterns.png

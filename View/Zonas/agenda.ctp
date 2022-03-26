@@ -4,7 +4,7 @@
 <p>Recuerda: en esta agenda no se comprueban solapes ya que estos exceden el ámbito de una zona.</p>
 <h2>Infraestructura necesaria para la zona</h2>
 <table>
-	<tr><th>Necesidad</th><th>Cantidad</th></tr>
+	<tr><th>Necesidad</th><th>Cantidad</th><th>Provista por</th></tr>
 <?php
 	foreach ($necesidadzona as $v) {
 		if ($v['Necesidadzona']['infraestructura']) {
@@ -14,7 +14,7 @@
 				$txterror = 'OjO: infraestructura con objeto asignado. ';
 				$txtclass = ' class="erroruso"';
 			}
-			echo "<tr$txtclass><td>$txterror".htmlspecialchars($v['Necesidadzona']['descripcion'])."</td><td>{$v['Necesidadzona']['cantidad']}</td></tr>\n";
+			echo "<tr$txtclass><td>$txterror".htmlspecialchars($v['Necesidadzona']['descripcion'])."</td><td>{$v['Necesidadzona']['cantidad']}</td><td>{$v['Necesidadzona']['proveedor_infra']}</td></tr>\n";
 		}
 	}
 ?>

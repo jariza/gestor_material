@@ -35,7 +35,7 @@ class GeneralesController extends AppController {
 		$mnecesidadactividad = $this->loadModel('Necesidadactividad');
 		$mnecesidadzona = $this->loadModel('Necesidadzona');
 		$mzona = $this->loadModel('Zona');
-		$neczona = $this->Necesidadzona->find('all', array('conditions' => array('infraestructura' => true), 'fields' => array('Necesidadzona.descripcion', 'Necesidadzona.cantidad', 'Zona.nombre')));
+		$neczona = $this->Necesidadzona->find('all', array('conditions' => array('infraestructura' => true), 'fields' => array('Necesidadzona.descripcion', 'Necesidadzona.cantidad', 'Necesidadzona.proveedor_infra', 'Zona.nombre')));
 		$necactividad = $this->Necesidadactividad->find('all', array('conditions' => array('infraestructura' => true), 'fields' => array('Necesidadactividad.descripcion', 'Necesidadactividad.cantidad', 'Necesidadactividad.proveedor_infra', 'Actividad.nombre', 'Actividad.zona_id')));
 
 		$zonaid = array();
@@ -60,14 +60,14 @@ class GeneralesController extends AppController {
 		//No satisfechas - zona
 		$nosatzona = $this->Necesidadzona->find('all', array('conditions' => array('infraestructura' => 0, 'objeto_id' => null), 'fields' => array('Necesidadzona.cantidad', 'Necesidadzona.descripcion', 'Zona.nombre', 'Zona.id'), 'order' => 'Zona.nombre'));
 		$nosatzona_infra = $this->Necesidadzona->find('all', array('conditions' => array('infraestructura' => 0, 'objeto_id' => null), 'fields' => array('Necesidadzona.cantidad', 'Necesidadzona.descripcion', 'Zona.nombre', 'Zona.id'), 'order' => 'Zona.nombre'));
-		$nosatzona_obj = $this->Necesidadzona->find('all', array('conditions' => array('infraestructura' => 1, 'proveedor_infra' => ''), 'fields' => array('Necesidadzona.cantidad', 'Necesidadzona.descripcion', 'Zona.nombre', 'Zona.id'), 'order' => 'Zona.nombre'));
+		$nosatzona_obj = $this->Necesidadzona->find('all', array('conditions' => array('infraestructura' => 1, 'OR' => array(array('proveedor_infra' => ''), array('proveedor_infra' => NULL))), 'fields' => array('Necesidadzona.cantidad', 'Necesidadzona.descripcion', 'Zona.nombre', 'Zona.id'), 'order' => 'Zona.nombre'));
 		$nosatzona = array_merge($nosatzona_obj, $nosatzona_infra);
 
 		//No satisfechas - actividad
 		$this->Necesidadactividad->bindModel(array('hasOne' => array('Zona' => array('foreignKey' => false, 'conditions' => 'Actividad.zona_id = Zona.id'))));
 		$nosatactividad_obj = $this->Necesidadactividad->find('all', array('conditions' => array('infraestructura' => 0, 'objeto_id' => null), 'fields' => array('Necesidadactividad.cantidad', 'Necesidadactividad.cantidad', 'Necesidadactividad.descripcion', 'Zona.nombre', 'Actividad.nombre', 'Zona.id', 'Actividad.id')));
 		$this->Necesidadactividad->bindModel(array('hasOne' => array('Zona' => array('foreignKey' => false, 'conditions' => 'Actividad.zona_id = Zona.id')))); //Sí, hay que repetirla para que pille la zona
-		$nosatactividad_infra = $this->Necesidadactividad->find('all', array('conditions' => array('infraestructura' => 1, 'proveedor_infra' => ''), 'fields' => array('Necesidadactividad.cantidad', 'Necesidadactividad.cantidad', 'Necesidadactividad.descripcion', 'Zona.nombre', 'Actividad.nombre', 'Zona.id', 'Actividad.id')));
+		$nosatactividad_infra = $this->Necesidadactividad->find('all', array('conditions' => array('infraestructura' => 1, 'OR' => array(array('proveedor_infra' => ''), array('proveedor_infra' => NULL))), 'fields' => array('Necesidadactividad.cantidad', 'Necesidadactividad.cantidad', 'Necesidadactividad.descripcion', 'Zona.nombre', 'Actividad.nombre', 'Zona.id', 'Actividad.id')));
 		$nosatactividad = array_merge($nosatactividad_obj, $nosatactividad_infra);
 		
 		//No satisfechas por descripción

@@ -5,8 +5,8 @@
 <table>
 	<tr><th>Zona</th><th>Necesidad</th><th>Cantidad</th><th>Provista por</th></tr>
 <?php
-	foreach ($neczona as $v) {
-		echo "\t<tr><td>".htmlspecialchars($v['Zona']['nombre']).'</td><td>'.htmlspecialchars($v['Necesidadzona']['descripcion']).'</td><td>'.htmlspecialchars($v['Necesidadzona']['cantidad'])."</td></tr>\n";
+foreach ($neczona as $v) {
+		echo "\t<tr><td>".htmlspecialchars($v['Zona']['nombre']).'</td><td>'.htmlspecialchars($v['Necesidadzona']['descripcion']).'</td><td>'.htmlspecialchars($v['Necesidadzona']['cantidad']).'</td><td>'.htmlspecialchars($v['Necesidadzona']['proveedor_infra'])."</td></tr>\n";
 	}
 ?>
 </table>

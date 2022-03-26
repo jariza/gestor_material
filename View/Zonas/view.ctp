@@ -19,9 +19,9 @@
 	echo "\t\t<li>Modificada: {$zona['Zona']['modified']}</li>\n";
 	echo "\t</ul>\n";
 	echo "<p>Descripción técnica:</p>\n";
-	echo "<pre>{$zona['Zona']['desctecnica']}</pre>\n";
+	echo "<pre>".htmlspecialchars($zona['Zona']['desctecnica'])."</pre>\n";
 	echo "\t<h2>Necesidades de la zona</h2>\n\t<table>";
-	echo "\t<tr><th>Id</th><th>Descripción</th><th>Cantidad</th><th>Infraestructura</th><th>Recurso asignado</th></tr>\n";
+	echo "\t<tr><th>Descripción</th><th>Cantidad</th><th>Infraestructura</th><th>Recurso asignado</th></tr>\n";
 	foreach ($zona['Necesidadzona'] as $v) {
 	    if ($v['infraestructura']) {
 			$txtinfraestructura = 'Sí';
@@ -33,10 +33,26 @@
 				$txtdescripcion = '';
 			}
 			else {
-				$txtdescripcion = htmlspecialchars($v['Objeto']['descripcion']);
+				if (array_key_exists('Objeto', $v) && array_key_exists('Ubicacion', $v['Objeto'])) {
+					$ubicacion = array();
+					// Gnapa
+					if (count($v['Objeto']['Ubicacion']) == 0) {
+						$ubicacion[] = 'Pendiente de entrega';
+					}
+					else {
+						foreach($v['Objeto']['Ubicacion'] as $u) {
+							$ubicacion[] = $u['nombre'];
+						}
+					}
+					$ubicacion = '<br />Ubicación en almacén: '.implode($ubicacion, ', ');
+				}
+				else {
+					$ubicacion = '';
+				}
+				$txtdescripcion = '<a href="/Objeto/view/"'.$v['Objeto']['id'].'">'.htmlspecialchars($v['Objeto']['descripcion'])."</a>$ubicacion";
 			}
 		}
-		echo "\t\t<tr><td>{$v['id']}</td><td>".htmlspecialchars($v['descripcion'])."</td><td>{$v['cantidad']}</td><td>$txtinfraestructura</td><td>$txtobjeto</td></tr>\n";
+		echo "\t\t<tr><td>".htmlspecialchars($v['descripcion'])."</td><td>{$v['cantidad']}</td><td>$txtinfraestructura</td><td>$txtdescripcion</td></tr>\n";
 	}
 	echo "\t</table>\n";
 	echo "<p>".$this->Html->link('Volver al listado de zonas', array('action' => 'index'))." - ".$this->Html->link('Editar zona', array('action' => 'edit', $zona['Zona']['id']), array('title' => 'Editar'))."</p>";

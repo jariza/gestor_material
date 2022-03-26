@@ -19,7 +19,7 @@
 	echo "\t\t<li>Modificado: {$actividad['Actividad']['modified']}</li>\n";
 	echo "\t</ul>\n</p>\n";
 	echo "<p>Descripción técnica:";
-	echo "<pre>{$actividad['Actividad']['desctecnica']}</pre>\n";
+	echo "<pre>".htmlspecialchars($actividad['Actividad']['desctecnica'])."</pre>\n";
 	echo "\t<h2>Horario</h2>\n";
 	if ($actividad['Zona']['calendarioext'] != '0') {
 		if ($actividad['Zona']['sync_calext'] == '0000-00-00 00:00:00') {
@@ -75,7 +75,23 @@
 				$txtdescripcion = '';
 			}
 			else {
-				$txtdescripcion = htmlspecialchars($v['Objeto']['descripcion']);
+				if (array_key_exists('Objeto', $v) && array_key_exists('Ubicacion', $v['Objeto'])) {
+					$ubicacion = array();
+					//Gnapa
+					if (count($v['Objeto']['Ubicacion']) == 0) {
+						$ubicacion[] = "Pendiente de entrega";
+					}
+					else {
+						foreach ($v['Objeto']['Ubicacion'] as $u) {	
+							$ubicacion[] = $u['nombre'];
+						}
+					}
+					$ubicacion = '<br />Ubicación en almacén: '.implode(',', $ubicacion);
+				}
+				else {
+					$ubicacion = '';
+				}	
+				$txtdescripcion = '<a href="/Objetos/view/'.$v['Objeto']['id'].'"/>'.htmlspecialchars($v['Objeto']['descripcion'])."</a>$ubicacion";
 			}
 		}
 		echo "\t\t<tr><td>{$v['id']}</td><td>".htmlspecialchars($v['descripcion'])."</td><td>{$v['cantidad']}</td><td>$txtinfraestructura</td><td>{$v['sesion']}</td><td>$txtdescripcion</td></tr>\n";

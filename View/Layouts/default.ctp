@@ -20,6 +20,7 @@ $cakeDescription = __d('cake_dev', 'CakePHP: the rapid development php framework
 <html>
 <head>
 	<?php echo $this->Html->charset(); ?>
+        <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 	<title>
 		<?php echo "Gestión de material - ".Configure::read('datosevento.nombre')." - $title_for_layout"; ?>
 	</title>
