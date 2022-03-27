@@ -1,6 +1,7 @@
 Config/*.p12
-Config/material.php
 Config/core.php
+Config/database.php
+Config/material.php
 Console
 tmp
 .htaccess
