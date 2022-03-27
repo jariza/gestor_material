@@ -71,21 +71,24 @@ class GeneralesController extends AppController {
 		$nosatactividad = array_merge($nosatactividad_obj, $nosatactividad_infra);
 		
 		//No satisfechas por descripción
-		$this->Necesidadactividad->virtualFields['acumulado'] = 'SUM(Necesidadactividad.cantidad)';
-		$this->Necesidadzona->virtualFields['acumulado'] = 'SUM(Necesidadzona.cantidad)';
-		$czona = $this->Necesidadzona->find('list', array('fields' => array('descripcion', 'acumulado'), 'group' => 'Necesidadzona.descripcion'));
-		$cactividad = $this->Necesidadactividad->find('list', array('fields' => array('descripcion', 'acumulado'), 'group' => 'Necesidadactividad.descripcion'));
-		foreach($czona as $k => $v) {
-			if (array_key_exists($k, $cactividad)) {
-				$cactividad[$k] += $v;
+		$nosatdesc = array();
+		foreach ($nosatzona as $v) {
+			if (array_key_exists($v['Necesidadzona']['descripcion'], $nosatzona)) {
+				$nosatdesc[$v['Necesidadzona']['descripcion']] += $v['Necesidadzona']['cantidad'];
 			}
 			else {
-				
-				$cactividad[$k] = $v;
+				$nosatdesc[$v['Necesidadzona']['descripcion']] = $v['Necesidadzona']['cantidad'];
 			}
 		}
-		ksort($cactividad);
-		$nosatdesc = $cactividad;
+		foreach ($nosatactividad as $v) {
+			if (array_key_exists($v['Necesidadactividad']['descripcion'], $nosatdesc)) {
+				$nosatdesc[$v['Necesidadactividad']['descripcion']] += $v['Necesidadactividad']['cantidad'];
+			}
+			else {
+				$nosatdesc[$v['Necesidadactividad']['descripcion']] = $v['Necesidadactividad']['cantidad'];
+			}
+		}
+		ksort($nosatzona);
 
 		//No fungible con cantidad superior a uno
 		$this->Necesidadactividad->bindModel(array(
