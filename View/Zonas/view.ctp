@@ -49,7 +49,7 @@
 				else {
 					$ubicacion = '';
 				}
-				$txtdescripcion = '<a href="/Objeto/view/"'.$v['Objeto']['id'].'">'.htmlspecialchars($v['Objeto']['descripcion'])."</a>$ubicacion";
+				$txtdescripcion = '<a href="/Objetos/view/'.$v['Objeto']['id'].'">'.htmlspecialchars($v['Objeto']['descripcion'])."</a>$ubicacion";
 			}
 		}
 		echo "\t\t<tr><td>".htmlspecialchars($v['descripcion'])."</td><td>{$v['cantidad']}</td><td>$txtinfraestructura</td><td>$txtdescripcion</td></tr>\n";
