@@ -90,7 +90,7 @@ echo $this->Html->script('jquery');
 	</table>
 </div>
 
-<h2 onclick="$('#solapados').toggle('slow')"><?php echo count($activzona); ?> objetos no fungibles con solape en actividades (+)</h2>
+<h2 onclick="$('#solapados').toggle('slow')"><?php echo count($solapados); ?> objetos no fungibles con solape en actividades (+)</h2>
 <div id="solapados">
 	<table>
 		<tr><th>Objeto</th><th>Actividad</th><th>Inicio</th><th>Fin</th></tr>

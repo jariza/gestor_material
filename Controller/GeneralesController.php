@@ -208,7 +208,16 @@ class GeneralesController extends AppController {
 		foreach (array_keys($horarioobjetos) as $k) {
 			for ($i = 0; $i < count($horarioobjetos[$k]['horarios']); $i++) {
 				for ($j = $i+1; $j < count($horarioobjetos[$k]['horarios']); $j++) {
-					if (($horarioobjetos[$k]['horarios'][$i]['fin'] > $horarioobjetos[$k]['horarios'][$j]['inicio']) || ($horarioobjetos[$k]['horarios'][$j]['fin'] > $horarioobjetos[$k]['horarios'][$i]['inicio'])) {
+					//Ordenar for hora de inicio
+					$h1 = $horarioobjetos[$k]['horarios'][$i];
+					$h2 = $horarioobjetos[$k]['horarios'][$j];
+					if ($h1['inicio'] > $h2['inicio']) {
+						$htmp = $h2;
+						$h2 = $h1;
+						$h1 = $htmp;
+					}
+					//Comparar inicios con finales
+					if (($h1['fin'] > $h2['inicio']) || ($h2['fin'] < $h1['inicio'])) {
 						$horarioobjetos[$k]['horarios'][$i]['solapado'] = true;
 						$horarioobjetos[$k]['horarios'][$j]['solapado'] = true;
 					}
